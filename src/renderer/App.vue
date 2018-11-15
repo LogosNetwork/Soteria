@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div id="closeBar"></div>
     <router-view></router-view>
   </div>
 </template>
@@ -14,6 +15,15 @@
   @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
   body {
     font-family: 'Noto Sans', sans-serif;
+  }
+  #closeBar {
+    -webkit-app-region: drag;
+    height: 25px;
+    position: fixed;
+    width: 100vw;
+    top:0px;
+    left:0px;
+    z-index: 99999;
   }
   #app {
     -webkit-font-smoothing: antialiased;
