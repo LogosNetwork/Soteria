@@ -11,6 +11,30 @@ export default new Router({
       component: require('@/components/LandingPage').default
     },
     {
+      path: '/onboarding',
+      name: 'onboarding',
+      redirect: '/onboarding/language',
+      component: require('@/components/Onboarding').default,
+      children: [
+        {
+          path: 'language',
+          component: require('@/components/Onboarding/SelectLanguage').default
+        },
+        {
+          path: 'seed',
+          component: require('@/components/Onboarding/GenerateSeed').default
+        },
+        {
+          path: 'account',
+          component: require('@/components/Onboarding/NameAccount').default
+        },
+        {
+          path: 'validate',
+          component: require('@/components/Onboarding/ValidateSeed').default
+        }
+      ]
+    },
+    {
       path: '*',
       redirect: '/'
     }

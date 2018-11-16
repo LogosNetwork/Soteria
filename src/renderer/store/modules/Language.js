@@ -1,6 +1,19 @@
 const state = {
-  languages: ['en'],
+  languages: [
+    {
+      code: 'en',
+      name: 'English (International)'
+    },
+    {
+      code: 'ru',
+      name: 'Pусский - Russian'
+    }
+  ],
   selectedLanguage: null
+}
+
+const getters = {
+
 }
 
 const mutations = {
@@ -18,7 +31,9 @@ const actions = {
 }
 
 export default {
+  namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
