@@ -1,12 +1,12 @@
 const state = {
   languages: [
     {
-      code: 'en',
-      name: 'English (International)'
+      value: 'en',
+      text: 'English (International)'
     },
     {
-      code: 'ru',
-      name: 'Pусский - Russian'
+      value: 'ru',
+      text: 'Pусский - Russian'
     }
   ],
   selectedLanguage: null
@@ -23,10 +23,8 @@ const mutations = {
 }
 
 const actions = {
-  setLanguage ({state, commit}, lang) {
-    if (state.languages.indexOf(lang) !== -1) {
-      commit('setSelectedLanguage', lang)
-    }
+  setLanguage ({commit}, langIndex) {
+    commit('setSelectedLanguage', langIndex)
   }
 }
 

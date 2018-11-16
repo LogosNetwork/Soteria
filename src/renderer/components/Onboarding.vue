@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div class="mb-5">
-      <h1 v-t="'logosnetwork'"></h1>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
