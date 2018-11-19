@@ -1,12 +1,15 @@
 <template>
-  <b-container>
-    <div class="mt-5">
-      <h1 v-t="'logosnetwork'" class="mb-2"></h1>
-      <div class="text-left">
-        <label for="selectLang" v-t="'language'"></label>
-        <b-form-select id="selectLang" v-model="$i18n.locale" :options="languages" @change="setLang"/>
+  <b-container class="h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div id="jumbotron">
+        <h4 v-t="'thankyou'" class="mb-3"></h4>
+        <div class="text-left">
+          <label for="selectLang" v-t="'language'"></label>
+          <b-form-select id="selectLang" v-model="$i18n.locale" :options="languages" @change="setLang"/>
+        </div>
       </div>
     </div>
+
   </b-container>
 </template>
 
@@ -35,3 +38,9 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+  #jumbotron {
+    width:450px;
+  }
+</style>
