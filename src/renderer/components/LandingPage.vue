@@ -13,16 +13,16 @@
     name: 'landing-page',
     computed: {
       ...mapState('Language', {
-        selectedLanguage: state => state.selectedLanguage
+        selectedLanguageCode: state => state.selectedLanguageCode
       })
     },
     created: function () {
-      if (this.selectedLanguage === null) {
+      if (this.selectedLanguageCode === null) {
         setTimeout(() => {
           this.$router.push({ path: '/onboarding/language' })
         }, 2000)
       } else {
-        console.log(this.selectedLanguage)
+        this.$i18n.locale = this.selectedLanguageCode
       }
     }
   }

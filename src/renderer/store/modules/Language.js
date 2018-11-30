@@ -9,7 +9,7 @@ const state = {
       text: 'Pусский - Russian'
     }
   ],
-  selectedLanguage: null
+  selectedLanguageCode: null
 }
 
 const getters = {
@@ -17,14 +17,14 @@ const getters = {
 }
 
 const mutations = {
-  setSelectedLanguage (state, lang) {
-    state.selectedLanguage = lang
+  setSelectedLanguageCode (state, code) {
+    state.selectedLanguageCode = code
   }
 }
 
 const actions = {
-  setLanguage ({commit}, langIndex) {
-    commit('setSelectedLanguage', langIndex)
+  changeLanguage ({commit}, code) {
+    commit('setSelectedLanguageCode', code)
   }
 }
 
@@ -32,6 +32,6 @@ export default {
   namespaced: true,
   state,
   getters,
-  mutations,
-  actions
+  actions,
+  mutations
 }

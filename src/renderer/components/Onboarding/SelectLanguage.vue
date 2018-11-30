@@ -20,20 +20,15 @@ export default {
   computed: {
     ...mapState('Language', {
       languages: state => state.languages,
-      selectedLanguage: state => state.selectedLanguage
+      selectedLanguageCode: state => state.selectedLanguageCode
     })
-  },
-  created: function () {
-    if (this.selectedLanguage === null) {
-      this.setLanguage('en')
-    }
   },
   methods: {
     ...mapActions('Language', [
-      'setLanguage'
+      'changeLanguage'
     ]),
     setLang (code) {
-      this.setLanguage(code)
+      this.changeLanguage(code)
     }
   }
 }
