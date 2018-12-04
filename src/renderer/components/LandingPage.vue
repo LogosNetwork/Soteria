@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <b-container>
     <img class="img-fluid" id="logo" src="~@/assets/logo-light.png" alt="logos logo">
     <div class="mb-5">
       <h1 v-t="'logosnetwork'"></h1>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -23,6 +23,10 @@
         }, 2000)
       } else {
         this.$i18n.locale = this.selectedLanguageCode
+        // In future direct to wherever
+        setTimeout(() => {
+          this.$router.push({ path: '/onboarding/language' })
+        }, 2000)
       }
     }
   }
