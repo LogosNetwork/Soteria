@@ -23,7 +23,7 @@ const mutations = {
 }
 
 const actions = {
-  changeLanguage ({commit}, code) {
+  changeLanguage ({ commit }, code) {
     commit('setSelectedLanguageCode', code)
   }
 }
