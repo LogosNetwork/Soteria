@@ -1,5 +1,5 @@
 <template>
-  <div class="h-100" style="overflow:hidden">
+  <div class="onboarding-container">
     <div class="row h-100 justify-content-center align-items-center">
       <div class="panel table">
         <div class="plan">
@@ -43,8 +43,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-  #jumbotron {
-    width:450px;
+  .onboarding-container {
+    overflow:hidden;
+    height: calc(100vh - 88px);
   }
   .fixed-row-bottom { 
     position: fixed;
