@@ -9,10 +9,19 @@ import BootstrapVue from 'bootstrap-vue'
 import LogosWallet from '@logosnetwork/logos-webwallet-sdk'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faFileImport, faChartNetwork } from '@fortawesome/pro-light-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
+
+library.add(faFileImport)
+library.add(faChartNetwork)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 Vue.use(BootstrapVue)
 Vue.use(LogosWallet.Block)
 Vue.use(LogosWallet.LogosFunctions)
