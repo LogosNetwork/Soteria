@@ -17,18 +17,23 @@ export default new Router({
       component: require('@/components/Onboarding').default,
       children: [
         {
+          name: 'langauge',
           path: 'language',
           component: require('@/components/Onboarding/SelectLanguage').default
         },
         {
+          name: 'seed',
           path: 'seed',
           component: require('@/components/Onboarding/GenerateSeed').default
         },
         {
-          path: 'account',
-          component: require('@/components/Onboarding/NameAccount').default
+          name: 'encryptSeed',
+          path: 'encryptSeed/:seed',
+          props: true,
+          component: require('@/components/Onboarding/EncryptSeed').default
         },
         {
+          name: 'validate',
           path: 'validate',
           component: require('@/components/Onboarding/ValidateSeed').default
         }

@@ -8,5 +8,6 @@
   "haveaseed": "Есть семя?",
   "needaseed": "нужно семя?",
   "importseed": "Импорт семян",
-  "generateseed": "Генерировать Семя"
+  "generateseed": "Генерировать Семя",
+  "encrypt": "шифровать"
 }
