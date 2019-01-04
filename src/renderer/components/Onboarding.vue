@@ -5,13 +5,13 @@
 </template>
 
 <script>
-  export default {
-    name: 'onboarding'
-  }
+export default {
+  name: 'onboarding'
+}
 </script>
 
 <style scoped lang="scss">
-  #app {
-    height: 100vh;
-  }
+#app {
+  height: 100vh;
+}
 </style>

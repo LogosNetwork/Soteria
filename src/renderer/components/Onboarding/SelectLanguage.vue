@@ -14,7 +14,7 @@
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
         <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="default" v-t="'continue'"  v-on:click="generateSeedPage()"></b-button>
+          <b-button class="w-100" variant="primary" v-t="'continue'"  v-on:click="generateSeedPage()"></b-button>
         </b-button-group>
       </b-col>
     </b-row>
