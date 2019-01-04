@@ -2,7 +2,11 @@
   "logosnetwork": "Logos Network",
   "loading": "Loading...",
   "language": "Language",
-  "thankyou": "Thank you for downloading Gaia",
+  "thankyou": "Thank you for downloading Logos",
   "continue": "Continue",
-  "previous": "Previous"
+  "previous": "Previous",
+  "haveaseed": "Have a seed?",
+  "needaseed": "Need a seed?",
+  "importseed": "Import Seed",
+  "generateseed": "Generate Seed"
 }

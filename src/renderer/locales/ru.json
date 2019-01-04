@@ -2,7 +2,11 @@
   "logosnetwork": "логотипы сеть",
   "loading": "погрузка...",
   "language": "язык",
-  "thankyou": "Спасибо за скачивание Gaia",
+  "thankyou": "Спасибо за скачивание Logos",
   "continue": "Продолжить",
-  "previous": "предыдущий"
+  "previous": "предыдущий",
+  "haveaseed": "Есть семя?",
+  "needaseed": "нужно семя?",
+  "importseed": "Импорт семян",
+  "generateseed": "Генерировать Семя"
 }
