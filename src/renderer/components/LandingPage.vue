@@ -1,10 +1,4 @@
 <template>
-  <b-container>
-    <img class="img-fluid" id="logo" src="~@/assets/logo-light.png" alt="logos logo">
-    <div class="mb-5">
-      <h1 v-t="'logosnetwork'"></h1>
-    </div>
-  </b-container>
 </template>
 
 <script>
@@ -17,16 +11,16 @@
       })
     },
     created: function () {
-      if (this.selectedLanguageCode === null) {
-        setTimeout(() => {
-          this.$router.push({ path: '/onboarding/language' })
-        }, 2000)
-      } else {
+      // Check wallet and initalize i18n
+      if (this.selectedLanguageCode !== null) {
         this.$i18n.locale = this.selectedLanguageCode
-        // In future direct to wherever
-        setTimeout(() => {
-          this.$router.push({ path: '/onboarding/language' })
-        }, 2000)
+      }
+      console.log(this.wallet)
+      if (this.wallet === null || typeof this.wallet === 'undefined') {
+        // Start onboarding
+        this.$router.push({ path: '/onboarding/language' })
+      } else {
+        // Route to wallet initalizer
       }
     }
   }
