@@ -7,6 +7,10 @@ const state = {
     {
       value: 'ru',
       text: 'Pусский - Russian'
+    },
+    {
+      value: 'zh',
+      text: '中文 - Chinese (Simplified)'
     }
   ],
   selectedLanguageCode: null
