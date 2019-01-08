@@ -2,6 +2,7 @@
   <div class="onboarding-container">
     <div class="row h-100 justify-content-center align-items-center">
       <div id="passwordEncrypt">
+        {{wallet}}
         <font-awesome-icon size="4x" class="icon mb-3" :icon="['fal','shield-check']" />
         <h4 v-t="'encryptseed'" class="mb-3"></h4>
         <div class="form-group text-left">
@@ -56,7 +57,7 @@
       <b-col class="p-0 w-100">
         <b-button-group class="w-100" size="lg">
           <b-button class="w-50" variant="dark" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button :disabled="!valid" class="w-50" variant="primary" v-t="'encrypt'"  v-on:click="tba()"></b-button>
+          <b-button :disabled="!valid" class="w-50" variant="primary" v-t="'encrypt'"  v-on:click="createWallet()"></b-button>
         </b-button-group>
       </b-col>
     </b-row>
@@ -65,15 +66,24 @@
 
 <script>
 import zxcvbn from 'zxcvbn'
+import LogosWallet from '../api/wallet'
+import Vue from 'vue'
+import { mapState, mapActions } from 'vuex'
+Vue.use(LogosWallet)
 
 export default {
   name: 'encrypt-seed',
   methods: {
+    ...mapActions('EncryptedWallet', [
+      'setWallet'
+    ]),
     previous () {
       this.$router.go(-1)
     },
-    tba () {
-      console.log(this.seed)
+    createWallet () {
+      let wallet = new this.$Wallet(this.password)
+      wallet.createWallet(this.seed)
+      this.setWallet(wallet.pack())
     },
     togglePasswordVisibility () {
       this.showPassword = !this.showPassword
@@ -81,6 +91,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('EncryptedWallet', {
+      wallet: state => state.wallet
+    }),
     validatePassword () {
       if (this.password === null || this.password.length === 0) {
         this.score = null
