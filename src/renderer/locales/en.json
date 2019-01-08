@@ -8,6 +8,9 @@
   "haveaseed": "Have a seed?",
   "needaseed": "Need a seed?",
   "importseed": "Import Seed",
+  "encryptseed": "Encrypt Seed",
   "generateseed": "Generate Seed",
-  "encrypt": "Encrypt"
+  "encrypt": "Encrypt",
+  "password": "Password",
+  "retypePassword": "Retype Password"
 }
