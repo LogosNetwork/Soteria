@@ -2,7 +2,6 @@
   <div class="onboarding-container">
     <div class="row h-100 justify-content-center align-items-center">
       <div id="passwordEncrypt">
-        {{wallet}}
         <font-awesome-icon size="4x" class="icon mb-3" :icon="['fal','shield-check']" />
         <h4 v-t="'encryptseed'" class="mb-3"></h4>
         <div class="form-group text-left">

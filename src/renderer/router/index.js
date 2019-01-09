@@ -40,6 +40,19 @@ export default new Router({
       ]
     },
     {
+      path: '/wallet',
+      name: 'wallet',
+      redirect: '/wallet/decrypt',
+      component: require('@/components/Wallet').default,
+      children: [
+        {
+          name: 'decrypt',
+          path: 'decrypt',
+          component: require('@/components/Wallet/DecryptWallet').default
+        }
+      ]
+    },
+    {
       path: '*',
       redirect: '/'
     }

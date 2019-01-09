@@ -12,5 +12,13 @@
   "generateseed": "Generate Seed",
   "encrypt": "Encrypt",
   "password": "Password",
-  "retypePassword": "Retype Password"
+  "retypePassword": "Retype Password",
+  "unlockwallet": "Unlock Wallet",
+  "forgotPassword": "Forgot your password?",
+  "forgotPasswordWarning": "If you have forgotten your wallet you must re-import your seed. Performing this action will clear all the data in this application.",
+  "areyousure": "Are you sure?",
+  "delete": {
+    "placeholder": "Type delete to confirm the deletion of this wallet",
+    "keyword": "delete"
+  }
 }

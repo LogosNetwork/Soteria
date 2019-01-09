@@ -8,6 +8,9 @@
     computed: {
       ...mapState('Language', {
         selectedLanguageCode: state => state.selectedLanguageCode
+      }),
+      ...mapState('EncryptedWallet', {
+        wallet: state => state.wallet
       })
     },
     created: function () {
@@ -15,12 +18,12 @@
       if (this.selectedLanguageCode !== null) {
         this.$i18n.locale = this.selectedLanguageCode
       }
-      console.log(this.wallet)
       if (this.wallet === null || typeof this.wallet === 'undefined') {
         // Start onboarding
         this.$router.push({ path: '/onboarding/language' })
       } else {
-        // Route to wallet initalizer
+        // Wallet found time to decrypt and unpack
+        this.$router.push({ path: '/wallet/decrypt' })
       }
     }
   }

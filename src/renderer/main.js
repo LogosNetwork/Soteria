@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/css/shame.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck } from '@fortawesome/pro-light-svg-icons'
+import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
@@ -21,6 +21,7 @@ Vue.config.productionTip = false
 library.add(faFileImport)
 library.add(faChartNetwork)
 library.add(faLambda)
+library.add(faKey)
 library.add(faEye)
 library.add(faEyeSlash)
 library.add(faShieldCheck)
