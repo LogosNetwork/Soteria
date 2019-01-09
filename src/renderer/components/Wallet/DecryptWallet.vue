@@ -23,15 +23,17 @@
           </div>
           <div>
             <b-button v-b-modal.clearWalletModal variant="link" class="btn-sm" style="padding-left:0px" v-t="'forgotPassword'"></b-button>
-            <b-modal id="clearWalletModal" ref="modal" :title="$t('areyousure')" @ok="handleClearWallet">
+            <b-modal id="clearWalletModal" ref="clearWallet" :title="$t('areyousure')" @ok="handleOk">
               <p class="text-danger" v-t="'forgotPasswordWarning'"></p>
-              <b-form-input 
-                class="mt-3 mb-3"
-                type="text"
-                :placeholder="$t('delete.placeholder')"
-                :state="validateDeleteKeyword"
-                v-model="deleteText">
-              </b-form-input>
+              <form @submit.stop.prevent="handleSubmit">
+                <b-form-input 
+                  class="mt-3 mb-3"
+                  type="text"
+                  :placeholder="$t('delete.placeholder')"
+                  :state="validateDeleteKeyword"
+                  v-model="deleteText">
+                </b-form-input>
+              </form>
             </b-modal>
           </div>
         </div>
@@ -59,10 +61,15 @@ export default {
     unlockWallet () {
       // TODO
     },
-    handleClearWallet () {
+    handleSubmit () {
       if (this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()) {
+        this.$refs.clearWallet.hide()
         this.$router.push({ path: '/onboarding/language' })
       }
+    },
+    handleOk (evt) {
+      evt.preventDefault()
+      this.handleSubmit()
     },
     togglePasswordVisibility () {
       this.showPassword = !this.showPassword

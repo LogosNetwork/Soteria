@@ -51,6 +51,18 @@
           </div>
         </div>
       </div>
+      <b-modal ref="areyousure" :title="$t('areyousure')" @ok="handleOk">
+        <p class="text-danger" v-t="'lastchancedelete'"></p>
+        <form @submit.stop.prevent="handleSubmit">
+          <b-form-input 
+            class="mt-3 mb-3"
+            type="text"
+            :placeholder="$t('delete.placeholder')"
+            :state="validateDeleteKeyword"
+            v-model="deleteText">
+          </b-form-input>
+        </form>
+      </b-modal>
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
@@ -79,10 +91,24 @@ export default {
     previous () {
       this.$router.go(-1)
     },
+    handleSubmit () {
+      if (this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()) {
+        let wallet = new this.$Wallet(this.password)
+        wallet.createWallet(this.seed)
+        this.setWallet(wallet.pack())
+        this.$refs.areyousure.hide()
+      }
+    },
+    handleOk (evt) {
+      evt.preventDefault()
+      this.handleSubmit()
+    },
     createWallet () {
-      let wallet = new this.$Wallet(this.password)
-      wallet.createWallet(this.seed)
-      this.setWallet(wallet.pack())
+      if (this.wallet !== null && typeof this.wallet !== 'undefined') {
+        this.$refs.areyousure.show()
+      } else {
+        this.clearAndCreateWallet()
+      }
     },
     togglePasswordVisibility () {
       this.showPassword = !this.showPassword
@@ -115,6 +141,13 @@ export default {
           return this.valid
         }
       }
+    },
+    validateDeleteKeyword () {
+      if (this.deleteText !== null && this.deleteText.length > 0) {
+        return this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()
+      } else {
+        return null
+      }
     }
   },
   data () {
@@ -124,6 +157,7 @@ export default {
       passwordConfirm: null,
       score: null,
       showPassword: false,
+      deleteText: null,
       inputType: 'password',
       valid: false
     }

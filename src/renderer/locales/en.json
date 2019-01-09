@@ -17,6 +17,7 @@
   "forgotPassword": "Forgot your password?",
   "forgotPasswordWarning": "If you have forgotten your wallet you must re-import your seed. Performing this action will clear all the data in this application.",
   "areyousure": "Are you sure?",
+  "lastchancedelete": "There is already a wallet associated with this application. By creating a new wallet or importing a new seed this will remove any existing data stored in this application.",
   "delete": {
     "placeholder": "Type delete to confirm the deletion of this wallet",
     "keyword": "delete"
