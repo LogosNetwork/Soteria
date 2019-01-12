@@ -28,9 +28,13 @@ export default new Router({
         },
         {
           name: 'encryptSeed',
-          path: 'encryptSeed/:seed',
-          props: true,
+          path: 'encryptSeed',
           component: require('@/components/Onboarding/EncryptSeed').default
+        },
+        {
+          name: 'exportSeed',
+          path: 'exportSeed',
+          component: require('@/components/Onboarding/ExportSeed').default
         },
         {
           name: 'validate',
