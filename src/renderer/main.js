@@ -1,17 +1,14 @@
 import Vue from 'vue'
 import axios from 'axios'
-
+import './assets/css/shame.scss'
 import App from './App'
 import router from './router'
 import store from './store'
 import i18n from './i18n'
 import BootstrapVue from 'bootstrap-vue'
 import LogosWallet from '@logosnetwork/logos-webwallet-sdk'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import './assets/css/shame.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey } from '@fortawesome/pro-light-svg-icons'
+import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
@@ -23,6 +20,8 @@ library.add(faChartNetwork)
 library.add(faLambda)
 library.add(faKey)
 library.add(faEye)
+library.add(faPencil)
+library.add(faLockAlt)
 library.add(faEyeSlash)
 library.add(faShieldCheck)
 

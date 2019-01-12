@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import LogosWallet from '../api/wallet'
+import LogosWallet from '../../api/wallet'
 import Vue from 'vue'
 import { mapState } from 'vuex'
 Vue.use(LogosWallet)
@@ -110,10 +110,10 @@ export default {
     border: 1px solid #ced4da;
   }
   .eyeButton > .btn-link {
-    color: #F5F5F5;
+    color: var(--white);
   }
   .eyeButton > .btn-link:hover > .icon {
-    color: #F5F5F5;
+    color: var(--white);
     opacity: 0.5;
   }
   .decrypt-container {

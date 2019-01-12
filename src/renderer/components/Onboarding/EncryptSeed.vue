@@ -21,7 +21,7 @@
               required>
             </b-form-input>
             <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm">
+              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
                 <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
                 <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
                 <span class="sr-only">Toggle Visibility of Password Field</span>
@@ -42,7 +42,7 @@
               required>
             </b-form-input>
             <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm">
+              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
                 <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
                 <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
                 <span class="sr-only">Toggle Visibility of Password Field</span>
@@ -51,23 +51,11 @@
           </div>
         </div>
       </div>
-      <b-modal ref="areyousure" :title="$t('areyousure')" @ok="handleOk">
-        <p class="text-danger" v-t="'lastchancedelete'"></p>
-        <form @submit.stop.prevent="handleSubmit">
-          <b-form-input 
-            class="mt-3 mb-3"
-            type="text"
-            :placeholder="$t('delete.placeholder')"
-            :state="validateDeleteKeyword"
-            v-model="deleteText">
-          </b-form-input>
-        </form>
-      </b-modal>
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
         <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="dark" v-t="'previous'"  v-on:click="previous()"></b-button>
+          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
           <b-button :disabled="!valid" class="w-50" variant="primary" v-t="'encrypt'"  v-on:click="createWallet()"></b-button>
         </b-button-group>
       </b-col>
@@ -77,7 +65,7 @@
 
 <script>
 import zxcvbn from 'zxcvbn'
-import LogosWallet from '../api/wallet'
+import LogosWallet from '../../api/wallet'
 import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
@@ -85,30 +73,17 @@ Vue.use(LogosWallet)
 export default {
   name: 'encrypt-seed',
   methods: {
-    ...mapActions('EncryptedWallet', [
+    ...mapActions('Onboarding', [
       'setWallet'
     ]),
     previous () {
       this.$router.go(-1)
     },
-    handleSubmit () {
-      if (this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()) {
-        let wallet = new this.$Wallet(this.password)
-        wallet.createWallet(this.seed)
-        this.setWallet(wallet.pack())
-        this.$refs.areyousure.hide()
-      }
-    },
-    handleOk (evt) {
-      evt.preventDefault()
-      this.handleSubmit()
-    },
     createWallet () {
-      if (this.wallet !== null && typeof this.wallet !== 'undefined') {
-        this.$refs.areyousure.show()
-      } else {
-        this.clearAndCreateWallet()
-      }
+      let wallet = new this.$Wallet(this.password)
+      wallet.createWallet(this.seed)
+      this.setWallet(wallet.pack())
+      this.$router.push({ name: 'exportSeed' })
     },
     togglePasswordVisibility () {
       this.showPassword = !this.showPassword
@@ -116,8 +91,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('EncryptedWallet', {
-      wallet: state => state.wallet
+    ...mapState('Onboarding', {
+      seed: state => state.seed
     }),
     validatePassword () {
       if (this.password === null || this.password.length === 0) {
@@ -152,7 +127,6 @@ export default {
   },
   data () {
     return {
-      seed: this.$attrs.seed,
       password: null,
       passwordConfirm: null,
       score: null,
@@ -186,13 +160,9 @@ export default {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
     height: 48px;
-    border: 1px solid #ced4da;
-  }
-  .eyeButton > .btn-link {
-    color: #F5F5F5;
+    border: 1px solid var(--gray-400);
   }
   .eyeButton > .btn-link:hover > .icon {
-    color: #F5F5F5;
     opacity: 0.5;
   }
   .onboarding-container {

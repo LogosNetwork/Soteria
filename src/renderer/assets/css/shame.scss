@@ -1,14 +1,65 @@
+$theme-colors: (
+  "secondary": #36393F,
+  "primary": #7289da
+);
+:root {
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+}
+// Bootstrap and its default variables
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+@function color($key: "blue") {
+  @return map-get($colors, $key);
+}
+@function theme-color($key: "primary") {
+  @return map-get($theme-colors, $key);
+}
+@function gray($key: "100") {
+  @return map-get($grays, $key);
+}
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+#closeBar {
+  -webkit-app-region: drag;
+  height: 25px;
+  position: fixed;
+  width: 100vw;
+  top:0px;
+  left:0px;
+  z-index: 99999;
+}
+#app {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #2E3136;
+  color: var(--white);
+}
 .form-control {
-  background: rgba(0,0,0,0.05);
-  color: #F5F5F5;
+  background: rgba(color("white"),0.05);
+  color: var(--white);
 }
 .form-control.is-invalid {
-  border-color: #dc3545;
-  background: rgba(220, 53, 69, 0.05);
+  border-color: var(--danger);
+  background: rgba(theme-color("danger"), 0.05);
 }
 .form-control:focus {
-  background: rgba(0, 123, 255, 0.05);
-  color: #F5F5F5;
+  background: rgba(theme-color("primary"), 0.05);
+  color: var(--white);
 }
 .form-control:disabled {
   background: rgba(233, 236, 239, 0.15);
@@ -18,7 +69,7 @@ button[disabled="disabled"] {
   cursor: not-allowed;
 }
 .modal-content {
-  background: #20262D
+  background: theme-color("secondary")
 }
-.close {color:#FFF;}
-.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {color: #FFF;}
+.close {color:var(--white);}
+.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {color: var(--white);}

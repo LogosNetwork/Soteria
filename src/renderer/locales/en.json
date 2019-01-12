@@ -21,5 +21,10 @@
   "delete": {
     "placeholder": "Type delete to confirm the deletion of this wallet",
     "keyword": "delete"
-  }
+  },
+  "writeyourseeddown": "Write your seed down",
+  "exportlogosvault": "Export LogosVault",
+  "saveencryptedseed": "Save encryped seed",
+  "storeseed": "Export Seed",
+  "whystore": "You must backup your seed. If you lose your seed you will lose your Logos."
 }

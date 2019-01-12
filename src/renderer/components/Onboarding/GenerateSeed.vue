@@ -6,14 +6,14 @@
           <div class="circle">
             <font-awesome-icon size="6x" class="icon" :icon="['fal','file-import']" />
           </div>
-          <h5 class="header" v-t="'haveaseed'"></h5>
+          <h5 v-t="'haveaseed'"></h5>
           <b-button class="mt-3" size="lg" v-t="'importseed'" variant="outline-primary"></b-button>
         </div>
         <div class="plan">
           <div class="circle">
             <font-awesome-icon size="6x" class="icon" :icon="['fal','chart-network']" />
           </div>
-          <h5 class="header" v-t="'needaseed'"></h5>
+          <h5 v-t="'needaseed'"></h5>
           <b-button class="mt-3" size="lg" v-t="'generateseed'" v-on:click="encryptSeedPage()" variant="primary"></b-button>
         </div>
       </div>
@@ -21,7 +21,7 @@
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
         <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="dark" v-t="'previous'"  v-on:click="previous()"></b-button>
+          <b-button class="w-100" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
         </b-button-group>
       </b-col>
     </b-row>
@@ -30,16 +30,26 @@
 
 <script>
 import Vue from 'vue'
-import LogosWallet from '../api/wallet'
+import LogosWallet from '../../api/wallet'
+import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
 
 export default {
   name: 'generate-seed',
+  computed: {
+    ...mapState('Onboarding', {
+      seed: state => state.seed
+    })
+  },
   methods: {
+    ...mapActions('Onboarding', [
+      'setSeed'
+    ]),
     encryptSeedPage () {
       let wallet = new this.$Wallet()
       let seed = wallet.createWallet()
-      this.$router.push({ name: 'encryptSeed', params: { seed: seed } })
+      this.setSeed(seed)
+      this.$router.push({ name: 'encryptSeed' })
     },
     previous () {
       this.$router.go(-1)
@@ -67,7 +77,7 @@ export default {
     z-index: 10;
   }
   .icon {
-    color:#007bff;
+    color: var(--primary);
     max-width: 50%;
   }
 
@@ -77,7 +87,7 @@ export default {
     justify-content: center;
     width: 180px;
     height: 180px;
-    background: #FFF;
+    background: var(--white);
     border-radius: 50%;
     margin: auto;
     margin-bottom: 25px;
@@ -95,18 +105,12 @@ export default {
 
   .plan {
     border-bottom: none;
-    border-right: 1px solid #e1f1ff;
+    border-right: 1px solid var(--white);
     flex-basis: 100%;
     padding: 25px 50px;
   }
 
   .plan:last-child {
     border-right: none;
-  }
-
-  .header {
-    color: #888;
-    font-weight: 600;
-    letter-spacing: 1px;
   }
 </style>

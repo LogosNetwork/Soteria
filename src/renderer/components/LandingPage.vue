@@ -28,12 +28,3 @@
     }
   }
 </script>
-
-<style scoped lang="scss">
-  #logo {
-    height: auto;
-    max-height: 65vh;
-    max-width: 65vw;
-    margin: auto;
-  }
-</style>
