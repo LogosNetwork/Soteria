@@ -22,7 +22,7 @@
     "placeholder": "Type delete to confirm the deletion of this wallet",
     "keyword": "delete"
   },
-  "writeyourseeddown": "Write your seed down",
+  "writedownyourseed": "Write down your seed",
   "exportlogosvault": "Export LogosVault",
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",

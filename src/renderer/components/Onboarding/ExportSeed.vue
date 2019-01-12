@@ -12,7 +12,7 @@
               <font-awesome-icon size="3x" class="icon" :icon="['fal','pencil']" />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'writeyourseeddown'"></h5>
+              <h5 class="card-title" v-t="'writedownyourseed'"></h5>
               <a href="#" class="btn mt-3 btn-lg btn-primary" v-t="'continue'" v-on:click="writeSeed()"></a>
             </div>
           </div>
@@ -96,7 +96,7 @@ export default {
     justify-content: center;
     width: 90px;
     height: 90px;
-    background: #20262D;
+    background: #2E3136;
     border-radius: 50%;
     margin: auto;
     margin-bottom: 25px;
