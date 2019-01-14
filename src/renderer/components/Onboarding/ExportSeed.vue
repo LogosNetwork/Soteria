@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-container">
+  <div>
     <h4 class="mt-3" v-t="'storeseed'"></h4>
     <div>
       <small v-t="'whystore'"></small>
@@ -68,16 +68,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-  .onboarding-container {
-    overflow:hidden;
-    height: calc(100vh - 88px);
-  }
-  .fixed-row-bottom { 
-    position: fixed;
-    bottom: 0;
-    left: 15px;
-    width: 100vw;
-  }
   .panel {
     border-radius: 10px;
     padding: 15px 25px;

@@ -22,31 +22,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
-  name: 'locale-changer',
+  name: 'export-paper',
   computed: {
-    ...mapState('Language', {
-      languages: state => state.languages,
-      selectedLanguageCode: state => state.selectedLanguageCode
+    ...mapState('Onboarding', {
+      seed: state => state.seed
     })
-  },
-  methods: {
-    ...mapActions('Language', [
-      'changeLanguage'
-    ]),
-    setLang (code) {
-      this.changeLanguage(code)
-    },
-    generateSeedPage () {
-      this.$router.push({ path: '/onboarding/seed' })
-    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  #jumbotron {
-    width:450px;
-  }
 </style>

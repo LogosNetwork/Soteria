@@ -4,7 +4,9 @@
       <font-awesome-icon class="icon" size="lg" :icon="['fal','lambda']" />
       <span v-t="'logosnetwork'"></span>
     </div>
-    <router-view></router-view>
+    <div class="onboarding-container">
+      <router-view></router-view>
+    </div>  
   </div>
 </template>
 
@@ -15,7 +17,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.icon {
-  color: var(--primary);
-}
+  .onboarding-container {
+    overflow:hidden;
+    height: calc(100vh - 88px);
+  }
+  .icon {
+    color: var(--primary);
+  }
 </style>

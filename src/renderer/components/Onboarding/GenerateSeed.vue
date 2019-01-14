@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-container">
+  <div>
     <div class="row h-100 justify-content-center align-items-center">
       <div class="panel table">
         <div class="plan">
@@ -59,16 +59,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-  .onboarding-container {
-    overflow:hidden;
-    height: calc(100vh - 88px);
-  }
-  .fixed-row-bottom { 
-    position: fixed;
-    bottom: 0;
-    left: 15px;
-    width: 100vw;
-  }
   .panel {
     border-radius: 10px;
     padding: 15px 25px;

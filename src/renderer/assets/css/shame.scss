@@ -50,6 +50,12 @@ body {
   background: var(--bg);
   color: var(--white);
 }
+.fixed-row-bottom { 
+  position: fixed;
+  bottom: 0;
+  left: 15px;
+  width: 100vw;
+}
 .form-control {
   background: rgba(color("white"),0.05);
   color: var(--white);

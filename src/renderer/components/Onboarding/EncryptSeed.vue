@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-container">
+  <div>
     <div class="row h-100 justify-content-center align-items-center">
       <div id="passwordEncrypt">
         <font-awesome-icon size="4x" class="icon mb-3" :icon="['fal','shield-check']" />
@@ -32,23 +32,25 @@
         </div>
         <div class="form-group text-left">
           <label for="pwdConfirm" v-t="'retypePassword'"></label>
-          <div class="input-group input-group-lg mb-3">
-            <b-form-input id="pwdConfirm"
-              :type="inputType"
-              :state="validatePasswordConfirmation"
-              :disabled="score === null || score.score < 4"
-              v-model="passwordConfirm"
-              class="transparent"
-              required>
-            </b-form-input>
-            <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
-                <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
-                <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                <span class="sr-only">Toggle Visibility of Password Field</span>
-              </b-button>
+          <form @submit.stop.prevent="createWallet">
+            <div class="input-group input-group-lg mb-3">
+              <b-form-input id="pwdConfirm"
+                :type="inputType"
+                :state="validatePasswordConfirmation"
+                :disabled="score === null || score.score < 4"
+                v-model="passwordConfirm"
+                class="transparent"
+                required>
+              </b-form-input>
+              <div class="input-group-append eyeButton">
+                <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
+                  <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
+                  <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
+                  <span class="sr-only">Toggle Visibility of Password Field</span>
+                </b-button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -164,15 +166,5 @@ export default {
   }
   .eyeButton > .btn-link:hover > .icon {
     opacity: 0.5;
-  }
-  .onboarding-container {
-    overflow:hidden;
-    height: calc(100vh - 88px);
-  }
-  .fixed-row-bottom { 
-    position: fixed;
-    bottom: 0;
-    left: 15px;
-    width: 100vw;
   }
 </style>
