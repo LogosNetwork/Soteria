@@ -12,6 +12,7 @@ $theme-colors: (
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
+  --bg: #2E3136;
 }
 // Bootstrap and its default variables
 @import "../../../../node_modules/bootstrap/scss/bootstrap";
@@ -46,7 +47,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #2E3136;
+  background: var(--bg);
   color: var(--white);
 }
 .form-control {

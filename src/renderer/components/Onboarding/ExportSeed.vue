@@ -96,7 +96,7 @@ export default {
     justify-content: center;
     width: 90px;
     height: 90px;
-    background: #2E3136;
+    background: var(--bg);
     border-radius: 50%;
     margin: auto;
     margin-bottom: 25px;
