@@ -60,6 +60,9 @@ export default {
     ]),
     saveVault () {
     },
+    writeSeed () {
+      this.$router.push({ name: 'exportPaper' })
+    },
     previous () {
       this.$router.go(-1)
     }

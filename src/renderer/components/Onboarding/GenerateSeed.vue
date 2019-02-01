@@ -48,6 +48,7 @@ export default {
     encryptSeedPage () {
       let wallet = new this.$Wallet({mqtt: false, rpc: false})
       let seed = wallet.seed
+      console.log(seed)
       this.setSeed(seed)
       this.$router.push({ name: 'encryptSeed' })
     },

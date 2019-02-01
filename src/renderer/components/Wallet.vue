@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <div class="header mt-3">
+  <div>
+    <div class="header mt-3 mb-1">
       <font-awesome-icon class="icon" size="lg" :icon="['fal','lambda']" />
       <span v-t="'logosnetwork'"></span>
     </div>

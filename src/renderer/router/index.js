@@ -37,6 +37,11 @@ export default new Router({
           component: require('@/components/Onboarding/ExportSeed').default
         },
         {
+          name: 'exportPaper',
+          path: 'exportPaper',
+          component: require('@/components/Onboarding/ExportPaper').default
+        },
+        {
           name: 'validate',
           path: 'validate',
           component: require('@/components/Onboarding/ValidateSeed').default

@@ -2,9 +2,10 @@
   "logosnetwork": "Logos Network",
   "loading": "Loading...",
   "language": "Language",
-  "thankyou": "Thank you for downloading Logos",
+  "thankyou": "Prometheus - Logos Wallet",
   "continue": "Continue",
   "previous": "Previous",
+  "seed": "Seed",
   "haveaseed": "Have a seed?",
   "needaseed": "Need a seed?",
   "importseed": "Import Seed",
@@ -27,5 +28,10 @@
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",
   "whystore": "You must backup your seed. If you lose your seed you will lose your Logos.",
-  "togglePasswordVisibility": "Toggle Visibility of Password Field"
+  "togglePasswordVisibility": "Toggle Visibility of Password Field",
+  "validate": "Validate",
+  "whywrite": "Writing down your seed mnemonic will allow you to recover this wallet from anywhere. Do not lose this mnemonic store it in several secure places.",
+  "printMnemonic": "Print Mnemonic",
+  "printTemplate": "Print Template",
+  "showSeed": "Show Seed"
 }
