@@ -26,5 +26,6 @@
   "exportlogosvault": "Export LogosVault",
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",
-  "whystore": "You must backup your seed. If you lose your seed you will lose your Logos."
+  "whystore": "You must backup your seed. If you lose your seed you will lose your Logos.",
+  "togglePasswordVisibility": "Toggle Visibility of Password Field"
 }

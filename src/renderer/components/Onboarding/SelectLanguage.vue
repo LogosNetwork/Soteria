@@ -2,7 +2,7 @@
   <div>
     <b-container class="h-100">
       <div class="row h-100 justify-content-center align-items-center">
-        <div id="jumbotron">
+        <div id="jumbotron" class="p-3">
           <h4 v-t="'thankyou'" class="mb-3"></h4>
           <div class="text-left">
             <label for="selectLang" v-t="'language'"></label>
@@ -47,6 +47,7 @@ export default {
 
 <style scoped lang="scss">
   #jumbotron {
-    width:450px;
+    max-width:450px;
+    width:100vw;
   }
 </style>

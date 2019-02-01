@@ -21,10 +21,10 @@
               required>
             </b-form-input>
             <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
+              <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
                 <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
                 <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                <span class="sr-only">Toggle Visibility of Password Field</span>
+                <span class="sr-only" v-t='togglePasswordVisibility'></span>
               </b-button>
             </div>
           </div>
@@ -43,10 +43,10 @@
                 required>
               </b-form-input>
               <div class="input-group-append eyeButton">
-                <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
+                <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
                   <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
                   <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                  <span class="sr-only">Toggle Visibility of Password Field</span>
+                  <span class="sr-only" v-t='togglePasswordVisibility'></span>
                 </b-button>
               </div>
             </div>
@@ -82,9 +82,13 @@ export default {
       this.$router.go(-1)
     },
     createWallet () {
-      let wallet = new this.$Wallet(this.password)
-      wallet.createWallet(this.seed)
-      this.setWallet(wallet.pack())
+      let wallet = new this.$Wallet({
+        password: this.password,
+        seed: this.seed,
+        mqtt: false,
+        rpc: false
+      })
+      this.setWallet(wallet.encrypt())
       this.$router.push({ name: 'exportSeed' })
     },
     togglePasswordVisibility () {

@@ -5,7 +5,9 @@
       <span v-t="'logosnetwork'"></span>
     </div>
     <div class="onboarding-container">
-      <router-view></router-view>
+      <div class="row h-100 justify-content-center align-items-center">
+        <router-view></router-view>
+      </div>
     </div>  
   </div>
 </template>

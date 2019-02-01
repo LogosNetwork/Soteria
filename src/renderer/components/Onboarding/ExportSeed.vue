@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="export">
     <h4 class="mt-3" v-t="'storeseed'"></h4>
     <div>
       <small v-t="'whystore'"></small>
@@ -74,6 +74,10 @@ export default {
     position: relative;
     width: 100%;
     z-index: 10;
+  }
+  .export {
+    width: 100%;
+    max-width: 800px
   }
   .icon {
     color: var(--white);

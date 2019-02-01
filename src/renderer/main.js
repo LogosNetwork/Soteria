@@ -28,9 +28,7 @@ library.add(faShieldCheck)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(BootstrapVue)
-Vue.use(LogosWallet.Block)
-Vue.use(LogosWallet.LogosFunctions)
-Vue.use(LogosWallet.Wallet)
+Vue.use(LogosWallet)
 /* eslint-disable no-new */
 new Vue({
   components: { App },

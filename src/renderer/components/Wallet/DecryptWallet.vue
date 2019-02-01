@@ -1,25 +1,29 @@
 <template>
   <div class="decrypt-container">
     <div class="row h-100 justify-content-center align-items-center">
-      <div id="passwordDecrypt">
+      <div id="passwordDecrypt" class="p-3">
         <font-awesome-icon size="4x" class="icon mb-3" :icon="['fal','key']" />
         <h4 v-t="'unlockwallet'" class="mb-3"></h4>
         <div class="form-group text-left">
           <label for="pwd" v-t="'password'"></label>
           <div class="input-group input-group-lg">
-            <b-form-input id="pwd"
-              :type="inputType"
-              v-model="password"
-              :placeholder="$t('password').toLowerCase()"
-              required>
-            </b-form-input>
-            <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover title="Toggle Password Visibility" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm">
-                <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
-                <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                <span class="sr-only">Toggle Visibility of Password Field</span>
-              </b-button>
-            </div>
+            <form id="unlockWalletForm" @submit.stop.prevent="unlockWallet()">
+              <div class="input-group input-group-lg">
+                <b-form-input id="pwd"
+                  :type="inputType"
+                  v-model="password"
+                  :placeholder="$t('password').toLowerCase()"
+                  required>
+                </b-form-input>
+                <div class="input-group-append eyeButton">
+                  <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm">
+                    <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
+                    <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
+                    <span class="sr-only" v-t='togglePasswordVisibility'></span>
+                  </b-button>
+                </div>
+              </div>
+            </form>
           </div>
           <div>
             <b-button v-b-modal.clearWalletModal variant="link" class="btn-sm" style="padding-left:0px" v-t="'forgotPassword'"></b-button>
@@ -59,6 +63,7 @@ export default {
   name: 'decrypt-wallet',
   methods: {
     unlockWallet () {
+      console.log(this.password)
       // TODO
     },
     handleSubmit () {
@@ -101,7 +106,11 @@ export default {
 
 <style scoped lang="scss">
   #passwordDecrypt {
-    width:450px;
+    max-width:450px;
+    width:100vw;
+  }
+  #unlockWalletForm {
+    width: 100%;
   }
   .eyeButton {
     border-top-right-radius: 0.3rem;
