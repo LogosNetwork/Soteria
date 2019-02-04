@@ -32,7 +32,7 @@
           </ol>
         </b-modal>
         <b-button v-on:click="printTemplate()" variant="link" class="btn-sm mb-3 " v-t="'printTemplate'"></b-button>
-        <b-button v-on:click="print()" variant="link" class="btn-sm mb-3" v-t="'printMnemonic'"></b-button>
+        <b-button v-b-tooltip.hover :title="$t('printWarning')" v-on:click="print()" variant="link" class="btn-sm mb-3" v-t="'printMnemonic'"></b-button>
       </b-button-group>
     </b-container>
     <b-row class="fixed-row-bottom d-print-none">
@@ -81,6 +81,9 @@ export default {
   methods: {
     previous () {
       this.$router.go(-1)
+    },
+    validateMnemonic () {
+      this.$router.push({ name: 'validateSeed' })
     },
     print () {
       const contents = remote.webContents.getFocusedWebContents()

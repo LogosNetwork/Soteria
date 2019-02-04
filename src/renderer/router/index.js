@@ -42,9 +42,14 @@ export default new Router({
           component: require('@/components/Onboarding/ExportPaper').default
         },
         {
-          name: 'validate',
-          path: 'validate',
+          name: 'validateSeed',
+          path: 'validateSeed',
           component: require('@/components/Onboarding/ValidateSeed').default
+        },
+        {
+          name: 'insertMnemonic',
+          path: 'insertMnemonic',
+          component: require('@/components/Onboarding/InsertMnemonic').default
         }
       ]
     },

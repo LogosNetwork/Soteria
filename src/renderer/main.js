@@ -8,7 +8,7 @@ import i18n from './i18n'
 import BootstrapVue from 'bootstrap-vue'
 import LogosWallet from '@logosnetwork/logos-webwallet-sdk'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt } from '@fortawesome/pro-light-svg-icons'
+import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
@@ -24,6 +24,7 @@ library.add(faPencil)
 library.add(faLockAlt)
 library.add(faEyeSlash)
 library.add(faShieldCheck)
+library.add(faFileUpload)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

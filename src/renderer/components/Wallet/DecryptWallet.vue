@@ -117,6 +117,7 @@ export default {
     border-bottom-right-radius: 0.3rem;
     height: 48px;
     border: 1px solid #ced4da;
+    border-left: none;
   }
   .eyeButton > .btn-link {
     color: var(--white);

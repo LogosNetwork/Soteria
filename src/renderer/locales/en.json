@@ -24,7 +24,8 @@
     "keyword": "delete"
   },
   "writedownyourseed": "Write down your seed",
-  "exportlogosvault": "Export LogosVault",
+  "exportlogosvault": "Export Seed Vault",
+  "uploadSeedVault": "Upload Seed Vault",
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",
   "whystore": "You must backup your seed. If you lose your seed you will lose your Logos.",
@@ -32,6 +33,11 @@
   "validate": "Validate",
   "whywrite": "Writing down your seed mnemonic will allow you to recover this wallet from anywhere. Do not lose this mnemonic store it in several secure places.",
   "printMnemonic": "Print Mnemonic",
+  "insertMnemonic": "Insert Mnemonic",
+  "twentyFourWords": "Type your 24-Word Phrase",
+  "printWarning": "WARNING: Printers can store past prints.",
   "printTemplate": "Print Template",
-  "showSeed": "Show Seed"
+  "showSeed": "Show Seed",
+  "validateYourSeed": "Validate your seed",
+  "whyvalidate": "Validating your seed ensures that you have written down or stored a backup of your seed vault. Remember if you lose your seed you will lose your money."
 }
