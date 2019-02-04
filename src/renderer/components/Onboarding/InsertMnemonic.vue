@@ -1,13 +1,16 @@
 <template>
   <div class="mh-100">
     <b-container>
-      <h4 v-t="'insertMnemonic'"></h4>
+      <h4 class="mt-3" v-t="'insertMnemonic'"></h4>
       <small v-t="'twentyFourWords'"></small>
       <div class="row mt-3 justify-content-center align-items-center">
         <div class="panel table bg-secondary">
           <b-input v-for="(item, index) in phraseList" :state="validMnemonic" v-model="phraseList[index]" :key="index" class="mnemonicInput card" :placeholder="(index+1).toString()"></b-input>
         </div>
       </div>
+      <b-button-group class="w-100 justify-content-center align-items-center" size="sm">
+        <b-button v-on:click="insertSeed()" variant="link" class="btn-sm mb-3" v-t="'typeSeed'"></b-button>
+      </b-button-group>
     </b-container>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
@@ -43,8 +46,11 @@ export default {
     },
     validateMnemonic () {
       if (bip39.validateMnemonic(this.phraseList.join(' '))) {
-        // Create Wallet based on seed
+        // TODO create Wallet based on seed
       }
+    },
+    insertSeed () {
+      this.$router.push({ name: 'validateSeed' })
     }
   },
   data () {

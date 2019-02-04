@@ -59,6 +59,8 @@ export default {
       'setSeed'
     ]),
     saveVault () {
+      console.log(this.wallet)
+      console.log(this.seed)
     },
     writeSeed () {
       this.$router.push({ name: 'exportPaper' })

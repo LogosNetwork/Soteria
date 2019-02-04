@@ -59,7 +59,6 @@ export default {
     }),
     splitSeed () {
       let vals = []
-      console.log(this.seed)
       let mySeedSplit = this.seed.match(/.{1,16}/g)
       for (let val of mySeedSplit) {
         vals.push(val.match(/.{1,4}/g))
@@ -83,7 +82,7 @@ export default {
       this.$router.go(-1)
     },
     validateMnemonic () {
-      this.$router.push({ name: 'validateSeed' })
+      this.$router.push({ name: 'insertMnemonic' })
     },
     print () {
       const contents = remote.webContents.getFocusedWebContents()

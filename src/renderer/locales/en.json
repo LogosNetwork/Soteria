@@ -39,5 +39,6 @@
   "printTemplate": "Print Template",
   "showSeed": "Show Seed",
   "validateYourSeed": "Validate your seed",
-  "whyvalidate": "Validating your seed ensures that you have written down or stored a backup of your seed vault. Remember if you lose your seed you will lose your money."
+  "typeSeed": "Use seed instead",
+  "whyvalidate": "Validating your seed ensures that you have written down your seed or stored a backup of your seed vault. Remember if you lose your seed you will lose your money."
 }
