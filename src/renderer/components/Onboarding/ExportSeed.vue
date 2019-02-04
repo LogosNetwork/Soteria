@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
               <h5 class="card-title" v-t="'writedownyourseed'"></h5>
-              <a href="#" class="btn mt-3 btn-lg btn-primary" v-t="'continue'" v-on:click="writeSeed()"></a>
+              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="writeSeed()"></b-button>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="card-body">
               <h5 class="card-title" v-t="'exportlogosvault'"></h5>
-              <a href="#" class="btn mt-3 btn-lg btn-primary" v-t="'continue'" v-on:click="saveVault()"></a>
+              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="saveVault()"></b-button>
             </div>
           </div>
         </div>

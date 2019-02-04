@@ -24,8 +24,8 @@
         <b-button v-b-modal.seedModal variant="link" class="btn-sm mb-3" v-t="'showSeed'"></b-button>
         <b-modal id="seedModal" ref="showSeed" :title="$t('writedownyourseed')">
           <ol>
-            <li class="seedRow" v-for="row in splitSeed" :key="row">
-              <span v-for="seedItem in row" :key="seedItem">
+            <li class="seedRow" v-for="row in splitSeed" :key="row+'row'">
+              <span v-for="seedItem in row" :key="seedItem+'column'">
                 {{seedItem}}
               </span>
             </li>
