@@ -21,10 +21,10 @@
               required>
             </b-form-input>
             <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
+              <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="changePasswordVisibility()" class="btn btn-default btn-sm text-white">
                 <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
                 <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                <span class="sr-only" v-t='togglePasswordVisibility'></span>
+                <span class="sr-only" v-t="'togglePasswordVisibility'"></span>
               </b-button>
             </div>
           </div>
@@ -43,10 +43,10 @@
                 required>
               </b-form-input>
               <div class="input-group-append eyeButton">
-                <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="togglePasswordVisibility()" class="btn btn-default btn-sm text-white">
+                <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="changePasswordVisibility()" class="btn btn-default btn-sm text-white">
                   <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
                   <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                  <span class="sr-only" v-t='togglePasswordVisibility'></span>
+                  <span class="sr-only" v-t="'togglePasswordVisibility'"></span>
                 </b-button>
               </div>
             </div>
@@ -91,7 +91,7 @@ export default {
       this.setWallet(wallet.encrypt())
       this.$router.push({ name: 'exportSeed' })
     },
-    togglePasswordVisibility () {
+    changePasswordVisibility () {
       this.showPassword = !this.showPassword
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
     }
