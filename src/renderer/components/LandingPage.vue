@@ -10,7 +10,8 @@
         selectedLanguageCode: state => state.selectedLanguageCode
       }),
       ...mapState('EncryptedWallet', {
-        wallet: state => state.wallet
+        wallet: state => state.wallet,
+        validated: state => state.validated
       })
     },
     created: function () {
@@ -18,7 +19,8 @@
       if (this.selectedLanguageCode !== null) {
         this.$i18n.locale = this.selectedLanguageCode
       }
-      if (this.wallet === null || typeof this.wallet === 'undefined') {
+      if (typeof this.wallet === 'undefined' || this.wallet === null ||
+        typeof this.validated === 'undefined' || this.validated === false) {
         // Start onboarding
         this.$router.push({ path: '/onboarding/language' })
       } else {

@@ -75,7 +75,7 @@ Vue.use(LogosWallet)
 export default {
   name: 'encrypt-seed',
   methods: {
-    ...mapActions('Onboarding', [
+    ...mapActions('EncryptedWallet', [
       'setWallet'
     ]),
     previous () {

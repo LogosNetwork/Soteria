@@ -37,7 +37,10 @@ export default {
       for (let i = 0; i < this.phraseList.length; i++) {
         if (!this.phraseList[i] || this.phraseList[i].length === 0) return null
       }
-      return bip39.validateMnemonic(this.phraseList.join(' '))
+      if (bip39.validateMnemonic(this.phraseList.join(' '))) {
+        let seed = bip39.mnemonicToEntropy(this.phraseList.join(' '))
+        return this.seed === seed
+      }
     }
   },
   methods: {
@@ -46,7 +49,8 @@ export default {
     },
     validateMnemonic () {
       if (bip39.validateMnemonic(this.phraseList.join(' '))) {
-        // TODO create Wallet based on seed
+        let seed = bip39.mnemonicToEntropy(this.phraseList.join(' '))
+        if (seed === this.seed) this.$router.push({ name: 'decrypt' })
       }
     },
     insertSeed () {

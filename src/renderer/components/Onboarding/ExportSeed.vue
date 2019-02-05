@@ -52,7 +52,9 @@ export default {
   name: 'export-seed',
   computed: {
     ...mapState('Onboarding', {
-      seed: state => state.seed,
+      seed: state => state.seed
+    }),
+    ...mapState('EncryptedWallet', {
       wallet: state => state.wallet
     })
   },

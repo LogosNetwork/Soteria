@@ -63,6 +63,11 @@ export default new Router({
           name: 'decrypt',
           path: 'decrypt',
           component: require('@/components/Wallet/DecryptWallet').default
+        },
+        {
+          name: 'dashboard',
+          path: 'dashboard',
+          component: require('@/components/Wallet/Dashboard').default
         }
       ]
     },

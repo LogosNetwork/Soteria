@@ -23,6 +23,7 @@
                   </b-button>
                 </div>
               </div>
+              <small v-if="error" id="error" class="form-text text-danger">{{error}}</small>
             </form>
           </div>
           <div>
@@ -56,15 +57,30 @@
 <script>
 import LogosWallet from '../../api/wallet'
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
 
 export default {
   name: 'decrypt-wallet',
   methods: {
+    ...mapActions('Onboarding', [
+      'setSeed'
+    ]),
+    ...mapActions('EncryptedWallet', [
+      'setValidated'
+    ]),
     unlockWallet () {
-      console.log(this.password)
-      // TODO
+      let wallet = new this.$Wallet({
+        password: this.password
+      })
+      this.error = null
+      wallet.load(this.wallet).then((val) => {
+        this.setValidated(true)
+        this.setSeed(null)
+        this.$router.push({ path: '/wallet/dashboard' })
+      }).catch(() => {
+        this.error = 'Invalid Password'
+      })
     },
     handleSubmit () {
       if (this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()) {
@@ -83,7 +99,8 @@ export default {
   },
   computed: {
     ...mapState('EncryptedWallet', {
-      wallet: state => state.wallet
+      wallet: state => state.wallet,
+      validated: state => state.validated
     }),
     validateDeleteKeyword () {
       if (this.deleteText !== null && this.deleteText.length > 0) {
@@ -95,6 +112,7 @@ export default {
   },
   data () {
     return {
+      error: null,
       password: null,
       showPassword: false,
       deleteText: null,
@@ -111,6 +129,9 @@ export default {
   }
   #unlockWalletForm {
     width: 100%;
+  }
+  #error {
+    height: 15px;
   }
   .eyeButton {
     border-top-right-radius: 0.3rem;

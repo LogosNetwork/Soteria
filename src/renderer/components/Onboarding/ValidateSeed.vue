@@ -16,6 +16,7 @@
                   v-model="insertedSeed"
                   :state="seedMatch"
                   :placeholder="$t('seed').toLowerCase()"
+                  onpaste="return false;"
                   required>
                 </b-form-input>
               </div>
@@ -49,7 +50,7 @@ export default {
     },
     verify () {
       if (this.seed === this.insertedSeed) {
-        // TODO initalize wallet
+        this.$router.push({ name: 'decrypt' })
       }
     }
   },
