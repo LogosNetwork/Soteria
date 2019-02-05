@@ -21,7 +21,7 @@ const actions = {
     commit('setWallet', encryptedWalletData)
   },
   setValidated ({ commit }, validated) {
-    commit('setWallet', validated)
+    commit('setValidated', validated)
   }
 }
 
