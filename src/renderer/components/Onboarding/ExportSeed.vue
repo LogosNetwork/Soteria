@@ -44,6 +44,8 @@
 import Vue from 'vue'
 import LogosWallet from '../../api/wallet'
 import { mapState, mapActions } from 'vuex'
+import { remote } from 'electron'
+import fs from 'fs'
 Vue.use(LogosWallet)
 
 export default {
@@ -59,8 +61,30 @@ export default {
       'setSeed'
     ]),
     saveVault () {
-      console.log(this.wallet)
-      console.log(this.seed)
+      try {
+        const now = new Date()
+        let prefix = 'SeedVault'
+        const path = remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+          title: 'Export keyfile',
+          defaultPath: `Logos${prefix}-${now
+            .toISOString()
+            .slice(0, 16)
+            .replace(/[-:]/g, '')
+            .replace('T', '-')}.lgsx`,
+          buttonLabel: 'Export',
+          filters: [{ name: 'SeedVault File', extensions: ['lgsx'] }]
+        })
+
+        if (!path) {
+          throw Error('Export cancelled')
+        }
+
+        fs.writeFileSync(path, Buffer.from(this.wallet))
+        this.$router.push({ name: 'decrypt' })
+        return false
+      } catch (error) {
+        return error.message
+      }
     },
     writeSeed () {
       this.$router.push({ name: 'exportPaper' })
