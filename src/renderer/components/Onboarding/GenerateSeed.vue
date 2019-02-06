@@ -7,7 +7,7 @@
             <font-awesome-icon size="6x" class="icon" :icon="['fal','file-import']" />
           </div>
           <h5 v-t="'haveaseed'"></h5>
-          <b-button class="mt-3" size="lg" v-t="'importseed'" variant="outline-primary"></b-button>
+          <b-button class="mt-3" size="lg" v-t="'importseed'" v-on:click="importSeedPage()" variant="outline-primary"></b-button>
         </div>
         <div class="plan">
           <div class="circle">
@@ -45,11 +45,23 @@ export default {
     ...mapActions('Onboarding', [
       'setSeed'
     ]),
+    ...mapActions('EncryptedWallet', [
+      'setValidated',
+      'setWallet'
+    ]),
     encryptSeedPage () {
       let wallet = new this.$Wallet({mqtt: false, rpc: false})
       let seed = wallet.seed
       this.setSeed(seed)
+      this.setValidated(false)
+      this.setWallet(null)
       this.$router.push({ name: 'encryptSeed' })
+    },
+    importSeedPage () {
+      this.setSeed(null)
+      this.setValidated(false)
+      this.setWallet(null)
+      this.$router.push({ name: 'importSeed' })
     },
     previous () {
       this.$router.go(-1)

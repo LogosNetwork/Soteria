@@ -23,8 +23,9 @@
     "placeholder": "Type delete to confirm the deletion of this wallet",
     "keyword": "delete"
   },
-  "writedownyourseed": "Write down your seed",
-  "exportlogosvault": "Export Seed Vault",
+  "writedownyourseed": "Write it down",
+  "exportlogosvault": "Seed Vault",
+  "importseedvault": "Seed Vault",
   "uploadSeedVault": "Upload Seed Vault",
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",
@@ -38,7 +39,10 @@
   "printWarning": "WARNING: Printers can store past prints.",
   "printTemplate": "Print Template",
   "showSeed": "Show Seed",
-  "validateYourSeed": "Validate your seed",
+  "validateYourSeed": "Insert your seed",
   "typeSeed": "Use seed instead",
-  "whyvalidate": "Validating your seed ensures that you have written down your seed or stored a backup of your seed vault. Remember if you lose your seed you will lose your Logos."
+  "whyvalidate": "Validating your seed ensures that you have written down your seed or stored a backup of your seed vault. Remember if you lose your seed you will lose your Logos.",
+  "importMethods": "There are three different methods that can be used to import your seed.",
+  "insertPlainSeed": "Plaintext seed",
+  "importMnemonic": "Mnemonic"
 }

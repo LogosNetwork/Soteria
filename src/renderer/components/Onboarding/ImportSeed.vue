@@ -1,8 +1,8 @@
 <template>
   <div class="export">
-    <h4 class="mt-3" v-t="'storeseed'"></h4>
+    <h4 class="mt-3" v-t="'importseed'"></h4>
     <div>
-      <small v-t="'whystore'"></small>
+      <small v-t="'importMethods'"></small>
     </div>
     <div class="row mt-3 justify-content-center align-items-center">
       <div class="panel table">
@@ -12,8 +12,8 @@
               <font-awesome-icon size="3x" class="icon" :icon="['fal','pencil']" />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'writedownyourseed'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="writeSeed()"></b-button>
+              <h5 class="card-title" v-t="'insertPlainSeed'"></h5>
+              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="plainSeed()"></b-button>
             </div>
           </div>
         </div>
@@ -23,8 +23,8 @@
               <font-awesome-icon size="3x" class="icon" :icon="['fal','lock-alt']" />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'exportlogosvault'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="saveVault()"></b-button>
+              <h5 class="card-title" v-t="'importseedvault'"></h5>
+              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="uploadVault()"></b-button>
             </div>
           </div>
         </div>
@@ -52,58 +52,17 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import LogosWallet from '../../api/wallet'
-import { mapState, mapActions } from 'vuex'
-import { remote } from 'electron'
-import fs from 'fs'
-Vue.use(LogosWallet)
-
 export default {
-  name: 'export-seed',
-  computed: {
-    ...mapState('Onboarding', {
-      seed: state => state.seed
-    }),
-    ...mapState('EncryptedWallet', {
-      wallet: state => state.wallet
-    })
-  },
+  name: 'import-seed',
   methods: {
-    ...mapActions('Onboarding', [
-      'setSeed'
-    ]),
-    saveVault () {
-      try {
-        const now = new Date()
-        let prefix = 'SeedVault'
-        const path = remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
-          title: 'Export keyfile',
-          defaultPath: `Logos${prefix}-${now
-            .toISOString()
-            .slice(0, 16)
-            .replace(/[-:]/g, '')
-            .replace('T', '-')}.lgsx`,
-          buttonLabel: 'Export',
-          filters: [{ name: 'SeedVault File', extensions: ['lgsx'] }]
-        })
-
-        if (!path) {
-          throw Error('Export cancelled')
-        }
-
-        fs.writeFileSync(path, Buffer.from(this.wallet))
-        this.$router.push({ name: 'decrypt' })
-        return false
-      } catch (error) {
-        return error.message
-      }
-    },
-    writeSeed () {
-      this.$router.push({ name: 'exportPlaintext' })
+    plainSeed () {
+      this.$router.push({ name: 'insertSeed' })
     },
     mnemonic () {
-      this.$router.push({ name: 'exportPaper' })
+      this.$router.push({ name: 'insertMnemonic' })
+    },
+    uploadVault () {
+      this.$router.push({ name: 'insertVault' })
     },
     previous () {
       this.$router.go(-1)

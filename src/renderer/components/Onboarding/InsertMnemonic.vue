@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import bip39 from 'bip39'
 
 export default {
@@ -33,28 +33,44 @@ export default {
     ...mapState('Onboarding', {
       seed: state => state.seed
     }),
+    ...mapState('EncryptedWallet', {
+      wallet: state => state.wallet
+    }),
     validMnemonic () {
       for (let i = 0; i < this.phraseList.length; i++) {
         if (!this.phraseList[i] || this.phraseList[i].length === 0) return null
       }
       if (bip39.validateMnemonic(this.phraseList.join(' '))) {
         let seed = bip39.mnemonicToEntropy(this.phraseList.join(' '))
-        return this.seed === seed
+        return (this.seed === null || this.seed === seed)
       }
     }
   },
   methods: {
+    ...mapActions('EncryptedWallet', [
+      'setValidated'
+    ]),
+    ...mapActions('Onboarding', [
+      'setSeed'
+    ]),
     previous () {
       this.$router.go(-1)
     },
     validateMnemonic () {
       if (bip39.validateMnemonic(this.phraseList.join(' '))) {
         let seed = bip39.mnemonicToEntropy(this.phraseList.join(' '))
-        if (seed === this.seed) this.$router.push({ name: 'decrypt' })
+        if (this.seed === null) {
+          this.setValidated(true)
+          this.setSeed(seed)
+          this.$router.push({ name: 'encryptSeed' })
+        } else if (seed === this.seed) {
+          this.setValidated(true)
+          this.$router.push({ name: 'decrypt' })
+        }
       }
     },
     insertSeed () {
-      this.$router.push({ name: 'validateSeed' })
+      this.$router.push({ name: 'insertSeed' })
     }
   },
   data () {

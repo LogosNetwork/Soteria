@@ -74,31 +74,12 @@ Vue.use(LogosWallet)
 
 export default {
   name: 'encrypt-seed',
-  methods: {
-    ...mapActions('EncryptedWallet', [
-      'setWallet'
-    ]),
-    previous () {
-      this.$router.go(-1)
-    },
-    createWallet () {
-      let wallet = new this.$Wallet({
-        password: this.password,
-        seed: this.seed,
-        mqtt: false,
-        rpc: false
-      })
-      this.setWallet(wallet.encrypt())
-      this.$router.push({ name: 'exportSeed' })
-    },
-    changePasswordVisibility () {
-      this.showPassword = !this.showPassword
-      this.inputType = this.inputType === 'password' ? 'text' : 'password'
-    }
-  },
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
+    }),
+    ...mapState('EncryptedWallet', {
+      validated: state => state.validated
     }),
     validatePassword () {
       if (this.password === null || this.password.length === 0) {
@@ -129,6 +110,33 @@ export default {
       } else {
         return null
       }
+    }
+  },
+  methods: {
+    ...mapActions('EncryptedWallet', [
+      'setWallet'
+    ]),
+    previous () {
+      this.$router.go(-1)
+    },
+    createWallet () {
+      let tempWallet = new this.$Wallet({
+        password: this.password,
+        seed: this.seed,
+        mqtt: false,
+        rpc: false
+      })
+      let encryptedWallet = tempWallet.encrypt()
+      this.setWallet(encryptedWallet)
+      if (this.validated) {
+        this.$router.push({ path: '/wallet/dashboard' })
+      } else {
+        this.$router.push({ name: 'exportSeed' })
+      }
+    },
+    changePasswordVisibility () {
+      this.showPassword = !this.showPassword
+      this.inputType = this.inputType === 'password' ? 'text' : 'password'
     }
   },
   data () {

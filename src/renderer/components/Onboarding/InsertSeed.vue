@@ -3,9 +3,6 @@
     <div class="row h-100 justify-content-center align-items-center">
       <div id="passwordDecrypt" class="p-3">
         <h4 v-t="'validateYourSeed'"></h4>
-        <div>
-          <small v-t="'whyvalidate'"></small>
-        </div>
         <div class="form-group text-left">
           <label for="seed" v-t="'seed'"></label>
           <div class="input-group input-group-lg">
@@ -39,18 +36,33 @@
 <script>
 import LogosWallet from '../../api/wallet'
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
 
 export default {
   name: 'decrypt-wallet',
   methods: {
+    ...mapActions('EncryptedWallet', [
+      'setValidated'
+    ]),
+    ...mapActions('Onboarding', [
+      'setSeed'
+    ]),
     previous () {
       this.$router.go(-1)
     },
     verify () {
-      if (this.seed === this.insertedSeed) {
-        this.$router.push({ name: 'decrypt' })
+      if (this.seed === null && (/[0-9A-F]{64}/i).test(this.insertedSeed)) {
+        this.setValidated(true)
+        this.setSeed(this.insertedSeed)
+        this.$router.push({ name: 'encryptSeed' })
+      } else if (this.seed === this.insertedSeed) {
+        this.setValidated(true)
+        if (this.wallet) {
+          this.$router.push({ name: 'decrypt' })
+        } else {
+          this.$router.push({ name: 'encryptSeed' })
+        }
       }
     }
   },
@@ -58,9 +70,19 @@ export default {
     ...mapState('Onboarding', {
       seed: state => state.seed
     }),
+    ...mapState('EncryptedWallet', {
+      wallet: state => state.wallet
+    }),
     seedMatch () {
-      if (!this.insertedSeed || this.insertedSeed.length === 0) return null
-      return this.seed === this.insertedSeed
+      if (this.seed === null) {
+        if (this.insertedSeed && this.insertedSeed.length === 64) {
+          return (/[0-9a-f]+/i).test(this.insertedSeed)
+        }
+        return null
+      } else {
+        if (!this.insertedSeed || this.insertedSeed.length === 0) return null
+        return this.seed === this.insertedSeed
+      }
     }
   },
   data () {
