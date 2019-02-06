@@ -25,7 +25,8 @@
   },
   "writedownyourseed": "Write it down",
   "exportlogosvault": "Seed Vault",
-  "importseedvault": "Seed Vault",
+  "seedvault": "Seed Vault",
+  "importvault": "Import Seed Vault",
   "uploadSeedVault": "Upload Seed Vault",
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",
@@ -44,5 +45,8 @@
   "whyvalidate": "Validating your seed ensures that you have written down your seed or stored a backup of your seed vault. Remember if you lose your seed you will lose your Logos.",
   "importMethods": "There are three different methods that can be used to import your seed.",
   "insertPlainSeed": "Plaintext seed",
-  "importMnemonic": "Mnemonic"
+  "importMnemonic": "Mnemonic",
+  "unlockSeedVault": "Unlock Seed Vault",
+  "selectDifferent": "Select a different Seed Vault",
+  "chooseyourseedvault": "Choose your seed vault..."
 }

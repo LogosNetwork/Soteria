@@ -75,6 +75,29 @@ body {
 button[disabled="disabled"] {
   cursor: not-allowed;
 }
+.custom-file-input {
+  height: calc(2.875rem + 2px);
+  cursor: pointer;
+  text-indent: -999px;
+}
+.custom-file-label {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+  height: calc(2.875rem + 2px);
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+}
+.custom-file-label::after {
+  background: var(--primary);
+  color: var(--white);
+  height: calc(2.81rem + 2px);
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-color: var(--primary);
+}
 .modal-content {
   background: theme-color("secondary")
 }

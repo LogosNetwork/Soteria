@@ -23,7 +23,7 @@
               <font-awesome-icon size="3x" class="icon" :icon="['fal','lock-alt']" />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'importseedvault'"></h5>
+              <h5 class="card-title" v-t="'seedvault'"></h5>
               <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="uploadVault()"></b-button>
             </div>
           </div>
