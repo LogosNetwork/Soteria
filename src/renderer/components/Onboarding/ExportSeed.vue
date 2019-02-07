@@ -54,7 +54,7 @@
 <script>
 import Vue from 'vue'
 import LogosWallet from '../../api/wallet'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { remote } from 'electron'
 import fs from 'fs'
 Vue.use(LogosWallet)
@@ -70,9 +70,6 @@ export default {
     })
   },
   methods: {
-    ...mapActions('Onboarding', [
-      'setSeed'
-    ]),
     saveVault () {
       try {
         const now = new Date()

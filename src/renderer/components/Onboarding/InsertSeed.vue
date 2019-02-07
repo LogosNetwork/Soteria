@@ -54,9 +54,9 @@ export default {
     verify () {
       if (this.seed === null && (/[0-9A-F]{64}/i).test(this.insertedSeed)) {
         this.setValidated(true)
-        this.setSeed(this.insertedSeed)
+        this.setSeed(this.insertedSeed.toUpperCase())
         this.$router.push({ name: 'encryptSeed' })
-      } else if (this.seed === this.insertedSeed) {
+      } else if (this.seed === this.insertedSeed.toUpperCase()) {
         this.setValidated(true)
         if (this.wallet) {
           this.$router.push({ name: 'decrypt' })
@@ -81,7 +81,7 @@ export default {
         return null
       } else {
         if (!this.insertedSeed || this.insertedSeed.length === 0) return null
-        return this.seed === this.insertedSeed
+        return this.seed === this.insertedSeed.toUpperCase()
       }
     }
   },

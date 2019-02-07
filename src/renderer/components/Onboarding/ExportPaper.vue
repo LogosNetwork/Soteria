@@ -13,7 +13,7 @@
         <div class="panel table">
           <div class="card bg-secondary">
             <ol v-bind:class="mnemonicBorder" class="mnemonicList">
-              <li v-for="item in mnemonic" :key="item">
+              <li v-for="(item, index) in mnemonic" :key="item+'_'+index">
                 <span v-bind:class="mnemonicItem">{{ item }}</span>
               </li>
             </ol>
