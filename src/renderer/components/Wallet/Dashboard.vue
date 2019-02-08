@@ -1,15 +1,15 @@
 <template>
   <div class="dashboard-container">
-    <div class="row h-100 justify-content-center align-items-center">
-      <h3>Righteous you made it to the end of the maze</h3>
-    </div>
-    <b-row class="fixed-row-bottom">
-      <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-        </b-button-group>
-      </b-col>
-    </b-row>
+    <b-container class="h-100" fluid>
+      <b-row class="h-100">
+        <b-col cols="3" class="pt-3">
+          Account Selector
+        </b-col>
+        <b-col class="dashboard pt-3">
+          Dashboard
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -27,6 +27,10 @@ export default {
 <style scoped lang="scss">
   .dashboard-container {
     overflow:hidden;
-    height: calc(100vh - 88px);
+    height: calc(100vh);
+    background-color: var(--secondary)
+  }
+  .dashboard {
+    background-color: var(--bg)
   }
 </style>

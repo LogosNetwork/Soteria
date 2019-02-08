@@ -25,7 +25,7 @@
         this.$router.push({ path: '/onboarding/language' })
       } else {
         // Wallet found time to decrypt and unpack
-        this.$router.push({ path: '/wallet/decrypt' })
+        this.$router.push({ path: '/locked' })
       }
     }
   }

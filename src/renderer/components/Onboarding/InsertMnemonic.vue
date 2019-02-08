@@ -67,7 +67,7 @@ export default {
           this.$router.push({ name: 'encryptSeed' })
         } else if (seed === this.seed) {
           this.setValidated(true)
-          this.$router.push({ name: 'decrypt' })
+          this.$router.push({ name: 'locked' })
         }
       }
     },

@@ -59,7 +59,7 @@ export default {
       } else if (this.seed === this.insertedSeed.toUpperCase()) {
         this.setValidated(true)
         if (this.wallet) {
-          this.$router.push({ name: 'decrypt' })
+          this.$router.push({ name: 'locked' })
         } else {
           this.$router.push({ name: 'encryptSeed' })
         }

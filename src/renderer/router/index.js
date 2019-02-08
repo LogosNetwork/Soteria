@@ -75,16 +75,16 @@ export default new Router({
       component: require('@/components/Wallet').default,
       children: [
         {
-          name: 'decrypt',
-          path: 'decrypt',
-          component: require('@/components/Wallet/DecryptWallet').default
-        },
-        {
           name: 'dashboard',
           path: 'dashboard',
           component: require('@/components/Wallet/Dashboard').default
         }
       ]
+    },
+    {
+      path: '/locked',
+      name: 'locked',
+      component: require('@/components/LockedWallet').default
     },
     {
       path: '*',

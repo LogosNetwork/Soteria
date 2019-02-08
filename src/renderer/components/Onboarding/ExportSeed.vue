@@ -90,7 +90,7 @@ export default {
         }
 
         fs.writeFileSync(path, Buffer.from(this.wallet))
-        this.$router.push({ name: 'decrypt' })
+        this.$router.push({ name: 'locked' })
         return false
       } catch (error) {
         return error.message
