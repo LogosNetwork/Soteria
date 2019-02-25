@@ -4,7 +4,7 @@
       <b-row class="h-100">
         <b-col cols="3" class="pt-3">
           Account Selector
-          <ul>
+          <ul v-if="wallet && wallet.accounts.length > 0">
             <li v-for="account in wallet.accounts" :key="account.address">{{account.address}}</li>
           </ul>
         </b-col>
@@ -36,7 +36,7 @@ export default {
     })
   },
   created: function () {
-    if (this.wallet.accounts.length === 0) this.wallet.createAccount()
+    if (this.wallet && this.wallet.accounts.length === 0) this.wallet.createAccount()
   }
 }
 </script>
