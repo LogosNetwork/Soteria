@@ -75,6 +75,9 @@ export default {
     ...mapActions('EncryptedWallet', [
       'setValidated'
     ]),
+    ...mapActions('Wallet', [
+      'setWallet'
+    ]),
     unlockWallet () {
       let wallet = new this.$Wallet({
         password: this.password
@@ -83,6 +86,7 @@ export default {
       wallet.load(this.wallet).then((val) => {
         this.setValidated(true)
         this.setSeed(null)
+        this.setWallet(val)
         this.$router.push({ path: '/wallet/dashboard' })
       }).catch(() => {
         this.error = 'Invalid Password'

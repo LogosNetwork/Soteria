@@ -4,6 +4,9 @@
       <b-row class="h-100">
         <b-col cols="3" class="pt-3">
           Account Selector
+          <ul>
+            <li v-for="account in wallet.accounts" :key="account.address">{{account.address}}</li>
+          </ul>
         </b-col>
         <b-col class="dashboard pt-3">
           Dashboard
@@ -14,12 +17,26 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import LogosWallet from '../../api/wallet'
+import Vue from 'vue'
+Vue.use(LogosWallet)
 export default {
   name: 'dashboard',
   methods: {
     previous () {
       this.$router.go(-1)
     }
+  },
+  computed: {
+    ...mapState('Wallet', {
+      wallet: function (state) {
+        return new this.$Wallet(state.wallet)
+      }
+    })
+  },
+  created: function () {
+    if (this.wallet.accounts.length === 0) this.wallet.createAccount()
   }
 }
 </script>

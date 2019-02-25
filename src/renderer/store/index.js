@@ -11,7 +11,7 @@ export default new Vuex.Store({
   modules,
   plugins: [
     createPersistedState({
-      ignoredPaths: ['Onboarding']
+      ignoredPaths: ['Onboarding', 'Wallet']
     }),
     createSharedMutations()
   ],
