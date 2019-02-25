@@ -7,6 +7,6 @@
 
 <script>
   export default {
-    name: 'Logos-Node'
+    name: 'Soteria'
   }
 </script>
