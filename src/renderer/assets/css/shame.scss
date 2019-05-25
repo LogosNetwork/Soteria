@@ -1,6 +1,9 @@
 $theme-colors: (
   "secondary": #2E3136,
-  "primary": #7289da
+  "primary": #7289da,
+  "bg": #36393F,
+  "tertiary": #2B2C31,
+  "base": #dcddde
 );
 :root {
   --gray-100: #f8f9fa;
@@ -12,23 +15,28 @@ $theme-colors: (
   --gray-700: #495057;
   --gray-800: #343a40;
   --gray-900: #212529;
-  --bg: #36393F;
-  --tertiary: #2B2C31;
 }
-// Bootstrap and its default variables
-@import "../../../../node_modules/bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+
 @function color($key: "blue") {
   @return map-get($colors, $key);
 }
+
 @function theme-color($key: "primary") {
   @return map-get($theme-colors, $key);
 }
+
 @function gray($key: "100") {
   @return map-get($grays, $key);
 }
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
+
 body {
   font-family: 'Noto Sans', sans-serif;
+  color: theme-color("base")
 }
 #closeBar {
   -webkit-app-region: drag;
@@ -49,7 +57,6 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  color: #dcddde;
 }
 .fixed-row-bottom { 
   position: fixed;
@@ -58,8 +65,8 @@ body {
   width: 100vw;
 }
 .form-control {
-  background: rgba(color("white"),0.05);
-  color: var(--white);
+  background: rgba(theme-color("base"),0.05);
+  color: theme-color("base");
 }
 .form-control.is-invalid {
   border-color: var(--danger);
@@ -67,7 +74,7 @@ body {
 }
 .form-control:focus {
   background: rgba(theme-color("primary"), 0.05);
-  color: var(--white);
+  color: theme-color("base");
 }
 .form-control:disabled {
   background: rgba(233, 236, 239, 0.15);
@@ -83,7 +90,7 @@ button[disabled="disabled"] {
 }
 .custom-file-label {
   background: rgba(255, 255, 255, 0.05);
-  color: var(--white);
+  color: theme-color("base");
   height: calc(2.875rem + 2px);
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
@@ -91,16 +98,24 @@ button[disabled="disabled"] {
   border-radius: 0.3rem;
 }
 .custom-file-label::after {
-  background: var(--primary);
-  color: var(--white);
+  background: theme-color("primary");
+  color: theme-color("base");
   height: calc(2.81rem + 2px);
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
-  border-color: var(--primary);
+  border-color: theme-color("primary");
 }
 .modal-content {
   background: theme-color("secondary")
 }
-.close {color:var(--white);}
-.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {color: var(--white);}
+.modal-content > .modal-header {
+  color: theme-color("base");
+}
+.close {color:theme-color("base");}
+.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {color: theme-color("base");}
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

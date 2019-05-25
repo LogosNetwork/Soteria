@@ -5,7 +5,7 @@
       <small v-t="'importMethods'"></small>
     </div>
     <div class="row mt-3 justify-content-center align-items-center">
-      <div class="panel table">
+      <div class="panel table text-base">
         <div class="plan">
           <div class="card bg-secondary">
             <div class="mt-3 mb-0 card-img-top circle">

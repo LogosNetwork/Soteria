@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row h-100 justify-content-center align-items-center">
-      <div class="panel table">
+      <div class="panel table text-base">
         <div class="plan">
           <div class="circle">
             <font-awesome-icon size="6x" class="icon" :icon="['fal','file-import']" />

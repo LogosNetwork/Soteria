@@ -31,11 +31,16 @@ export default {
   computed: {
     ...mapState('Wallet', {
       wallet: function (state) {
-        return new this.$Wallet(state.wallet)
+        if (state.wallet) {
+          return new this.$Wallet(state.wallet)
+        } else {
+          return null
+        }
       }
     })
   },
   created: function () {
+    if (this.wallet === null) this.$router.push({ path: '/' })
     if (this.wallet && this.wallet.accounts.length === 0) this.wallet.createAccount()
   }
 }

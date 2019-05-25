@@ -6,7 +6,7 @@
         <small v-t="'whywrite'"></small>
       </div>
       <div class="row mt-3 justify-content-center align-items-center">
-        <div class="panel table">
+        <div class="panel table text-base">
           <div class="card bg-secondary">
             <ol>
               <li class="seedRow" v-for="row in splitSeed" :key="row+'row'">

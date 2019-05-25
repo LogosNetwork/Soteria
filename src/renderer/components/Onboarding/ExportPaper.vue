@@ -10,7 +10,7 @@
         <small v-t="'whywrite'"></small>
       </div>
       <div class="row mt-3 justify-content-center align-items-center">
-        <div class="panel table">
+        <div class="panel table text-base">
           <div class="card bg-secondary">
             <ol v-bind:class="mnemonicBorder" class="mnemonicList">
               <li v-for="(item, index) in mnemonic" :key="item+'_'+index">
