@@ -75,18 +75,13 @@ export default {
     ...mapActions('EncryptedWallet', [
       'setValidated'
     ]),
-    ...mapActions('Wallet', [
-      'setWallet'
-    ]),
     unlockWallet () {
-      let wallet = new this.$Wallet({
-        password: this.password
-      })
       this.error = null
-      wallet.load(this.wallet).then((val) => {
+      this.$Wallet.setPassword(this.password)
+      this.$Wallet.load(this.wallet).then((val) => {
         this.setValidated(true)
         this.setSeed(null)
-        this.setWallet(val)
+        this.$router.push({ path: '/wallet/dashboard' })
       }).catch(() => {
         this.error = 'Invalid Password'
       })
@@ -111,20 +106,12 @@ export default {
       wallet: state => state.wallet,
       validated: state => state.validated
     }),
-    ...mapState('Wallet', {
-      rawWallet: state => state.wallet
-    }),
     validateDeleteKeyword () {
       if (this.deleteText !== null && this.deleteText.length > 0) {
         return this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()
       } else {
         return null
       }
-    }
-  },
-  watch: {
-    rawWallet: function (newWallet, oldWallet) {
-      if (newWallet !== null) this.$router.push({ path: '/wallet/dashboard' })
     }
   },
   data () {

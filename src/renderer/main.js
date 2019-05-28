@@ -6,7 +6,6 @@ import router from './router'
 import store from './store'
 import i18n from './i18n'
 import BootstrapVue from 'bootstrap-vue'
-import LogosWallet from '@logosnetwork/logos-webwallet-sdk'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -29,7 +28,6 @@ library.add(faFileUpload)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(BootstrapVue)
-Vue.use(LogosWallet)
 /* eslint-disable no-new */
 new Vue({
   components: { App },

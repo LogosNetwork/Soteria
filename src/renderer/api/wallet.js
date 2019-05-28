@@ -8,6 +8,7 @@ export default {
       return
     }
     this.installed = true
-    Vue.prototype.$Wallet = LogosWallet.Wallet
+    Vue.prototype.$LogosWallet = LogosWallet.Wallet
+    Vue.prototype.$Wallet = new LogosWallet.Wallet()
   }
 }

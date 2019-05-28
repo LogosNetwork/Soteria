@@ -120,7 +120,7 @@ export default {
       this.$router.go(-1)
     },
     createWallet () {
-      let tempWallet = new this.$Wallet({
+      let tempWallet = new this.$LogosWallet({
         password: this.password,
         seed: this.seed,
         mqtt: false,

@@ -52,12 +52,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import LogosWallet from '../../api/wallet'
 import { mapState } from 'vuex'
 import { remote } from 'electron'
 import fs from 'fs'
-Vue.use(LogosWallet)
 
 export default {
   name: 'export-seed',

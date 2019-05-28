@@ -34,10 +34,7 @@
 </template>
 
 <script>
-import LogosWallet from '../../api/wallet'
-import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
-Vue.use(LogosWallet)
 
 export default {
   name: 'decrypt-wallet',

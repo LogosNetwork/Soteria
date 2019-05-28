@@ -77,11 +77,9 @@ export default {
       this.$refs.fileinput.reset()
     },
     unlockWallet () {
-      let wallet = new this.$Wallet({
-        password: this.password
-      })
       this.error = null
-      wallet.load(this.wallet).then((val) => {
+      this.$Wallet.setPassword(this.password)
+      this.$Wallet.load(this.wallet).then((val) => {
         this.setValidated(true)
         this.setSeed(null)
         this.$router.push({ path: '/wallet/dashboard' })

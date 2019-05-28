@@ -50,7 +50,7 @@ export default {
       'setWallet'
     ]),
     encryptSeedPage () {
-      let wallet = new this.$Wallet({mqtt: false, rpc: false})
+      let wallet = new this.$LogosWallet({mqtt: false, rpc: false})
       let seed = wallet.seed
       this.setSeed(seed)
       this.setValidated(false)
