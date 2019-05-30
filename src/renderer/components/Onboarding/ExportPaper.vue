@@ -144,10 +144,10 @@ export default {
       column-gap: 8rem !important;
     }
     #app {
-      background: var(--white) !important;
+      background: var(--base) !important;
     }
     .bg-secondary {
-      background: var(--white) !important;
+      background: var(--base) !important;
       border: 0px solid #000;
     }
   }

@@ -1,5 +1,6 @@
 {
   "logosnetwork": "Logos Network",
+  "logos": "Logos",
   "loading": "Loading...",
   "language": "Language",
   "thankyou": "Soteria - Logos Wallet",
@@ -48,5 +49,12 @@
   "importMnemonic": "Mnemonic",
   "unlockSeedVault": "Unlock Seed Vault",
   "selectDifferent": "Select a different Seed Vault",
-  "chooseyourseedvault": "Choose your seed vault..."
+  "chooseyourseedvault": "Choose your seed vault...",
+  "logosAccounts": "Logos Accounts",
+  "addNewAccount": "+ Add new account",
+  "walletNavigation": "Wallet Navigation",
+  "wallet": "Wallet",
+  "governance": "Governance",
+  "settings": "Settings",
+  "logout": "Log out"
 }

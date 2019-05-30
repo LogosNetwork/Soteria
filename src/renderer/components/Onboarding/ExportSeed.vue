@@ -119,7 +119,7 @@ export default {
     max-width: 100vw
   }
   .icon {
-    color: var(--white);
+    color: var(--base);
     max-width: 50%;
   }
 

@@ -89,7 +89,7 @@ export default {
     justify-content: center;
     width: 180px;
     height: 180px;
-    background: var(--white);
+    background: var(--base);
     border-radius: 50%;
     margin: auto;
     margin-bottom: 25px;
@@ -107,7 +107,7 @@ export default {
 
   .plan {
     border-bottom: none;
-    border-right: 1px solid var(--white);
+    border-right: 1px solid var(--base);
     flex-basis: 100%;
     padding: 25px 50px;
   }

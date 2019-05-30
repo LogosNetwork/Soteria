@@ -146,10 +146,10 @@ export default {
     border-left: none;
   }
   .eyeButton > .btn-link {
-    color: var(--white);
+    color: var(--base);
   }
   .eyeButton > .btn-link:hover > .icon {
-    color: var(--white);
+    color: var(--base);
     opacity: 0.5;
   }
   .decrypt-container {
