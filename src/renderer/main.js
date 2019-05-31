@@ -7,7 +7,7 @@ import store from './store'
 import i18n from './i18n'
 import BootstrapVue from 'bootstrap-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff } from '@fortawesome/pro-light-svg-icons'
+import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
@@ -26,6 +26,7 @@ library.add(faShieldCheck)
 library.add(faFileUpload)
 library.add(faCogs)
 library.add(faWallet)
+library.add(faExchange)
 library.add(faLandmark)
 library.add(faPowerOff)
 
