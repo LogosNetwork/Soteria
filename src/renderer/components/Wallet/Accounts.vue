@@ -1,6 +1,6 @@
 <template>
   <b-form-group
-    class="text-left fitPanel scroller pt-3 pb-3"
+    class="text-left fitPanel scroller pt-3 pb-3 mb-0"
     v-if="wallet && wallet.accounts.length > 0"
     :label="$t('logosAccounts')"
     :label-sr-only="true"

@@ -1,6 +1,6 @@
 <template>
   <b-form-group
-    class="text-left footer pt-3"
+    class="text-left pt-3"
     :label="$t('walletNavigation')"
     :label-sr-only="true"
   >
@@ -56,10 +56,5 @@ export default {
   }
   .navigationSelector > small {
     display: block;
-  }
-  .footer {
-    position: fixed;
-    bottom: 0px;
-    width: calc(100% * 0.25);
   }
 </style>
