@@ -202,15 +202,15 @@ export default {
     border-bottom-right-radius: 0.3rem;
     height: 48px;
     width: 59px;
-    border: 1px solid #2E3136;
-    background: rgba(220, 221, 222, 0.05);
+    background: $input-bg;
+    border: 1px solid $input-border-color;
     border-left: none;
   }
   .eyeButton > .btn-link {
-    color: var(--base);
+    color: theme-color("base");
   }
   .eyeButton > .btn-link:hover > .icon {
-    color: var(--base);
+    color: theme-color("base");
     opacity: 0.5;
   }
   .decrypt-container {

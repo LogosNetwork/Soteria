@@ -11,11 +11,11 @@ $vue-multiselect-color : $custom-select-color !default;
 $vue-multiselect-disabled-bg : $custom-select-disabled-bg !default;
 $vue-multiselect-disabled-color : $custom-select-disabled-color !default;
 
-$vue-multiselect-option-selected-bg : #f3f3f3 !default;
-$vue-multiselect-option-selected-color : $body-color !default;
-$vue-multiselect-option-highlight-color : #fff !default;
+$vue-multiselect-option-selected-bg : theme-color("tertiary") !default;
+$vue-multiselect-option-selected-color : $gray-600 !default;
+$vue-multiselect-option-highlight-color : $white !default;
 $vue-multiselect-option-highlight-bg : theme-color("primary") !default;
-$vue-multiselect-option-selected-highlight-color : #fff !default;
+$vue-multiselect-option-selected-highlight-color : $white !default;
 $vue-multiselect-option-selected-highlight-bg : theme-color("secondary") !default;
 
 $vue-multiselect-tag-color : $dark !default;
@@ -24,7 +24,7 @@ $vue-multiselect-tag-font-size : $badge-font-size !default;
 $vue-multiselect-tag-font-weight : normal !default;
 $vue-multiselect-tag-icon-size : 1.7rem !default;
 $vue-multiselect-tag-icon-color : $vue-multiselect-tag-color !default;
-$vue-multiselect-tag-icon-color-hover : white !default;
+$vue-multiselect-tag-icon-color-hover : $white !default;
 $vue-multiselect-tag-icon-bg-hover : $danger !default;
 $vue-multiselect-tag-padding-x : .4rem !default;
 $vue-multiselect-tag-padding-y : .25rem !default;
@@ -108,7 +108,7 @@ fieldset[disabled] .multiselect {
     line-height    : $vue-multiselect-min-height / 2;
     border         : none;
     border-radius  : $vue-multiselect-border-radius;
-    background     : $vue-multiselect-bg;
+    background     : transparent;
     padding        : 0 0 0 $vue-multiselect-padding-x / 2;
     width          : calc(100%);
     transition     : border 0.1s ease;
@@ -264,7 +264,7 @@ fieldset[disabled] .multiselect {
 .multiselect__content-wrapper {
     position                   : absolute;
     display                    : block;
-    background                 : $vue-multiselect-bg;
+    background                 : theme-color("bg");
     width                      : 100%;
     max-height                 : 240px;
     overflow                   : auto;
@@ -343,7 +343,7 @@ fieldset[disabled] .multiselect {
 
 .multiselect__option--selected:after {
     content : attr(data-selected);
-    color   : silver;
+    color   : $gray-600;
 }
 
 .multiselect__option--selected.multiselect__option--highlight {

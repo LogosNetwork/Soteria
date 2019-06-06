@@ -1,32 +1,4 @@
-@import "node_modules/bootstrap/scss/functions";
-
-$theme-colors: (
-  "secondary": #2E3136,
-  "primary": #7289da,
-  "bg": #36393F,
-  "tertiary": #2B2C31,
-  "base": #dcddde,
-  "danger": #dc3545
-);
-:root {
-  --gray-100: #f8f9fa;
-  --gray-200: #e9ecef;
-  --gray-300: #dee2e6;
-  --gray-400: #ced4da;
-  --gray-500: #adb5bd;
-  --gray-600: #6c757d;
-  --gray-700: #495057;
-  --gray-800: #343a40;
-  --gray-900: #212529;
-}
-
-$input-bg: rgba(theme-color("base"),0.05);
-$input-border-color: theme-color("secondary");
-$input-color: theme-color("base");
-$form-feedback-invalid-color: rgba(theme-color("danger"),0.05);
-$input-focus-bg: rgba(theme-color("primary"),0.05);
-$custom-select-indicator-color: #fff;
-$input-disabled-bg: rgba(theme-color("base"),0.05);
+@import "./vars.scss";
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';

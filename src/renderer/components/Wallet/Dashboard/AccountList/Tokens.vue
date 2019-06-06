@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       value: null,
-      options: ['list', 'of', 'options']
+      options: ['list', 'of', 'tokens']
     }
   }
 }

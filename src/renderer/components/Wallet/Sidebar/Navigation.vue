@@ -115,19 +115,19 @@ export default {
 <style scoped lang="scss">
   .navigationSelector {
     text-align: left;
-    color: var(--gray-600);
+    color: $gray-600;
     margin-left: 1rem;
     margin-right: 1rem;
     width: calc(100% - 2rem);
   }
   .navigationSelector:not(.active):hover {
     cursor: pointer;
-    background-color: var(--tertiary);
-    color: var(--gray-400);
+    background-color: theme-color("tertiary");
+    color: $gray-400;
   }
   .navigationSelector.active {
-    color: var(--base);
-    background-color: var(--bg);
+    color: theme-color("base");
+    background-color: theme-color("bg");
   }
   .navigationSelector > small {
     display: block;

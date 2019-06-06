@@ -163,7 +163,7 @@ export default {
 <style scoped lang="scss">
   @media print {
     .mnemonicBorder > li {
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid $black;
     }
     .mnemonicItem {
       display: none;
@@ -173,7 +173,7 @@ export default {
       padding-bottom: 3rem;
     }
     .header > .icon {
-      color: var(--primary) !important;
+      color: theme-color("primary") !important;
     }
     .header > h1 {
       position: relative;
@@ -190,7 +190,7 @@ export default {
       width: 100% !important;
       max-width: 100% !important;
       padding: 3rem !important;
-      color: #000 !important;
+      color: $black !important;
     }
     ol.mnemonicList {
       -moz-column-count: 2 !important;
@@ -201,11 +201,11 @@ export default {
       column-gap: 8rem !important;
     }
     #app {
-      background: var(--base) !important;
+      background: theme-color("base") !important;
     }
     .bg-secondary {
-      background: var(--base) !important;
-      border: 0px solid #000;
+      background: theme-color("base") !important;
+      border: 0px solid $black;
     }
   }
   .header {

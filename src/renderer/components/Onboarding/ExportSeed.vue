@@ -162,7 +162,7 @@ export default {
     max-width: 100vw
   }
   .icon {
-    color: var(--base);
+    color: theme-color("base");
     max-width: 50%;
   }
 
@@ -172,7 +172,7 @@ export default {
     justify-content: center;
     width: 90px;
     height: 90px;
-    background: var(--bg);
+    background: theme-color("bg");
     border-radius: 50%;
     margin: auto;
     margin-bottom: 25px;
@@ -186,7 +186,7 @@ export default {
 
   .plan {
     border-bottom: none;
-    border-right: 1px solid #e1f1ff;
+    border-right: 1px solid theme-color("base");
     flex-basis: 100%;
     padding: 25px 50px;
   }

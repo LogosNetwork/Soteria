@@ -107,7 +107,7 @@ export default {
     z-index: 10;
   }
   .icon {
-    color: var(--primary);
+    color: theme-color("primary");
     max-width: 50%;
   }
 
@@ -117,7 +117,7 @@ export default {
     justify-content: center;
     width: 180px;
     height: 180px;
-    background: var(--base);
+    background: theme-color("base");
     border-radius: 50%;
     margin: auto;
     margin-bottom: 25px;
@@ -135,7 +135,7 @@ export default {
 
   .plan {
     border-bottom: none;
-    border-right: 1px solid var(--base);
+    border-right: 1px solid theme-color("base");
     flex-basis: 100%;
     padding: 25px 50px;
   }

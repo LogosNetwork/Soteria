@@ -120,7 +120,7 @@ export default {
     width: 100vw;
   }
   .mnemonicInput {
-    border: 1px solid rgba(#000, .125);
+    border: 1px solid rgba($black, .125);
     max-width: 100px;
     margin: 1rem;
     display: inline-flex;

@@ -61,9 +61,9 @@ export default {
   .wallet-container {
     overflow:hidden;
     height: calc(100vh);
-    background-color: var(--secondary);
+    background-color: theme-color("secondary");
   }
   .content {
-    background-color: var(--bg);
+    background-color: theme-color("bg");
   }
 </style>

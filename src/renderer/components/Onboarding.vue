@@ -34,6 +34,6 @@ export default {
     overflow-x: hidden;
   }
   .icon {
-    color: var(--primary);
+    color: theme-color("primary");
   }
 </style>

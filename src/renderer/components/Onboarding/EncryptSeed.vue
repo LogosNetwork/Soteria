@@ -230,13 +230,15 @@ export default {
     height:5px;
     margin-left:1px;
     display: inline-block;
-    background: rgba(233, 236, 239, 0.15)
+    background: $input-bg
   }
   .eyeButton {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
     height: 48px;
-    border: 1px solid var(--gray-400);
+    width: 59px;
+    background: $input-bg;
+    border: 1px solid $input-border-color;
   }
   .eyeButton > .btn-link:hover > .icon {
     opacity: 0.5;

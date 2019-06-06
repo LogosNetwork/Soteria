@@ -64,7 +64,7 @@ export default {
 
 <style scoped lang="scss">
 .nav-link {
-  color: var(--gray-600);
+  color: $gray-600;
   padding: 0px;
   padding-left: 0.5rem;
   margin-left: 0.5rem;
@@ -73,11 +73,11 @@ export default {
   border: 0px;
 }
 .nav-item:not(.active) > .nav-link:hover {
-  color: var(--gray-400);
+  color: $gray-400;
 }
 .nav-item.active > .nav-link {
-  color: var(--base);
-  border-bottom: 1px solid var(--primary);
+  color: theme-color("base");
+  border-bottom: 1px solid theme-color("primary");
   background: transparent;
 }
 </style>
