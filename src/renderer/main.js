@@ -8,7 +8,7 @@ import i18n from './i18n'
 import BootstrapVue from 'bootstrap-vue'
 import Multiselect from 'vue-multiselect'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus } from '@fortawesome/pro-light-svg-icons'
+import { faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
@@ -34,6 +34,7 @@ library.add(faSearch)
 library.add(faCoins)
 library.add(faPlus)
 library.add(faSquare)
+library.add(faFilter)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)

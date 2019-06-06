@@ -71,10 +71,10 @@ button[disabled="disabled"] {
   height: 14px;
 }
 .scroller::-webkit-scrollbar-corner {
-  background-color: transparent;
+  background: transparent;
 }
 .scroller::-webkit-scrollbar-thumb {
-  background-color: theme-color("tertiary");
+  background: $gray-700;
   border: 2px solid transparent;
   cursor: move;
   visibility: hidden;
@@ -84,7 +84,7 @@ button[disabled="disabled"] {
   visibility: visible;
 }
 .scroller::-webkit-scrollbar-track {
-  background-color: transparent;
+  background: transparent;
   border: 2px solid transparent;
   visibility: hidden;
   background-clip: padding-box;
