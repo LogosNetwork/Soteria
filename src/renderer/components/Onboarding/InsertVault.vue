@@ -1,42 +1,87 @@
 <template>
   <div class="decrypt-container">
     <div class="row h-100 justify-content-center align-items-center">
-      <div id="passwordDecrypt" class="p-3">
-        <font-awesome-icon size="4x" class="icon mb-3" :icon="['fal','key']" />
-        <h4 v-t="'importvault'" class="mb-3"></h4>
+      <div
+        id="passwordDecrypt"
+        class="p-3"
+      >
+        <font-awesome-icon
+          size="4x"
+          class="icon mb-3"
+          :icon="['fal','key']"
+        />
+        <h4
+          v-t="'importvault'"
+          class="mb-3"
+        />
         <div class="form-group text-left">
           <div v-show="!validFile">
             <b-form-file
+              ref="fileinput"
               v-model="seedVault"
               accept=".lgsx"
-              ref="fileinput"
-              :placeholder="$t('chooseyourseedvault')">
-            </b-form-file>
+              :placeholder="$t('chooseyourseedvault')"
+            />
           </div>
           <div v-if="validFile">
-            <label for="pwd" v-t="'unlockSeedVault'"></label>
+            <label
+              v-t="'unlockSeedVault'"
+              for="pwd"
+            />
             <div class="input-group input-group-lg">
-              <form id="unlockWalletForm" @submit.stop.prevent="unlockWallet()">
+              <form
+                id="unlockWalletForm"
+                @submit.stop.prevent="unlockWallet()"
+              >
                 <div class="input-group input-group-lg">
-                  <b-form-input id="pwd"
-                    :type="inputType"
+                  <b-form-input
+                    id="pwd"
                     v-model="password"
+                    :type="inputType"
                     :placeholder="$t('password').toLowerCase()"
-                    required>
-                  </b-form-input>
+                    required
+                  />
                   <div class="input-group-append eyeButton">
-                    <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="changePasswordVisibility()" class="btn btn-default btn-sm">
-                      <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
-                      <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                      <span class="sr-only" v-t="'togglePasswordVisibility'"></span>
+                    <b-button
+                      v-b-tooltip.hover
+                      :title="$t('togglePasswordVisibility')"
+                      :pressed="showPassword"
+                      variant="link"
+                      class="btn btn-default btn-sm"
+                      @click="changePasswordVisibility()"
+                    >
+                      <font-awesome-icon
+                        v-if="showPassword"
+                        class="icon"
+                        :icon="['fal','eye']"
+                      />
+                      <font-awesome-icon
+                        v-if="!showPassword"
+                        class="icon"
+                        :icon="['fal','eye-slash']"
+                      />
+                      <span
+                        v-t="'togglePasswordVisibility'"
+                        class="sr-only"
+                      />
                     </b-button>
                   </div>
                 </div>
-                <small v-if="error" id="error" class="form-text text-danger">{{error}}</small>
+                <small
+                  v-if="error"
+                  id="error"
+                  class="form-text text-danger"
+                >{{ error }}</small>
               </form>
             </div>
             <div>
-              <b-button v-on:click="clearFiles()" variant="link" class="btn-sm" style="padding-left:0px" v-t="'selectDifferent'"></b-button>
+              <b-button
+                v-t="'selectDifferent'"
+                variant="link"
+                class="btn-sm"
+                style="padding-left:0px"
+                @click="clearFiles()"
+              />
             </div>
           </div>
         </div>
@@ -44,9 +89,23 @@
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button :disabled="!validFile || password === null" class="w-50" variant="primary" v-t="'unlockwallet'"  v-on:click="unlockWallet()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-50"
+            variant="secondary"
+            @click="previous()"
+          />
+          <b-button
+            v-t="'unlockwallet'"
+            :disabled="!validFile || password === null"
+            class="w-50"
+            variant="primary"
+            @click="unlockWallet()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -60,7 +119,39 @@ import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
 
 export default {
-  name: 'insert-vault',
+  name: 'InsertVault',
+  data () {
+    return {
+      error: null,
+      password: null,
+      showPassword: false,
+      deleteText: null,
+      seedVault: null,
+      inputType: 'password'
+    }
+  },
+  computed: {
+    ...mapState('EncryptedWallet', {
+      wallet: state => state.wallet,
+      validated: state => state.validated
+    }),
+    validFile () {
+      if (this.seedVault === null) return null
+      return Boolean(this.seedVault)
+    }
+  },
+  watch: {
+    seedVault: function (newVault, oldVault) {
+      if (newVault !== null) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          const text = reader.result
+          this.setWallet(text)
+        }
+        reader.readAsText(newVault)
+      }
+    }
+  },
   methods: {
     ...mapActions('Onboarding', [
       'setSeed'
@@ -91,38 +182,6 @@ export default {
       this.showPassword = !this.showPassword
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
     }
-  },
-  computed: {
-    ...mapState('EncryptedWallet', {
-      wallet: state => state.wallet,
-      validated: state => state.validated
-    }),
-    validFile () {
-      if (this.seedVault === null) return null
-      return Boolean(this.seedVault)
-    }
-  },
-  watch: {
-    seedVault: function (newVault, oldVault) {
-      if (newVault !== null) {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          const text = reader.result
-          this.setWallet(text)
-        }
-        reader.readAsText(newVault)
-      }
-    }
-  },
-  data () {
-    return {
-      error: null,
-      password: null,
-      showPassword: false,
-      deleteText: null,
-      seedVault: null,
-      inputType: 'password'
-    }
   }
 }
 </script>
@@ -142,7 +201,9 @@ export default {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;
     height: 48px;
-    border: 1px solid #ced4da;
+    width: 59px;
+    border: 1px solid #2E3136;
+    background: rgba(220, 221, 222, 0.05);
     border-left: none;
   }
   .eyeButton > .btn-link {
@@ -156,7 +217,7 @@ export default {
     overflow:hidden;
     height: calc(100vh - 88px);
   }
-  .fixed-row-bottom { 
+  .fixed-row-bottom {
     position: fixed;
     bottom: 0;
     left: 15px;

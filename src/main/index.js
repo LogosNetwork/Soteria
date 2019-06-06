@@ -27,7 +27,10 @@ function createWindow () {
     height: 563,
     useContentSize: true,
     width: 1000,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      nodeIntegration: true // TODO Negative Side-effects when building web?
+    }
   })
 
   mainWindow.loadURL(winURL)

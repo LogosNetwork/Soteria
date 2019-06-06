@@ -2,44 +2,101 @@
   <div class="mh-100">
     <b-container>
       <div class="header mt-3 mb-1">
-        <font-awesome-icon class="icon" size="5x" :icon="['fal','lambda']" />
-        <h1 v-t="'logosnetwork'"></h1>
+        <font-awesome-icon
+          class="icon"
+          size="5x"
+          :icon="['fal','lambda']"
+        />
+        <h1 v-t="'logosnetwork'" />
       </div>
-      <h4 class="mt-3" v-t="'writedownyourseed'"></h4>
+      <h4
+        v-t="'writedownyourseed'"
+        class="mt-3"
+      />
       <div>
-        <small v-t="'whywrite'"></small>
+        <small v-t="'whywrite'" />
       </div>
       <div class="row mt-3 justify-content-center align-items-center">
         <div class="panel table text-base">
           <div class="card bg-secondary">
-            <ol v-bind:class="mnemonicBorder" class="mnemonicList">
-              <li v-for="(item, index) in mnemonic" :key="item+'_'+index">
-                <span v-bind:class="mnemonicItem">{{ item }}</span>
+            <ol
+              :class="mnemonicBorder"
+              class="mnemonicList"
+            >
+              <li
+                v-for="(item, index) in mnemonic"
+                :key="item+'_'+index"
+              >
+                <span :class="mnemonicItem">{{ item }}</span>
               </li>
             </ol>
           </div>
         </div>
       </div>
-      <b-button-group class="w-100 justify-content-center align-items-center d-print-none" size="sm">
-        <b-button v-b-modal.seedModal variant="link" class="btn-sm mb-3" v-t="'showSeed'"></b-button>
-        <b-modal id="seedModal" ref="showSeed" :title="$t('writedownyourseed')">
+      <b-button-group
+        class="w-100 justify-content-center align-items-center d-print-none"
+        size="sm"
+      >
+        <b-button
+          v-b-modal.seedModal
+          v-t="'showSeed'"
+          variant="link"
+          class="btn-sm mb-3"
+        />
+        <b-modal
+          id="seedModal"
+          ref="showSeed"
+          :title="$t('writedownyourseed')"
+        >
           <ol>
-            <li class="seedRow" v-for="row in splitSeed" :key="row+'row'">
-              <span v-for="seedItem in row" :key="seedItem+'column'">
-                {{seedItem}}
+            <li
+              v-for="row in splitSeed"
+              :key="row+'row'"
+              class="seedRow"
+            >
+              <span
+                v-for="seedItem in row"
+                :key="seedItem+'column'"
+              >
+                {{ seedItem }}
               </span>
             </li>
           </ol>
         </b-modal>
-        <b-button v-on:click="printTemplate()" variant="link" class="btn-sm mb-3 " v-t="'printTemplate'"></b-button>
-        <b-button v-b-tooltip.hover :title="$t('printWarning')" v-on:click="print()" variant="link" class="btn-sm mb-3" v-t="'printMnemonic'"></b-button>
+        <b-button
+          v-t="'printTemplate'"
+          variant="link"
+          class="btn-sm mb-3 "
+          @click="printTemplate()"
+        />
+        <b-button
+          v-b-tooltip.hover
+          v-t="'printMnemonic'"
+          :title="$t('printWarning')"
+          variant="link"
+          class="btn-sm mb-3"
+          @click="print()"
+        />
       </b-button-group>
     </b-container>
     <b-row class="fixed-row-bottom d-print-none">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button class="w-50" variant="primary" v-t="'validate'"  v-on:click="validateMnemonic()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-50"
+            variant="secondary"
+            @click="previous()"
+          />
+          <b-button
+            v-t="'validate'"
+            class="w-50"
+            variant="primary"
+            @click="validateMnemonic()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -52,7 +109,12 @@ import bip39 from 'bip39'
 import { remote } from 'electron'
 
 export default {
-  name: 'export-paper',
+  name: 'ExportPaper',
+  data () {
+    return {
+      isPrintingTemplate: false
+    }
+  },
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
@@ -93,11 +155,6 @@ export default {
       const contents = remote.webContents.getFocusedWebContents()
       this.isPrintingTemplate = true
       contents.print()
-    }
-  },
-  data () {
-    return {
-      isPrintingTemplate: false
     }
   }
 }

@@ -5,7 +5,7 @@ process.env.BABEL_ENV = 'web'
 const path = require('path')
 const webpack = require('webpack')
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -121,7 +121,8 @@ let webConfig = {
     },
     extensions: ['.js', '.vue', '.json', '.css']
   },
-  target: 'web'
+  target: 'web',
+  mode: 'development'
 }
 
 /**
@@ -129,9 +130,11 @@ let webConfig = {
  */
 if (process.env.NODE_ENV === 'production') {
   webConfig.devtool = ''
-
+  webConfig.mode = 'production'
+  webConfig.optimization = {
+    minimizer: [new TerserPlugin()]
+  }
   webConfig.plugins.push(
-    new BabiliWebpackPlugin(),
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, '../static'),

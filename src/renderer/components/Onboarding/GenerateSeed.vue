@@ -4,24 +4,52 @@
       <div class="panel table text-base">
         <div class="plan">
           <div class="circle">
-            <font-awesome-icon size="6x" class="icon" :icon="['fal','file-import']" />
+            <font-awesome-icon
+              size="6x"
+              class="icon"
+              :icon="['fal','file-import']"
+            />
           </div>
-          <h5 v-t="'haveaseed'"></h5>
-          <b-button class="mt-3" size="lg" v-t="'importseed'" v-on:click="importSeedPage()" variant="outline-primary"></b-button>
+          <h5 v-t="'haveaseed'" />
+          <b-button
+            v-t="'importseed'"
+            class="mt-3"
+            size="lg"
+            variant="outline-primary"
+            @click="importSeedPage()"
+          />
         </div>
         <div class="plan">
           <div class="circle">
-            <font-awesome-icon size="6x" class="icon" :icon="['fal','chart-network']" />
+            <font-awesome-icon
+              size="6x"
+              class="icon"
+              :icon="['fal','chart-network']"
+            />
           </div>
-          <h5 v-t="'needaseed'"></h5>
-          <b-button class="mt-3" size="lg" v-t="'generateseed'" v-on:click="encryptSeedPage()" variant="primary"></b-button>
+          <h5 v-t="'needaseed'" />
+          <b-button
+            v-t="'generateseed'"
+            class="mt-3"
+            size="lg"
+            variant="primary"
+            @click="encryptSeedPage()"
+          />
         </div>
       </div>
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-100"
+            variant="secondary"
+            @click="previous()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -35,7 +63,7 @@ import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
 
 export default {
-  name: 'generate-seed',
+  name: 'GenerateSeed',
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
@@ -50,7 +78,7 @@ export default {
       'setWallet'
     ]),
     encryptSeedPage () {
-      let wallet = new this.$LogosWallet({mqtt: false, rpc: false})
+      let wallet = new this.$LogosWallet({ mqtt: false, rpc: false })
       let seed = wallet.seed
       this.setSeed(seed)
       this.setValidated(false)

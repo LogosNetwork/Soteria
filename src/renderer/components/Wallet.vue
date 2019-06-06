@@ -1,12 +1,21 @@
 <template>
   <div class="wallet-container">
-    <b-container class="h-100 p-0" fluid>
-      <b-row class="h-100" no-gutters>
-        <b-col cols="3" class="pt-4">
-          <Sidebar/>
+    <b-container
+      class="h-100 p-0"
+      fluid
+    >
+      <b-row
+        class="h-100"
+        no-gutters
+      >
+        <b-col
+          cols="3"
+          class="pt-4"
+        >
+          <Sidebar />
         </b-col>
         <b-col class="pt-3 content">
-          <router-view></router-view>
+          <router-view />
         </b-col>
       </b-row>
     </b-container>
@@ -17,14 +26,21 @@
 import Sidebar from '@/components/Wallet/Sidebar.vue'
 
 export default {
-  name: 'wallet',
+  name: 'Wallet',
+  components: {
+    'Sidebar': Sidebar
+  },
   data () {
     return {
       wallet: this.$Wallet
     }
   },
-  components: {
-    'Sidebar': Sidebar
+  created () {
+    if (this.wallet.seed === null) {
+      this.$router.push({ path: '/' })
+    } else if (this.wallet && this.wallet.accounts.length === 0) {
+      this.addAccount()
+    }
   },
   methods: {
     addAccount: async function () {
@@ -36,13 +52,6 @@ export default {
         delete this.wallet._tokenAccounts[token]
         this.$set(this.wallet._tokenAccounts, tkAccount.address, tkAccount)
       }
-    }
-  },
-  created () {
-    if (this.wallet.seed === null) {
-      this.$router.push({ path: '/' })
-    } else if (this.wallet && this.wallet.accounts.length === 0) {
-      this.addAccount()
     }
   }
 }

@@ -1,21 +1,31 @@
 <template>
   <div class="decrypt-container">
     <div class="row h-100 justify-content-center align-items-center">
-      <div id="passwordDecrypt" class="p-3">
-        <h4 v-t="'validateYourSeed'"></h4>
+      <div
+        id="passwordDecrypt"
+        class="p-3"
+      >
+        <h4 v-t="'validateYourSeed'" />
         <div class="form-group text-left">
-          <label for="seed" v-t="'seed'"></label>
+          <label
+            v-t="'seed'"
+            for="seed"
+          />
           <div class="input-group input-group-lg">
-            <form id="validateSeedForm" @submit.stop.prevent="verify()">
+            <form
+              id="validateSeedForm"
+              @submit.stop.prevent="verify()"
+            >
               <div class="input-group input-group-lg">
-                <b-form-input id="seed"
-                  type="text"
+                <b-form-input
+                  id="seed"
                   v-model="insertedSeed"
+                  type="text"
                   :state="seedMatch"
                   :placeholder="$t('seed').toLowerCase()"
                   onpaste="return false;"
-                  required>
-                </b-form-input>
+                  required
+                />
               </div>
             </form>
           </div>
@@ -24,9 +34,23 @@
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button :disabled="!seedMatch" class="w-50" variant="primary" v-t="'validate'"  v-on:click="verify()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-50"
+            variant="secondary"
+            @click="previous()"
+          />
+          <b-button
+            v-t="'validate'"
+            :disabled="!seedMatch"
+            class="w-50"
+            variant="primary"
+            @click="verify()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -37,7 +61,31 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'decrypt-wallet',
+  name: 'DecryptWallet',
+  data () {
+    return {
+      insertedSeed: null
+    }
+  },
+  computed: {
+    ...mapState('Onboarding', {
+      seed: state => state.seed
+    }),
+    ...mapState('EncryptedWallet', {
+      wallet: state => state.wallet
+    }),
+    seedMatch () {
+      if (this.seed === null) {
+        if (this.insertedSeed && this.insertedSeed.length === 64) {
+          return (/[0-9a-f]+/i).test(this.insertedSeed)
+        }
+        return null
+      } else {
+        if (!this.insertedSeed || this.insertedSeed.length === 0) return null
+        return this.seed === this.insertedSeed.toUpperCase()
+      }
+    }
+  },
   methods: {
     ...mapActions('EncryptedWallet', [
       'setValidated'
@@ -62,30 +110,6 @@ export default {
         }
       }
     }
-  },
-  computed: {
-    ...mapState('Onboarding', {
-      seed: state => state.seed
-    }),
-    ...mapState('EncryptedWallet', {
-      wallet: state => state.wallet
-    }),
-    seedMatch () {
-      if (this.seed === null) {
-        if (this.insertedSeed && this.insertedSeed.length === 64) {
-          return (/[0-9a-f]+/i).test(this.insertedSeed)
-        }
-        return null
-      } else {
-        if (!this.insertedSeed || this.insertedSeed.length === 0) return null
-        return this.seed === this.insertedSeed.toUpperCase()
-      }
-    }
-  },
-  data () {
-    return {
-      insertedSeed: null
-    }
   }
 }
 </script>
@@ -102,7 +126,7 @@ export default {
     overflow:hidden;
     height: calc(100vh - 88px);
   }
-  .fixed-row-bottom { 
+  .fixed-row-bottom {
     position: fixed;
     bottom: 0;
     left: 15px;

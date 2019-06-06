@@ -1,30 +1,57 @@
 <template>
   <div class="export">
-    <h4 class="mt-3" v-t="'storeseed'"></h4>
+    <h4
+      v-t="'storeseed'"
+      class="mt-3"
+    />
     <div>
-      <small v-t="'whystore'"></small>
+      <small v-t="'whystore'" />
     </div>
     <div class="row mt-3 justify-content-center align-items-center">
       <div class="panel table text-base">
         <div class="plan">
           <div class="card bg-secondary">
             <div class="mt-3 mb-0 card-img-top circle">
-              <font-awesome-icon size="3x" class="icon" :icon="['fal','pencil']" />
+              <font-awesome-icon
+                size="3x"
+                class="icon"
+                :icon="['fal','pencil']"
+              />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'writedownyourseed'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="writeSeed()"></b-button>
+              <h5
+                v-t="'writedownyourseed'"
+                class="card-title"
+              />
+              <b-button
+                v-t="'continue'"
+                class="btn mt-3 btn-lg"
+                variant="primary"
+                @click="writeSeed()"
+              />
             </div>
           </div>
         </div>
         <div class="plan">
           <div class="card bg-secondary">
             <div class="mt-3 mb-0 card-img-top circle">
-              <font-awesome-icon size="3x" class="icon" :icon="['fal','lock-alt']" />
+              <font-awesome-icon
+                size="3x"
+                class="icon"
+                :icon="['fal','lock-alt']"
+              />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'exportlogosvault'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="saveVault()"></b-button>
+              <h5
+                v-t="'exportlogosvault'"
+                class="card-title"
+              />
+              <b-button
+                v-t="'continue'"
+                class="btn mt-3 btn-lg"
+                variant="primary"
+                @click="saveVault()"
+              />
             </div>
           </div>
         </div>
@@ -34,8 +61,16 @@
               <span style="font-size:2.2em">Abc</span>
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'importMnemonic'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="mnemonic()"></b-button>
+              <h5
+                v-t="'importMnemonic'"
+                class="card-title"
+              />
+              <b-button
+                v-t="'continue'"
+                class="btn mt-3 btn-lg"
+                variant="primary"
+                @click="mnemonic()"
+              />
             </div>
           </div>
         </div>
@@ -43,8 +78,16 @@
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-100"
+            variant="secondary"
+            @click="previous()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -57,7 +100,7 @@ import { remote } from 'electron'
 import fs from 'fs'
 
 export default {
-  name: 'export-seed',
+  name: 'ExportSeed',
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
@@ -150,11 +193,5 @@ export default {
 
   .plan:last-child {
     border-right: none;
-  }
-
-  .header {
-    color: #888;
-    font-weight: 600;
-    letter-spacing: 1px;
   }
 </style>

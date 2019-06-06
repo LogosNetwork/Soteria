@@ -1,20 +1,46 @@
 <template>
   <b-form-group
-    class="text-left fitPanel scroller pt-3 pb-3 mb-0"
     v-if="wallet && wallet.accounts.length > 0"
+    class="text-left fitPanel scroller pt-3 pb-3 mb-0"
     :label="$t('logosAccounts')"
     :label-sr-only="true"
   >
-    <div tabindex="-1" role="group">
-      <div id="accountSelectorRadios" role="radiogroup" tabindex="-1" class="btn-group-toggle">
-        <label class="btn btn-transparent accountSelector" v-bind:class="{ active: account.address === wallet.currentAccountAddress }" v-for="account in wallet.accounts" :key="account.address">
-          <input @click="setCurrentAccount(account.address)" :id="`accountSelectorRadios_${account.address}`" type="radio" name="accountSelector" autocomplete="off" :value="account.address"/>
-          <div>{{account.label}}</div>
-          <small>{{accountBalance(account.balance)}} <span v-t="'logos'"></span></small>
+    <div
+      tabindex="-1"
+      role="group"
+    >
+      <div
+        id="accountSelectorRadios"
+        role="radiogroup"
+        tabindex="-1"
+        class="btn-group-toggle"
+      >
+        <label
+          v-for="account in wallet.accounts"
+          :key="account.address"
+          class="btn btn-transparent accountSelector"
+          :class="{ active: account.address === wallet.currentAccountAddress }"
+        >
+          <input
+            :id="`accountSelectorRadios_${account.address}`"
+            type="radio"
+            name="accountSelector"
+            autocomplete="off"
+            :value="account.address"
+            @click="setCurrentAccount(account.address)"
+          >
+          <div>{{ account.label }}</div>
+          <small>{{ accountBalance(account.balance) }} <span v-t="'logos'" /></small>
         </label>
       </div>
     </div>
-    <b-button class="text-center w-100" variant="link" @click="addAccount"><span v-t="'addNewAccount'"></span></b-button>
+    <b-button
+      class="text-center w-100"
+      variant="link"
+      @click="addAccount"
+    >
+      <span v-t="'addNewAccount'" />
+    </b-button>
   </b-form-group>
 </template>
 

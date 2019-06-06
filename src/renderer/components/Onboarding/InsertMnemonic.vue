@@ -1,22 +1,54 @@
 <template>
   <div class="mh-100">
     <b-container>
-      <h4 class="mt-3" v-t="'insertMnemonic'"></h4>
-      <small v-t="'twentyFourWords'"></small>
+      <h4
+        v-t="'insertMnemonic'"
+        class="mt-3"
+      />
+      <small v-t="'twentyFourWords'" />
       <div class="row mt-3 justify-content-center align-items-center">
         <div class="panel table bg-secondary">
-          <b-input v-for="(item, index) in phraseList" :state="validMnemonic" v-model="phraseList[index]" :key="index" class="mnemonicInput card" :placeholder="(index+1).toString()"></b-input>
+          <b-input
+            v-for="(item, index) in phraseList"
+            :key="index"
+            v-model="phraseList[index]"
+            :state="validMnemonic"
+            class="mnemonicInput"
+            :placeholder="(index+1).toString()"
+          />
         </div>
       </div>
-      <b-button-group class="w-100 justify-content-center align-items-center" size="sm">
-        <b-button v-on:click="insertSeed()" variant="link" class="btn-sm mb-3" v-t="'typeSeed'"></b-button>
+      <b-button-group
+        class="w-100 justify-content-center align-items-center"
+        size="sm"
+      >
+        <b-button
+          v-t="'typeSeed'"
+          variant="link"
+          class="btn-sm mb-3"
+          @click="insertSeed()"
+        />
       </b-button-group>
     </b-container>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button :disabled="!validMnemonic" class="w-50" variant="primary" v-t="'validate'"  v-on:click="validateMnemonic()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-50"
+            variant="secondary"
+            @click="previous()"
+          />
+          <b-button
+            v-t="'validate'"
+            :disabled="!validMnemonic"
+            class="w-50"
+            variant="primary"
+            @click="validateMnemonic()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -28,7 +60,12 @@ import { mapState, mapActions } from 'vuex'
 import bip39 from 'bip39'
 
 export default {
-  name: 'export-paper',
+  name: 'ExportPaper',
+  data () {
+    return {
+      phraseList: new Array(24)
+    }
+  },
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
@@ -74,11 +111,6 @@ export default {
     insertSeed () {
       this.$router.push({ name: 'insertSeed' })
     }
-  },
-  data () {
-    return {
-      phraseList: new Array(24)
-    }
   }
 }
 </script>
@@ -88,6 +120,7 @@ export default {
     width: 100vw;
   }
   .mnemonicInput {
+    border: 1px solid rgba(#000, .125);
     max-width: 100px;
     margin: 1rem;
     display: inline-flex;

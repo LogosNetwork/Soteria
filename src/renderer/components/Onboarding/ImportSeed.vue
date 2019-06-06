@@ -1,30 +1,57 @@
 <template>
   <div class="export">
-    <h4 class="mt-3" v-t="'importseed'"></h4>
+    <h4
+      v-t="'importseed'"
+      class="mt-3"
+    />
     <div>
-      <small v-t="'importMethods'"></small>
+      <small v-t="'importMethods'" />
     </div>
     <div class="row mt-3 justify-content-center align-items-center">
       <div class="panel table text-base">
         <div class="plan">
           <div class="card bg-secondary">
             <div class="mt-3 mb-0 card-img-top circle">
-              <font-awesome-icon size="3x" class="icon" :icon="['fal','pencil']" />
+              <font-awesome-icon
+                size="3x"
+                class="icon"
+                :icon="['fal','pencil']"
+              />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'insertPlainSeed'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="plainSeed()"></b-button>
+              <h5
+                v-t="'insertPlainSeed'"
+                class="card-title"
+              />
+              <b-button
+                v-t="'continue'"
+                class="btn mt-3 btn-lg"
+                variant="primary"
+                @click="plainSeed()"
+              />
             </div>
           </div>
         </div>
         <div class="plan">
           <div class="card bg-secondary">
             <div class="mt-3 mb-0 card-img-top circle">
-              <font-awesome-icon size="3x" class="icon" :icon="['fal','lock-alt']" />
+              <font-awesome-icon
+                size="3x"
+                class="icon"
+                :icon="['fal','lock-alt']"
+              />
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'seedvault'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="uploadVault()"></b-button>
+              <h5
+                v-t="'seedvault'"
+                class="card-title"
+              />
+              <b-button
+                v-t="'continue'"
+                class="btn mt-3 btn-lg"
+                variant="primary"
+                @click="uploadVault()"
+              />
             </div>
           </div>
         </div>
@@ -34,8 +61,16 @@
               <span style="font-size:2.2em">Abc</span>
             </div>
             <div class="card-body">
-              <h5 class="card-title" v-t="'importMnemonic'"></h5>
-              <b-button class="btn mt-3 btn-lg" variant="primary" v-t="'continue'" v-on:click="mnemonic()"></b-button>
+              <h5
+                v-t="'importMnemonic'"
+                class="card-title"
+              />
+              <b-button
+                v-t="'continue'"
+                class="btn mt-3 btn-lg"
+                variant="primary"
+                @click="mnemonic()"
+              />
             </div>
           </div>
         </div>
@@ -43,8 +78,16 @@
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-100"
+            variant="secondary"
+            @click="previous()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -53,7 +96,7 @@
 
 <script>
 export default {
-  name: 'import-seed',
+  name: 'ImportSeed',
   methods: {
     plainSeed () {
       this.$router.push({ name: 'insertSeed' })

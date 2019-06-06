@@ -1,17 +1,27 @@
 <template>
   <div class="mh-100">
     <b-container>
-      <h4 class="mt-3" v-t="'writedownyourseed'"></h4>
+      <h4
+        v-t="'writedownyourseed'"
+        class="mt-3"
+      />
       <div>
-        <small v-t="'whywrite'"></small>
+        <small v-t="'whywrite'" />
       </div>
       <div class="row mt-3 justify-content-center align-items-center">
         <div class="panel table text-base">
           <div class="card bg-secondary">
             <ol>
-              <li class="seedRow" v-for="row in splitSeed" :key="row+'row'">
-                <span v-for="seedItem in row" :key="seedItem+'column'">
-                  {{seedItem}}
+              <li
+                v-for="row in splitSeed"
+                :key="row+'row'"
+                class="seedRow"
+              >
+                <span
+                  v-for="seedItem in row"
+                  :key="seedItem+'column'"
+                >
+                  {{ seedItem }}
                 </span>
               </li>
             </ol>
@@ -21,9 +31,22 @@
     </b-container>
     <b-row class="fixed-row-bottom d-print-none">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button class="w-50" variant="primary" v-t="'validate'"  v-on:click="validateSeed()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-50"
+            variant="secondary"
+            @click="previous()"
+          />
+          <b-button
+            v-t="'validate'"
+            class="w-50"
+            variant="primary"
+            @click="validateSeed()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -34,7 +57,12 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'export-paper',
+  name: 'ExportPaper',
+  data () {
+    return {
+      isPrintingTemplate: false
+    }
+  },
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
@@ -54,11 +82,6 @@ export default {
     },
     validateSeed () {
       this.$router.push({ name: 'insertSeed' })
-    }
-  },
-  data () {
-    return {
-      isPrintingTemplate: false
     }
   }
 }

@@ -2,19 +2,41 @@
   <div>
     <b-container class="h-100">
       <div class="row h-100 justify-content-center align-items-center">
-        <div id="jumbotron" class="p-3">
-          <h4 v-t="'thankyou'" class="mb-3"></h4>
+        <div
+          id="jumbotron"
+          class="p-3"
+        >
+          <h4
+            v-t="'thankyou'"
+            class="mb-3"
+          />
           <div class="text-left">
-            <label for="selectLang" v-t="'language'"></label>
-            <b-form-select id="selectLang" v-model="$i18n.locale" :options="languages" @change="setLang"/>
+            <label
+              v-t="'language'"
+              for="selectLang"
+            />
+            <b-form-select
+              id="selectLang"
+              v-model="$i18n.locale"
+              :options="languages"
+              @change="setLang"
+            />
           </div>
         </div>
       </div>
     </b-container>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-100" variant="primary" v-t="'continue'"  v-on:click="generateSeedPage()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'continue'"
+            class="w-100"
+            variant="primary"
+            @click="generateSeedPage()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -24,7 +46,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 export default {
-  name: 'locale-changer',
+  name: 'LocaleChanger',
   computed: {
     ...mapState('Language', {
       languages: state => state.languages,

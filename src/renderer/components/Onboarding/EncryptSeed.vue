@@ -2,51 +2,106 @@
   <div>
     <div class="row h-100 justify-content-center align-items-center">
       <div id="passwordEncrypt">
-        <font-awesome-icon size="4x" class="icon mb-3" :icon="['fal','shield-check']" />
-        <h4 v-t="'encryptseed'" class="mb-3"></h4>
+        <font-awesome-icon
+          size="4x"
+          class="icon mb-3"
+          :icon="['fal','shield-check']"
+        />
+        <h4
+          v-t="'encryptseed'"
+          class="mb-3"
+        />
         <div class="form-group text-left">
-          <label for="pwd" v-t="'password'"></label>
+          <label
+            v-t="'password'"
+            for="pwd"
+          />
           <div class="security">
-            <div v-bind:class="{ 'bg-danger': score !== null && (score.score >= 0 && score.score < 4), 'bg-success': score !== null && score.score === 4}"></div>
-            <div v-bind:class="{ 'bg-danger': score !== null && (score.score >= 2 && score.score < 4), 'bg-success': score !== null && score.score === 4}"></div>
-            <div v-bind:class="{ 'bg-danger': score !== null && (score.score >= 3 && score.score < 4), 'bg-success': score !== null && score.score === 4}"></div>
-            <div v-bind:class="{ 'bg-success': score !== null && score.score === 4}"></div>
+            <div :class="{ 'bg-danger': score !== null && (score.score >= 0 && score.score < 4), 'bg-success': score !== null && score.score === 4}" />
+            <div :class="{ 'bg-danger': score !== null && (score.score >= 2 && score.score < 4), 'bg-success': score !== null && score.score === 4}" />
+            <div :class="{ 'bg-danger': score !== null && (score.score >= 3 && score.score < 4), 'bg-success': score !== null && score.score === 4}" />
+            <div :class="{ 'bg-success': score !== null && score.score === 4}" />
           </div>
           <div class="input-group input-group-lg">
-            <b-form-input id="pwd"
-              :type="inputType"
-              :state="validatePassword"
+            <b-form-input
+              id="pwd"
               v-model="password"
+              :type="inputType"
+              :state="score && score.score >= 4"
               class="transparent"
-              required>
-            </b-form-input>
+              required
+              @input="validatePassword()"
+            />
             <div class="input-group-append eyeButton">
-              <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="changePasswordVisibility()" class="btn btn-default btn-sm text-white">
-                <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
-                <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                <span class="sr-only" v-t="'togglePasswordVisibility'"></span>
+              <b-button
+                v-b-tooltip.hover
+                :title="$t('togglePasswordVisibility')"
+                :pressed="showPassword"
+                variant="link"
+                class="btn btn-default btn-sm text-white"
+                @click="changePasswordVisibility()"
+              >
+                <font-awesome-icon
+                  v-if="showPassword"
+                  class="icon"
+                  :icon="['fal','eye']"
+                />
+                <font-awesome-icon
+                  v-if="!showPassword"
+                  class="icon"
+                  :icon="['fal','eye-slash']"
+                />
+                <span
+                  v-t="'togglePasswordVisibility'"
+                  class="sr-only"
+                />
               </b-button>
             </div>
           </div>
-          <small id="pwdHelp" class="form-text text-muted"> <span v-if="password && score && score.feedback && score.feedback.warning">{{score.feedback.warning}}</span></small>
+          <small
+            id="pwdHelp"
+            class="form-text text-muted"
+          > <span v-if="password && score && score.feedback && score.feedback.warning">{{ score.feedback.warning }}</span></small>
         </div>
         <div class="form-group text-left">
-          <label for="pwdConfirm" v-t="'retypePassword'"></label>
+          <label
+            v-t="'retypePassword'"
+            for="pwdConfirm"
+          />
           <form @submit.stop.prevent="createWallet">
             <div class="input-group input-group-lg mb-3">
-              <b-form-input id="pwdConfirm"
-                :type="inputType"
-                :state="validatePasswordConfirmation"
-                :disabled="score === null || score.score < 4"
+              <b-form-input
+                id="pwdConfirm"
                 v-model="passwordConfirm"
+                :type="inputType"
+                :state="validatePasswordConfirmation()"
+                :disabled="score === null || score.score < 4"
                 class="transparent"
-                required>
-              </b-form-input>
+                required
+              />
               <div class="input-group-append eyeButton">
-                <b-button v-b-tooltip.hover :title="$t('togglePasswordVisibility')" :pressed="showPassword" variant="link" v-on:click="changePasswordVisibility()" class="btn btn-default btn-sm text-white">
-                  <font-awesome-icon v-if="showPassword" class="icon" :icon="['fal','eye']" />
-                  <font-awesome-icon v-if="!showPassword" class="icon" :icon="['fal','eye-slash']" />
-                  <span class="sr-only" v-t="'togglePasswordVisibility'"></span>
+                <b-button
+                  v-b-tooltip.hover
+                  :title="$t('togglePasswordVisibility')"
+                  :pressed="showPassword"
+                  variant="link"
+                  class="btn btn-default btn-sm text-white"
+                  @click="changePasswordVisibility()"
+                >
+                  <font-awesome-icon
+                    v-if="showPassword"
+                    class="icon"
+                    :icon="['fal','eye']"
+                  />
+                  <font-awesome-icon
+                    v-if="!showPassword"
+                    class="icon"
+                    :icon="['fal','eye-slash']"
+                  />
+                  <span
+                    v-t="'togglePasswordVisibility'"
+                    class="sr-only"
+                  />
                 </b-button>
               </div>
             </div>
@@ -56,9 +111,23 @@
     </div>
     <b-row class="fixed-row-bottom">
       <b-col class="p-0 w-100">
-        <b-button-group class="w-100" size="lg">
-          <b-button class="w-50" variant="secondary" v-t="'previous'"  v-on:click="previous()"></b-button>
-          <b-button :disabled="!valid" class="w-50" variant="primary" v-t="'encrypt'"  v-on:click="createWallet()"></b-button>
+        <b-button-group
+          class="w-100"
+          size="lg"
+        >
+          <b-button
+            v-t="'previous'"
+            class="w-50"
+            variant="secondary"
+            @click="previous()"
+          />
+          <b-button
+            v-t="'encrypt'"
+            :disabled="!valid"
+            class="w-50"
+            variant="primary"
+            @click="createWallet()"
+          />
         </b-button-group>
       </b-col>
     </b-row>
@@ -73,44 +142,25 @@ import { mapState, mapActions } from 'vuex'
 Vue.use(LogosWallet)
 
 export default {
-  name: 'encrypt-seed',
+  name: 'EncryptSeed',
+  data () {
+    return {
+      password: null,
+      passwordConfirm: null,
+      score: null,
+      showPassword: false,
+      deleteText: null,
+      inputType: 'password',
+      valid: false
+    }
+  },
   computed: {
     ...mapState('Onboarding', {
       seed: state => state.seed
     }),
     ...mapState('EncryptedWallet', {
       validated: state => state.validated
-    }),
-    validatePassword () {
-      if (this.password === null || this.password.length === 0) {
-        this.score = null
-        return null
-      } else {
-        this.score = zxcvbn(this.password)
-        return this.score.score >= 4
-      }
-    },
-    validatePasswordConfirmation () {
-      if (this.passwordConfirm === null || this.passwordConfirm.length === 0) {
-        this.valid = null
-        return null
-      } else {
-        if (this.password === this.passwordConfirm) {
-          this.valid = true
-          return this.valid
-        } else {
-          this.valid = false
-          return this.valid
-        }
-      }
-    },
-    validateDeleteKeyword () {
-      if (this.deleteText !== null && this.deleteText.length > 0) {
-        return this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()
-      } else {
-        return null
-      }
-    }
+    })
   },
   methods: {
     ...mapActions('EncryptedWallet', [
@@ -137,17 +187,29 @@ export default {
     changePasswordVisibility () {
       this.showPassword = !this.showPassword
       this.inputType = this.inputType === 'password' ? 'text' : 'password'
-    }
-  },
-  data () {
-    return {
-      password: null,
-      passwordConfirm: null,
-      score: null,
-      showPassword: false,
-      deleteText: null,
-      inputType: 'password',
-      valid: false
+    },
+    validatePassword () {
+      if (this.password === null || this.password.length === 0) {
+        this.score = null
+        return null
+      } else {
+        this.score = zxcvbn(this.password)
+        return this.score.score >= 4
+      }
+    },
+    validatePasswordConfirmation () {
+      if (this.passwordConfirm === null || this.passwordConfirm.length === 0) {
+        this.valid = null
+        return null
+      } else {
+        if (this.password === this.passwordConfirm) {
+          this.valid = true
+          return this.valid
+        } else {
+          this.valid = false
+          return this.valid
+        }
+      }
     }
   }
 }

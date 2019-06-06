@@ -6,5 +6,12 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: true
     }
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "@/styles/shame.scss";`
+      }
+    }
   }
 }

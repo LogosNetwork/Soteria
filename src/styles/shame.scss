@@ -1,9 +1,12 @@
+@import "node_modules/bootstrap/scss/functions";
+
 $theme-colors: (
   "secondary": #2E3136,
   "primary": #7289da,
   "bg": #36393F,
   "tertiary": #2B2C31,
-  "base": #dcddde
+  "base": #dcddde,
+  "danger": #dc3545
 );
 :root {
   --gray-100: #f8f9fa;
@@ -17,22 +20,17 @@ $theme-colors: (
   --gray-900: #212529;
 }
 
-@function color($key: "blue") {
-  @return map-get($colors, $key);
-}
-
-@function theme-color($key: "primary") {
-  @return map-get($theme-colors, $key);
-}
-
-@function gray($key: "100") {
-  @return map-get($grays, $key);
-}
-
+$input-bg: rgba(theme-color("base"),0.05);
+$input-border-color: theme-color("secondary");
+$input-color: theme-color("base");
+$form-feedback-invalid-color: rgba(theme-color("danger"),0.05);
+$input-focus-bg: rgba(theme-color("primary"),0.05);
+$custom-select-indicator-color: #fff;
+$input-disabled-bg: rgba(theme-color("base"),0.05);
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
-
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
+@import './multiselect.scss';
 
 body {
   font-family: 'Noto Sans', sans-serif;
@@ -40,7 +38,7 @@ body {
 }
 #closeBar {
   -webkit-app-region: drag;
-  height: 25px;
+  height: 20px;
   position: fixed;
   width: 100vw;
   top:0px;
@@ -64,50 +62,23 @@ body {
   left: 15px;
   width: 100vw;
 }
-.form-control {
-  background: rgba(theme-color("base"),0.05);
-  color: theme-color("base");
-}
 .form-control.is-invalid {
   border-color: var(--danger);
-  background: rgba(theme-color("danger"), 0.05);
 }
 .form-control:focus {
-  background: rgba(theme-color("primary"), 0.05);
   color: theme-color("base");
 }
 .form-control:disabled {
-  background: rgba(233, 236, 239, 0.15);
   cursor: not-allowed;
 }
 button[disabled="disabled"] {
   cursor: not-allowed;
 }
-.custom-file-input {
-  height: calc(2.875rem + 2px);
-  cursor: pointer;
-  text-indent: -999px;
-}
-.custom-file-label {
-  background: rgba(255, 255, 255, 0.05);
-  color: theme-color("base");
-  height: calc(2.875rem + 2px);
-  padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  border-radius: 0.3rem;
-}
 .custom-file-label::after {
   background: theme-color("primary");
-  color: theme-color("base");
-  height: calc(2.81rem + 2px);
-  padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  border-color: theme-color("primary");
 }
 .modal-content {
-  background: theme-color("secondary")
+  background: theme-color("secondary");
 }
 .modal-content > .modal-header {
   color: theme-color("base");
@@ -148,4 +119,14 @@ button[disabled="disabled"] {
 }
 .scroller:hover::-webkit-scrollbar-track {
   visibility: visible;
+}
+.nav-tabs {
+  border: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+}
+.nav-tabs>li {
+  float: none;
 }

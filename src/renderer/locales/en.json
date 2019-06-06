@@ -41,7 +41,7 @@
   "printWarning": "WARNING: Printers can store past prints.",
   "printTemplate": "Print Template",
   "showSeed": "Show Seed",
-  "validateYourSeed": "Insert your seed",
+  "validateYourSeed": "Insert Seed",
   "typeSeed": "Use seed instead",
   "whyvalidate": "Validating your seed ensures that you have written down your seed or stored a backup of your seed vault. Remember if you lose your seed you will lose your Logos.",
   "importMethods": "There are three different methods that can be used to import your seed.",
@@ -52,9 +52,12 @@
   "chooseyourseedvault": "Choose your seed vault...",
   "logosAccounts": "Logos Accounts",
   "addNewAccount": "+ Add new account",
+  "add": "Add",
   "walletNavigation": "Wallet Navigation",
   "wallet": "Wallet",
   "governance": "Governance",
   "settings": "Settings",
-  "logout": "Log out"
+  "logout": "Log out",
+  "search": "Search",
+  "tokens": "Tokens"
 }
