@@ -61,5 +61,6 @@
   "search": "Search",
   "tokens": "Tokens",
   "searchTokens": "Search for a token",
-  "tokenFilter": "Filter the wallet by token"
+  "tokenFilter": "Filter the wallet by token",
+  "filterByCurrency": "Filter By Currency"
 }

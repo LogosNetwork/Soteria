@@ -1,16 +1,28 @@
 <template>
   <div class="panel scroller">
     <b-form-group
-      class="text-left pt-3"
+      class="text-left"
       :label="$t('tokenFilter')"
       :label-sr-only="true"
     >
-      <div class="inputWrapper">
+      <div class="inputWrapper pt-3">
+        <label
+          v-t="'filterByCurrency'"
+          for="tokenSearch"
+        />
+        <b-button
+          class="tokenClose"
+          variant="link"
+          @click="setShowFilter()"
+        >
+          <font-awesome-icon
+            :icon="['fal','times']"
+            :size="lg"
+          />
+        </b-button>
         <b-form-input
           id="tokenSearch"
           v-model="tokenName"
-          class="tokenSearch"
-          :state="nameState"
           :placeholder="$t('searchTokens')"
           trim
         />
@@ -94,12 +106,19 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'TokenSelector',
   data () {
     return {
-      value: null
+      tokenName: null
     }
+  },
+  methods: {
+    ...mapActions('Wallet', [
+      'setShowFilter'
+    ])
   }
 }
 </script>
@@ -114,6 +133,10 @@ export default {
   padding-right: 1rem;
   background: theme-color("secondary");
   overflow-y: auto;
+}
+.panel.slide-enter-active > .form-group > div:nth-child(2) > .inputWrapper,
+.panel.slide-leave-active > .form-group > div:nth-child(2) > .inputWrapper {
+  position: absolute;
 }
 .tokenSelector {
   text-align: left;
@@ -132,19 +155,21 @@ export default {
 .tokenSelector > small {
   display: block;
 }
-.tokenSearch {
-  position: fixed;
-  top: 1rem;
-  width: calc(300px - 2rem);
+.tokenClose {
+  float: right;
+  padding: 0px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
 }
 .tokenGroup {
-  margin-top: 58px;
+  margin-top: calc(70px + 2rem);
   width: calc(300px - 2rem);
 }
 .inputWrapper {
-  height: calc(38px + 2rem);
+  height: calc(70px + 2rem);
   position: fixed;
-  top: 0px;
+  top: 0;
   z-index: 2;
   background: theme-color("secondary");
   width: calc(300px - 2rem);

@@ -10,7 +10,7 @@
       >
         <b-col
           cols="3"
-          class="pt-4"
+          class="pt-4 sidebar"
         >
           <Sidebar />
         </b-col>
@@ -58,6 +58,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .sidebar { max-width: 200px; }
   .wallet-container {
     overflow:hidden;
     height: calc(100vh);
