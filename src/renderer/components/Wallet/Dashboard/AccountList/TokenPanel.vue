@@ -17,7 +17,6 @@
         >
           <font-awesome-icon
             :icon="['fal','times']"
-            :size="lg"
           />
         </b-button>
         <b-form-input

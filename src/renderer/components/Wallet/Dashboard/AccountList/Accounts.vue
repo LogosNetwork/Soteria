@@ -1,38 +1,46 @@
 <template>
-  <b-tabs>
-    <template slot="tabs">
-      <b-nav-item
-        href="#"
-        :class="{ active: activeAddress === null }"
-        @click="activeAddress = null"
+  <div>
+    <div class="accountList">
+      <ul
+        role="tablist"
+        class="nav nav-tabs scroller"
       >
-        All
-      </b-nav-item>
-      <b-nav-item
-        v-for="account in wallet.accounts"
-        :key="account.address"
-        href="#"
-        :class="{ active: account.address === activeAddress }"
-        @click="() => {activeAddress = account.address; setCurrentAccount(account.address); }"
-      >
-        {{ account.label }}
-      </b-nav-item>
-      <b-button
-        variant="link"
-        class="p-0"
-        @click="addAccount"
-      >
-        <font-awesome-layers class="fa-lg">
-          <font-awesome-icon :icon="['fal','square']" />
-          <font-awesome-icon
-            :icon="['fal','plus']"
-            transform="shrink-6"
-            :style="{ color: 'white' }"
-          />
-        </font-awesome-layers>
-      </b-button>
-    </template>
-  </b-tabs>
+        <b-nav-item
+          href="#"
+          class="mb-0"
+          :class="{ active: activeAddress === null }"
+          @click="activeAddress = null"
+        >
+          All
+        </b-nav-item>
+        <b-nav-item
+          v-for="account in wallet.accounts"
+          :key="account.address"
+          href="#"
+          :class="{ active: account.address === activeAddress }"
+          @click="() => {activeAddress = account.address; setCurrentAccount(account.address); }"
+        >
+          {{ account.label }}
+        </b-nav-item>
+      </ul>
+    </div>
+    <b-button
+      v-b-tooltip.hover
+      variant="link"
+      class="p-0 align-top"
+      :title="$t('addNewAccount')"
+      @click="addAccount"
+    >
+      <font-awesome-layers class="fa-lg">
+        <font-awesome-icon :icon="['fal','square']" />
+        <font-awesome-icon
+          :icon="['fal','plus']"
+          transform="shrink-6"
+          :style="{ color: 'white' }"
+        />
+      </font-awesome-layers>
+    </b-button>
+  </div>
 </template>
 
 <script>
@@ -63,6 +71,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.accountList {
+  width: calc(100% - 28px);
+  display: inline-block;
+}
 .nav-link {
   color: $gray-600;
   padding: 0px;

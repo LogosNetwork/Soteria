@@ -14,8 +14,8 @@
         >
           <Sidebar />
         </b-col>
-        <b-col class="pt-3 content">
-          <router-view />
+        <b-col class="content">
+          <router-view class="pt-4" />
         </b-col>
       </b-row>
     </b-container>
@@ -66,5 +66,6 @@ export default {
   }
   .content {
     background-color: theme-color("bg");
+    max-width: calc(100% - 200px);
   }
 </style>

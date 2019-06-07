@@ -2,6 +2,8 @@
   <div>
     <b-button
       v-if="!showFilter"
+      v-b-tooltip.hover
+      :title="$t('tokenFilter')"
       variant="link"
       class="p-0"
       @click="setShowFilter()"

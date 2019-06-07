@@ -51,7 +51,7 @@
   "selectDifferent": "Select a different Seed Vault",
   "chooseyourseedvault": "Choose your seed vault...",
   "logosAccounts": "Logos Accounts",
-  "addNewAccount": "+ Add new account",
+  "addNewAccount": "Add new account",
   "add": "Add",
   "walletNavigation": "Wallet Navigation",
   "wallet": "Wallet",
@@ -61,6 +61,6 @@
   "search": "Search",
   "tokens": "Tokens",
   "searchTokens": "Search for a token",
-  "tokenFilter": "Filter the wallet by token",
+  "tokenFilter": "Filter the wallet by currency",
   "filterByCurrency": "Filter By Currency"
 }
