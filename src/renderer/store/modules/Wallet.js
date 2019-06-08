@@ -1,6 +1,7 @@
 const state = {
   tokenFilter: null,
-  showFilter: false
+  showFilter: false,
+  activeAddress: null
 }
 
 const getters = {
@@ -13,6 +14,9 @@ const mutations = {
   },
   setShowFilter (state, bool) {
     state.showFilter = bool
+  },
+  setActiveAddress (state, address) {
+    state.activeAddress = address
   }
 }
 
@@ -23,6 +27,9 @@ const actions = {
   setShowFilter ({ commit, state }, bool = null) {
     if (bool === null) bool = !state.showFilter
     commit('setShowFilter', bool)
+  },
+  setActiveAddress ({ commit }, address) {
+    commit('setActiveAddress', address)
   }
 }
 

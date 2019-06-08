@@ -9,7 +9,7 @@
           href="#"
           class="mb-0"
           :class="{ active: activeAddress === null }"
-          @click="activeAddress = null"
+          @click="setCurrentAccount(null)"
         >
           All
         </b-nav-item>
@@ -17,8 +17,9 @@
           v-for="account in wallet.accounts"
           :key="account.address"
           href="#"
+          class="mb-0"
           :class="{ active: account.address === activeAddress }"
-          @click="() => {activeAddress = account.address; setCurrentAccount(account.address); }"
+          @click="setCurrentAccount(account.address)"
         >
           {{ account.label }}
         </b-nav-item>
@@ -44,17 +45,27 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'Accounts',
   data () {
     return {
-      wallet: this.$Wallet,
-      activeAddress: null
+      wallet: this.$Wallet
     }
   },
+  computed: {
+    ...mapState('Wallet', {
+      activeAddress: state => state.activeAddress
+    })
+  },
   methods: {
+    ...mapActions('Wallet', [
+      'setActiveAddress'
+    ]),
     setCurrentAccount (address) {
-      this.wallet.currentAccountAddress = address
+      this.setActiveAddress(address)
+      if (address !== null) this.wallet.currentAccountAddress = address
     },
     addAccount: async function () {
       let newAccount = await this.wallet.createAccount(null, false)

@@ -1,21 +1,21 @@
 <template>
   <div>
     <AccountList />
-    <AccountInfoActions />
+    <AccountInfo />
     <AccountHistory />
   </div>
 </template>
 
 <script>
 import AccountList from '@/components/Wallet/Dashboard/AccountList.vue'
-import AccountInfoActions from '@/components/Wallet/Dashboard/AccountInfoActions.vue'
+import AccountInfo from '@/components/Wallet/Dashboard/AccountInfo.vue'
 import AccountHistory from '@/components/Wallet/Dashboard/AccountHistory.vue'
 
 export default {
   name: 'Dashboard',
   components: {
     'AccountList': AccountList,
-    'AccountInfoActions': AccountInfoActions,
+    'AccountInfo': AccountInfo,
     'AccountHistory': AccountHistory
   }
 }
