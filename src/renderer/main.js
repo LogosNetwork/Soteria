@@ -7,6 +7,7 @@ import store from './store'
 import i18n from './i18n'
 import BootstrapVue from 'bootstrap-vue'
 import Multiselect from 'vue-multiselect'
+import VueInputAutowidth from 'vue-input-autowidth'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
@@ -45,6 +46,7 @@ Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 Vue.component('multiselect', Multiselect)
 
 Vue.use(BootstrapVue)
+Vue.use(VueInputAutowidth)
 /* eslint-disable no-new */
 new Vue({
   components: { App },

@@ -4,7 +4,7 @@
     class="mt-3"
   >
     <div class="text-left">
-      TODO
+      Account Info
     </div>
   </b-container>
 </template>

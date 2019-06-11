@@ -23,18 +23,18 @@
           @dblclick="editLabel(account.address)"
         >
           <input
-            v-show="editing[account.address]"
-            ref="editable"
+            v-if="editing[account.address]"
+            :ref="`editable${account.address}`"
             v-model="wallet.accountsObject[account.address].label"
             v-autowidth="{maxWidth: '250px', minWidth: '20px', comfortZone: 0}"
             type="text"
-            placeholder="Account Name"
+            :placeholder="$t('accountName')"
             class="p-0 m-0 border-0 bg-transparent text-inherit"
             @keydown.enter.prevent
             @keyup.enter="saveLabel(account.address)"
           >
           <span
-            v-if="!editing[account.address]"
+            v-else
           >
             {{ account.label }}
           </span>
@@ -63,8 +63,6 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Vue from 'vue'
-import VueInputAutowidth from 'vue-input-autowidth'
-Vue.use(VueInputAutowidth)
 
 export default {
   name: 'Accounts',
@@ -86,14 +84,14 @@ export default {
     setCurrentAccount (address) {
       this.setActiveAddress(address)
       for (let addr in this.editing) {
-        this.saveLabel(addr)
+        if (addr !== address) this.saveLabel(addr)
       }
       if (address !== null) this.wallet.currentAccountAddress = address
     },
     editLabel (address) {
       Vue.set(this.editing, address, true)
       Vue.nextTick(() => {
-        this.$refs.editable[0].focus()
+        this.$refs[`editable${address}`][0].focus()
       })
     },
     saveLabel (address) {
