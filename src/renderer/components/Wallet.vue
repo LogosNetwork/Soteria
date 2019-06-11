@@ -24,6 +24,7 @@
 
 <script>
 import Sidebar from '@/components/Wallet/Sidebar.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Wallet',
@@ -35,6 +36,9 @@ export default {
       wallet: this.$Wallet
     }
   },
+  mounted: function () {
+    window.addEventListener('beforeunload', this.recordData)
+  },
   created () {
     if (this.wallet.seed === null) {
       this.$router.push({ path: '/' })
@@ -43,6 +47,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('EncryptedWallet', [
+      'setWallet'
+    ]),
     addAccount: async function () {
       let newAccount = await this.wallet.createAccount(null, false)
       delete this.wallet._accounts[newAccount.address]
@@ -52,6 +59,9 @@ export default {
         delete this.wallet._tokenAccounts[token]
         this.$set(this.wallet._tokenAccounts, tkAccount.address, tkAccount)
       }
+    },
+    recordData () {
+      this.setWallet(this.wallet.encrypt())
     }
   }
 }
