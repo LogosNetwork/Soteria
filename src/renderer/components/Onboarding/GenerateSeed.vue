@@ -57,10 +57,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import LogosWallet from '../../api/wallet'
 import { mapState, mapActions } from 'vuex'
-Vue.use(LogosWallet)
 
 export default {
   name: 'GenerateSeed',

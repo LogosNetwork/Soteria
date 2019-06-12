@@ -136,10 +136,7 @@
 
 <script>
 import zxcvbn from 'zxcvbn'
-import LogosWallet from '../../api/wallet'
-import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
-Vue.use(LogosWallet)
 
 export default {
   name: 'EncryptSeed',
@@ -179,7 +176,10 @@ export default {
       let encryptedWallet = tempWallet.encrypt()
       this.setWallet(encryptedWallet)
       if (this.validated) {
-        this.$router.push({ path: '/wallet/dashboard' })
+        this.$Wallet.setPassword(this.password)
+        this.$Wallet.load(encryptedWallet).then((val) => {
+          this.$router.push({ path: '/wallet/dashboard' })
+        })
       } else {
         this.$router.push({ name: 'exportSeed' })
       }

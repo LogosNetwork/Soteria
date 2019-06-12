@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import '../styles/shame.scss'
+import LogosWallet from './api/wallet'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -47,6 +48,7 @@ Vue.component('multiselect', Multiselect)
 
 Vue.use(BootstrapVue)
 Vue.use(VueInputAutowidth)
+Vue.use(LogosWallet)
 /* eslint-disable no-new */
 new Vue({
   components: { App },
