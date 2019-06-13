@@ -136,4 +136,7 @@ export default {
   border-bottom: 1px solid theme-color("primary");
   background: transparent;
 }
+.nav-item:first-child > .nav-link {
+  margin-left: 0px;
+}
 </style>
