@@ -63,5 +63,9 @@
   "searchTokens": "Search for a token",
   "tokenFilter": "Filter the wallet by currency",
   "filterByCurrency": "Filter By Currency",
-  "accountName": "Account Name"
+  "accountName": "Account Name",
+  "send": "Send",
+  "receive": "Receive",
+  "recentTransactions": "Recent Transactions",
+  "balance": "Balance"
 }
