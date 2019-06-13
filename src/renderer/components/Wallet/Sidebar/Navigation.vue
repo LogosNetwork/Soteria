@@ -93,6 +93,7 @@
             name="navigationSelector"
             autocomplete="off"
             value="logout"
+            @click="logout"
           >
           <font-awesome-icon
             class="icon mr-2"
@@ -107,8 +108,28 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'NavigationSelector'
+  name: 'NavigationSelector',
+  data () {
+    return {
+      wallet: this.$Wallet
+    }
+  },
+  methods: {
+    ...mapActions('EncryptedWallet', [
+      'setWallet'
+    ]),
+    logout () {
+      this.setWallet(this.wallet.encrypt())
+      this.wallet.loadOptions({
+        seed: null,
+        walletID: false
+      })
+      this.$router.push({ path: '/locked' })
+    }
+  }
 }
 </script>
 

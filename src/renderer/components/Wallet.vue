@@ -46,6 +46,9 @@ export default {
       this.addAccount()
     }
   },
+  beforeDestroy: function () {
+    window.removeEventListener('beforeunload', this.recordData)
+  },
   methods: {
     ...mapActions('EncryptedWallet', [
       'setWallet'
