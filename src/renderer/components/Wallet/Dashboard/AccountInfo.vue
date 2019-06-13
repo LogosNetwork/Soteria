@@ -19,14 +19,20 @@
         </div>
       </div>
       <div class="align-self-center">
-        <b-button>
+        <b-button
+          variant="primary"
+          size="sm"
+        >
           <font-awesome-icon
             class="mr-1"
             :icon="['fal','paper-plane']"
           />
           <span v-t="'send'" />
         </b-button>
-        <b-button>
+        <b-button
+          variant="primary"
+          size="sm"
+        >
           <font-awesome-icon
             class="mr-1"
             :icon="['fal','hand-receiving']"

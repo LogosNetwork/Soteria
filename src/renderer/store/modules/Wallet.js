@@ -1,7 +1,8 @@
 const state = {
   tokenFilter: null,
   showFilter: false,
-  activeAddress: null
+  activeAddress: null,
+  synced: false
 }
 
 const getters = {
@@ -17,6 +18,9 @@ const mutations = {
   },
   setActiveAddress (state, address) {
     state.activeAddress = address
+  },
+  setSynced (state, synced) {
+    state.synced = synced
   }
 }
 
@@ -30,6 +34,9 @@ const actions = {
   },
   setActiveAddress ({ commit }, address) {
     commit('setActiveAddress', address)
+  },
+  setSynced ({ commit }, synced) {
+    commit('setSynced', synced)
   }
 }
 

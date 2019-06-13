@@ -6,7 +6,8 @@
 
 body {
   font-family: 'Noto Sans', sans-serif;
-  color: theme-color("base")
+  color: theme-color("base");
+  overflow: hidden;
 }
 #closeBar {
   -webkit-app-region: drag;

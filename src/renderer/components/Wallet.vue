@@ -18,13 +18,27 @@
           <router-view class="pt-4" />
         </b-col>
       </b-row>
+      <div
+        v-if="!synced"
+        v-b-tooltip.hover
+        class="syncer"
+        :title="$t('syncingWallet')"
+      >
+        <font-awesome-icon
+          class="text-primary mr-3 mb-3"
+          size="2x"
+          :icon="['fal','sync-alt']"
+          spin
+        />
+      </div>
     </b-container>
   </div>
 </template>
 
 <script>
 import Sidebar from '@/components/Wallet/Sidebar.vue'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'Wallet',
@@ -36,8 +50,36 @@ export default {
       wallet: this.$Wallet
     }
   },
+  computed: {
+    ...mapState('Wallet', {
+      activeAddress: state => state.activeAddress,
+      synced: state => state.synced
+    })
+  },
   mounted: function () {
-    window.addEventListener('beforeunload', this.recordData)
+    if (this.wallet.seed) {
+      this.setSynced(false)
+      axios.get(`https://pla.bs/delegates`).then(res => {
+        if (this.wallet.mqtt !== 'wss://pla.bs:8443') {
+          this.wallet.mqtt = 'wss://pla.bs:8443'
+        }
+        this.wallet.rpc = {
+          proxy: 'https://pla.bs',
+          delegates: Object.values(res.data)
+        }
+        if (this.activeAddress) {
+          if (this.wallet.accountsObject[this.activeAddress]) {
+            this.wallet.currentAccountAddress = this.activeAddress
+          } else {
+            this.setActiveAddress(this.wallet.currentAccountAddress)
+          }
+        }
+        this.wallet.sync().then((result) => {
+          this.setSynced(result)
+        })
+      })
+      window.addEventListener('beforeunload', this.recordData)
+    }
   },
   created () {
     if (this.wallet.seed === null) {
@@ -52,6 +94,10 @@ export default {
   methods: {
     ...mapActions('EncryptedWallet', [
       'setWallet'
+    ]),
+    ...mapActions('Wallet', [
+      'setActiveAddress',
+      'setSynced'
     ]),
     addAccount: async function () {
       let newAccount = await this.wallet.createAccount(null, false)
@@ -79,6 +125,10 @@ export default {
   }
   .content {
     background-color: theme-color("bg");
-    max-width: calc(100% - 200px);
+  }
+  .syncer {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
   }
 </style>

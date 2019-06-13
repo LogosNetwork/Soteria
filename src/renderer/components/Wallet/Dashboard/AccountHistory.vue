@@ -10,12 +10,20 @@
         <span v-t="'recentTransactions'" />
       </small>
     </div>
+    <small
+      v-t="'notOpened'"
+      class="text-center text-muted"
+    />
     <div
-      v-for="index in 500"
-      :key="index"
-      class="text-left"
+      v-if="false"
     >
-      Transaction {{ index }}
+      <div
+        v-for="index in 500"
+        :key="index"
+        class="text-left"
+      >
+        Transaction {{ index }}
+      </div>
     </div>
   </b-container>
 </template>

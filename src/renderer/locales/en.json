@@ -67,5 +67,7 @@
   "send": "Send",
   "receive": "Receive",
   "recentTransactions": "Recent Transactions",
-  "balance": "Balance"
+  "balance": "Balance",
+  "notOpened": "This account has not been opened",
+  "syncingWallet": "Syncing Wallet with the Logos Blockchain"
 }
