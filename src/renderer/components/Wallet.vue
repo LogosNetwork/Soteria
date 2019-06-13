@@ -57,24 +57,24 @@ export default {
     })
   },
   mounted: function () {
-    if (this.wallet.seed) {
+    if (this.$Wallet.seed) {
       this.setSynced(false)
       axios.get(`https://pla.bs/delegates`).then(res => {
-        if (this.wallet.mqtt !== 'wss://pla.bs:8443') {
-          this.wallet.mqtt = 'wss://pla.bs:8443'
+        if (this.$Wallet.mqtt !== 'wss://pla.bs:8443') {
+          this.$Wallet.mqtt = 'wss://pla.bs:8443'
         }
-        this.wallet.rpc = {
+        this.$Wallet.rpc = {
           proxy: 'https://pla.bs',
           delegates: Object.values(res.data)
         }
         if (this.activeAddress) {
-          if (this.wallet.accountsObject[this.activeAddress]) {
-            this.wallet.currentAccountAddress = this.activeAddress
+          if (this.$Wallet.accountsObject[this.activeAddress]) {
+            this.$Wallet.currentAccountAddress = this.activeAddress
           } else {
-            this.setActiveAddress(this.wallet.currentAccountAddress)
+            this.setActiveAddress(this.$Wallet.currentAccountAddress)
           }
         }
-        this.wallet.sync().then((result) => {
+        this.$Wallet.sync().then((result) => {
           this.setSynced(result)
         })
       })
@@ -82,9 +82,9 @@ export default {
     }
   },
   created () {
-    if (this.wallet.seed === null) {
+    if (this.$Wallet.seed === null) {
       this.$router.push({ path: '/' })
-    } else if (this.wallet && this.wallet.accounts.length === 0) {
+    } else if (this.$Wallet && this.$Wallet.accounts.length === 0) {
       this.addAccount()
     }
   },
@@ -100,17 +100,17 @@ export default {
       'setSynced'
     ]),
     addAccount: async function () {
-      let newAccount = await this.wallet.createAccount(null, false)
-      delete this.wallet._accounts[newAccount.address]
-      this.$set(this.wallet._accounts, newAccount.address, newAccount)
-      for (let token in this.wallet._tokenAccounts) {
-        let tkAccount = this.wallet._tokenAccounts[token]
-        delete this.wallet._tokenAccounts[token]
-        this.$set(this.wallet._tokenAccounts, tkAccount.address, tkAccount)
+      let newAccount = await this.$Wallet.createAccount(null, false)
+      delete this.$Wallet._accounts[newAccount.address]
+      this.$set(this.$Wallet._accounts, newAccount.address, newAccount)
+      for (let token in this.$Wallet._tokenAccounts) {
+        let tkAccount = this.$Wallet._tokenAccounts[token]
+        delete this.$Wallet._tokenAccounts[token]
+        this.$set(this.$Wallet._tokenAccounts, tkAccount.address, tkAccount)
       }
     },
     recordData () {
-      this.setWallet(this.wallet.encrypt())
+      this.setWallet(this.$Wallet.encrypt())
     }
   }
 }

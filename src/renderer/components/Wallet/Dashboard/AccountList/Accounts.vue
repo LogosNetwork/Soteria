@@ -14,7 +14,7 @@
           All
         </b-nav-item>
         <b-nav-item
-          v-for="account in wallet.accounts"
+          v-for="account in $Wallet.accounts"
           :key="account.address"
           href="#"
           class="mb-0"
@@ -25,7 +25,7 @@
           <input
             v-if="editing[account.address]"
             :ref="`editable${account.address}`"
-            v-model="wallet.accountsObject[account.address].label"
+            v-model="$Wallet.accountsObject[account.address].label"
             v-autowidth="{maxWidth: '250px', minWidth: '20px', comfortZone: 0}"
             type="text"
             :placeholder="$t('accountName')"
@@ -68,7 +68,6 @@ export default {
   name: 'Accounts',
   data () {
     return {
-      wallet: this.$Wallet,
       editing: {}
     }
   },
@@ -86,7 +85,7 @@ export default {
       for (let addr in this.editing) {
         if (addr !== address) this.saveLabel(addr)
       }
-      if (address !== null) this.wallet.currentAccountAddress = address
+      if (address !== null) this.$Wallet.currentAccountAddress = address
     },
     editLabel (address) {
       Vue.set(this.editing, address, true)
@@ -98,13 +97,13 @@ export default {
       Vue.set(this.editing, address, false)
     },
     addAccount: async function () {
-      let newAccount = await this.wallet.createAccount(null, false)
-      delete this.wallet._accounts[newAccount.address]
-      this.$set(this.wallet._accounts, newAccount.address, newAccount)
-      for (let token in this.wallet._tokenAccounts) {
-        let tkAccount = this.wallet._tokenAccounts[token]
-        delete this.wallet._tokenAccounts[token]
-        this.$set(this.wallet._tokenAccounts, tkAccount.address, tkAccount)
+      let newAccount = await this.$Wallet.createAccount(null, false)
+      delete this.$Wallet._accounts[newAccount.address]
+      this.$set(this.$Wallet._accounts, newAccount.address, newAccount)
+      for (let token in this.$Wallet._tokenAccounts) {
+        let tkAccount = this.$Wallet._tokenAccounts[token]
+        delete this.$Wallet._tokenAccounts[token]
+        this.$set(this.$Wallet._tokenAccounts, tkAccount.address, tkAccount)
       }
     }
   }

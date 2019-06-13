@@ -112,18 +112,13 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'NavigationSelector',
-  data () {
-    return {
-      wallet: this.$Wallet
-    }
-  },
   methods: {
     ...mapActions('EncryptedWallet', [
       'setWallet'
     ]),
     logout () {
-      this.setWallet(this.wallet.encrypt())
-      this.wallet.loadOptions({
+      this.setWallet(this.$Wallet.encrypt())
+      this.$Wallet.loadOptions({
         seed: null,
         walletID: false
       })

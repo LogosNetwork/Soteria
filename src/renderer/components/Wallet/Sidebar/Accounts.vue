@@ -1,6 +1,6 @@
 <template>
   <b-form-group
-    v-if="wallet && wallet.accounts.length > 0"
+    v-if="$Wallet && $Wallet.accounts.length > 0"
     class="text-left fitPanel scroller pt-3 pb-3 mb-0"
     :label="$t('logosAccounts')"
     :label-sr-only="true"
@@ -16,10 +16,10 @@
         class="btn-group-toggle"
       >
         <label
-          v-for="account in wallet.accounts"
+          v-for="account in $Wallet.accounts"
           :key="account.address"
           class="btn btn-transparent accountSelector"
-          :class="{ active: account.address === wallet.currentAccountAddress }"
+          :class="{ active: account.address === $Wallet.currentAccountAddress }"
         >
           <input
             :id="`accountSelectorRadios_${account.address}`"
@@ -49,23 +49,18 @@ import Logos from '@logosnetwork/logos-rpc-client'
 
 export default {
   name: 'AccountSelector',
-  data () {
-    return {
-      wallet: this.$Wallet
-    }
-  },
   methods: {
     setCurrentAccount (address) {
-      this.wallet.currentAccountAddress = address
+      this.$Wallet.currentAccountAddress = address
     },
     addAccount: async function () {
-      let newAccount = await this.wallet.createAccount(null, false)
-      delete this.wallet._accounts[newAccount.address]
-      this.$set(this.wallet._accounts, newAccount.address, newAccount)
-      for (let token in this.wallet._tokenAccounts) {
-        let tkAccount = this.wallet._tokenAccounts[token]
-        delete this.wallet._tokenAccounts[token]
-        this.$set(this.wallet._tokenAccounts, tkAccount.address, tkAccount)
+      let newAccount = await this.$Wallet.createAccount(null, false)
+      delete this.$Wallet._accounts[newAccount.address]
+      this.$set(this.$Wallet._accounts, newAccount.address, newAccount)
+      for (let token in this.$Wallet._tokenAccounts) {
+        let tkAccount = this.$Wallet._tokenAccounts[token]
+        delete this.$Wallet._tokenAccounts[token]
+        this.$set(this.$Wallet._tokenAccounts, tkAccount.address, tkAccount)
       }
     },
     accountBalance (reason) {

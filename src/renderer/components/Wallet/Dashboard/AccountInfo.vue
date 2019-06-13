@@ -11,11 +11,13 @@
           </small>
         </div>
         <div class="text-center">
-          {{ wallet.account.balance }}
-          <font-awesome-icon
-            class="text-primary ml-1"
-            :icon="['fal','lambda']"
-          />
+          <h4>
+            {{ balance }}
+            <font-awesome-icon
+              class="text-primary ml-1"
+              :icon="['fal','lambda']"
+            />
+          </h4>
         </div>
       </div>
       <div class="align-self-center">
@@ -46,18 +48,23 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import Logos from '@logosnetwork/logos-rpc-client'
 
 export default {
   name: 'AccountInfo',
-  data () {
-    return {
-      wallet: this.$Wallet
-    }
-  },
   computed: {
     ...mapState('Wallet', {
       activeAddress: state => state.activeAddress
-    })
+    }),
+    ...mapState('Language', {
+      languageCode: state => state.selectedLanguageCode.value
+    }),
+    currentAccountBalance: function () {
+      return this.$Wallet.account.balance
+    },
+    balance: function () {
+      return parseInt(Logos.convert.fromReason(this.currentAccountBalance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+    }
   },
   methods: {
     ...mapActions('Wallet', [
