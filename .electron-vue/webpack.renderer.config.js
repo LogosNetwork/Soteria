@@ -6,8 +6,6 @@ const path = require('path')
 const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
-const TerserPlugin = require('terser-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
@@ -171,6 +169,9 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust rendererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
+  const TerserPlugin = require('terser-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
   rendererConfig.devtool = ''
   rendererConfig.mode = 'production'
   rendererConfig.optimization = {

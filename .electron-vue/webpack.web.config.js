@@ -129,7 +129,7 @@ let webConfig = {
  * Adjust webConfig for development settings
  */
 if (process.env.NODE_ENV !== 'production') {
-  rendererConfig.plugins.push(
+  webConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin()
   )
 }
