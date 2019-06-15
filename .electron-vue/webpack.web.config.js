@@ -5,10 +5,9 @@ process.env.BABEL_ENV = 'web'
 const path = require('path')
 const webpack = require('webpack')
 
-const TerserPlugin = require('terser-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
 let webConfig = {
@@ -49,10 +48,6 @@ let webConfig = {
       {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader']
-      },
-      {
-        test: /\.html$/,
-        use: 'vue-html-loader'
       },
       {
         test: /\.js$/,
@@ -109,10 +104,10 @@ let webConfig = {
       },
       nodeModules: false
     }),
+    new CspHtmlWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.IS_WEB': 'true'
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
@@ -131,9 +126,21 @@ let webConfig = {
 }
 
 /**
+ * Adjust webConfig for development settings
+ */
+if (process.env.NODE_ENV !== 'production') {
+  rendererConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin()
+  )
+}
+
+/**
  * Adjust webConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
+  const TerserPlugin = require('terser-webpack-plugin')
+  const CopyWebpackPlugin = require('copy-webpack-plugin')
+
   webConfig.devtool = ''
   webConfig.mode = 'production'
   webConfig.optimization = {

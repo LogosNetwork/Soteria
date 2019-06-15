@@ -118,8 +118,11 @@ export default {
     ]),
     logout () {
       this.setWallet(this.$Wallet.encrypt())
+      this.$Wallet._mqttDisconnect()
       this.$Wallet.loadOptions({
         seed: null,
+        mqtt: null,
+        rpc: null,
         walletID: false
       })
       this.$router.push({ path: '/locked' })

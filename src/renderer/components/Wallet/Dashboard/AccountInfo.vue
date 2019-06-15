@@ -22,7 +22,8 @@
       </div>
       <div class="align-self-center">
         <b-button
-          variant="primary"
+          variant="outline-primary"
+          class="text-white"
           size="sm"
         >
           <font-awesome-icon
@@ -32,7 +33,8 @@
           <span v-t="'send'" />
         </b-button>
         <b-button
-          variant="primary"
+          variant="outline-primary"
+          class="text-white"
           size="sm"
         >
           <font-awesome-icon
@@ -59,11 +61,8 @@ export default {
     ...mapState('Language', {
       languageCode: state => state.selectedLanguageCode.value
     }),
-    currentAccountBalance: function () {
-      return this.$Wallet.account.balance
-    },
     balance: function () {
-      return parseInt(Logos.convert.fromReason(this.currentAccountBalance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseInt(Logos.convert.fromReason(this.$Wallet.account.balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
     }
   },
   methods: {

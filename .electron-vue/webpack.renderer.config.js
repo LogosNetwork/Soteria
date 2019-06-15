@@ -10,6 +10,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
 /**
@@ -62,10 +63,6 @@ let rendererConfig = {
       {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader']
-      },
-      {
-        test: /\.html$/,
-        use: 'vue-html-loader'
       },
       {
         test: /\.js$/,
@@ -139,7 +136,7 @@ let rendererConfig = {
         ? path.resolve(__dirname, '../node_modules')
         : false
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new CspHtmlWebpackPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
@@ -163,6 +160,7 @@ let rendererConfig = {
  */
 if (process.env.NODE_ENV !== 'production') {
   rendererConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
     })

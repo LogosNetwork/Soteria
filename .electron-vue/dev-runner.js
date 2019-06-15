@@ -7,14 +7,12 @@ const { say } = require('cfonts')
 const { spawn } = require('child_process')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
-const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
 
 let electronProcess = null
 let manualRestart = false
-let hotMiddleware
 
 function logStats (proc, data) {
   let log = ''
@@ -40,40 +38,22 @@ function logStats (proc, data) {
 
 function startRenderer () {
   return new Promise((resolve, reject) => {
-    rendererConfig.entry.renderer = [path.join(__dirname, 'dev-client')].concat(rendererConfig.entry.renderer)
     rendererConfig.mode = 'development'
+    const options = {
+      contentBase: path.join(__dirname, '../'),
+      hot: true,
+      noInfo: true
+    }
+
+    WebpackDevServer.addDevServerEntrypoints(rendererConfig, options)
     const compiler = webpack(rendererConfig)
-    hotMiddleware = webpackHotMiddleware(compiler, {
-      log: false,
-      heartbeat: 2500
-    })
-
-    compiler.hooks.compilation.tap('compilation', compilation => {
-      compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync('html-webpack-plugin-after-emit', (data, cb) => {
-        hotMiddleware.publish({ action: 'reload' })
-        cb()
-      })
-    })
-
+    const server = new WebpackDevServer(compiler, options)
     compiler.hooks.done.tap('done', stats => {
       logStats('Renderer', stats)
     })
-
-    const server = new WebpackDevServer(
-      compiler,
-      {
-        contentBase: path.join(__dirname, '../'),
-        quiet: true,
-        before (app, ctx) {
-          app.use(hotMiddleware)
-          ctx.middleware.waitUntilValid(() => {
-            resolve()
-          })
-        }
-      }
-    )
-
-    server.listen(9080)
+    server.listen(9080, 'localhost', () => {
+      resolve()
+    })
   })
 }
 
@@ -85,7 +65,6 @@ function startMain () {
 
     compiler.hooks.watchRun.tapAsync('watch-run', (compilation, done) => {
       logStats('Main', chalk.white.bold('compiling...'))
-      hotMiddleware.publish({ action: 'compiling' })
       done()
     })
 
@@ -158,20 +137,11 @@ function electronLog (data, color) {
 }
 
 function greeting () {
-  const cols = process.stdout.columns
-  let text = ''
-
-  if (cols > 104) text = 'electron-vue'
-  else if (cols > 76) text = 'electron-|vue'
-  else text = false
-
-  if (text) {
-    say(text, {
-      colors: ['yellow'],
-      font: 'simple3d',
-      space: false
-    })
-  } else console.log(chalk.yellow.bold('\n  electron-vue'))
+  say('Logos-Soteria', {
+    colors: ['yellow'],
+    font: 'simple',
+    space: true
+  })
   console.log(chalk.blue('  getting ready...') + '\n')
 }
 

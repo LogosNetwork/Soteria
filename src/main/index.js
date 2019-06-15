@@ -2,7 +2,7 @@
 
 import { app, BrowserWindow } from 'electron'
 
-// Store must be imported for the shitty vuex-electron sharedMutations
+// Store must be imported for the vuex-electron sharedMutations
 /* eslint no-unused-vars: 0 */
 import store from '../renderer/store'
 

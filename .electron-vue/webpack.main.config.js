@@ -6,8 +6,6 @@ const path = require('path')
 const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
-const TerserPlugin = require('terser-webpack-plugin')
-
 let mainConfig = {
   entry: {
     main: path.join(__dirname, '../src/main/index.js')
@@ -74,6 +72,7 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust mainConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
+  const TerserPlugin = require('terser-webpack-plugin')
   mainConfig.mode = 'production'
   mainConfig.optimization = {
     minimizer: [new TerserPlugin()]
