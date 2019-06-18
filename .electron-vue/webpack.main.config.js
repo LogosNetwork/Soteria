@@ -12,8 +12,7 @@ let mainConfig = {
     preload: path.join(__dirname, '../src/main/preload.js')
   },
   externals: [
-    ...Object.keys(dependencies || {}),
-    {'electron-debug': 'electron-debug'}
+    ...Object.keys(dependencies || {})
   ],
   module: {
     rules: [
@@ -62,6 +61,7 @@ let mainConfig = {
  * Adjust mainConfig for development settings
  */
 if (process.env.NODE_ENV !== 'production') {
+  mainConfig.externals.push('electron-debug')
   mainConfig.plugins.push(
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`

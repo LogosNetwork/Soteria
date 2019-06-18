@@ -13,6 +13,12 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
+if (process.env.NODE_ENV === 'development') {
+  import('electron-debug').then((debug) => {
+    debug.default()
+  })
+}
+
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
