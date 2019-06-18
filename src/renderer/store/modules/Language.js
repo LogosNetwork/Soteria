@@ -13,7 +13,7 @@ const state = {
       text: '中文 - Chinese (Simplified)'
     }
   ],
-  selectedLanguageCode: null
+  selectedLanguageCode: 'en'
 }
 
 const getters = {

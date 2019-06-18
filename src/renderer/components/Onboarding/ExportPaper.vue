@@ -106,7 +106,6 @@
 <script>
 import { mapState } from 'vuex'
 import bip39 from 'bip39'
-import { remote } from 'electron'
 
 export default {
   name: 'ExportPaper',
@@ -147,14 +146,22 @@ export default {
       this.$router.push({ name: 'insertMnemonic' })
     },
     print () {
-      const contents = remote.webContents.getFocusedWebContents()
-      this.isPrintingTemplate = false
-      contents.print()
+      if (global && global.remote) {
+        const contents = global.remote.webContents.getFocusedWebContents()
+        this.isPrintingTemplate = false
+        contents.print()
+      } else {
+        console.error('TODO Unsupported Browser Action')
+      }
     },
     printTemplate () {
-      const contents = remote.webContents.getFocusedWebContents()
-      this.isPrintingTemplate = true
-      contents.print()
+      if (global && global.remote) {
+        const contents = global.remote.webContents.getFocusedWebContents()
+        this.isPrintingTemplate = true
+        contents.print()
+      } else {
+        console.error('TODO Unsupported Browser Action')
+      }
     }
   }
 }

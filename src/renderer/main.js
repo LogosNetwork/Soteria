@@ -13,7 +13,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 

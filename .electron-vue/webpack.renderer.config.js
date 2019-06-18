@@ -1,9 +1,8 @@
 'use strict'
 
-process.env.BABEL_ENV = 'renderer'
+process.env.BABEL_ENV = 'web'
 
 const path = require('path')
-const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -11,23 +10,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
-/**
- * List of node_modules to include in webpack bundle
- *
- * Required for specific packages like Vue UI libraries
- * that provide pure *.vue files that need compiling
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
- */
-let whiteListedModules = ['vue', 'bootstrap-vue']
-
 let rendererConfig = {
-  devtool: '#cheap-module-eval-source-map',
+  devtool: 'inline-source-map',
   entry: {
     renderer: path.join(__dirname, '../src/renderer/main.js')
   },
-  externals: [
-    ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
-  ],
   module: {
     rules: [
       {
@@ -139,7 +126,7 @@ let rendererConfig = {
   ],
   output: {
     filename: '[name].js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'var',
     path: path.join(__dirname, '../dist/electron')
   },
   resolve: {
@@ -149,7 +136,7 @@ let rendererConfig = {
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
   },
-  target: 'electron-renderer',
+  target: 'web',
   mode: 'development'
 }
 

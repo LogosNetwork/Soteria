@@ -1,7 +1,6 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-
 // Store must be imported for the vuex-electron sharedMutations
 /* eslint no-unused-vars: 0 */
 import store from '../renderer/store'
@@ -29,7 +28,8 @@ function createWindow () {
     width: 1000,
     titleBarStyle: 'hidden',
     webPreferences: {
-      nodeIntegration: true // TODO Negative Side-effects when building web?
+      nodeIntegration: false,
+      preload: require('path').resolve(__dirname, '..', '..', 'dist', 'electron', 'preload.js')
     }
   })
 

@@ -79,7 +79,7 @@
                 v-b-modal.clearWalletModal
                 v-t="'forgotPassword'"
                 variant="link"
-                class="btn-sm"
+                class="btn-sm text-white"
                 style="padding-left:0px"
               />
               <b-modal

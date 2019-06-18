@@ -96,8 +96,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { remote } from 'electron'
-import fs from 'fs'
 
 export default {
   name: 'ExportSeed',
@@ -112,26 +110,30 @@ export default {
   methods: {
     saveVault () {
       try {
-        const now = new Date()
-        let prefix = 'SeedVault'
-        const path = remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
-          title: 'Export keyfile',
-          defaultPath: `Logos${prefix}-${now
-            .toISOString()
-            .slice(0, 16)
-            .replace(/[-:]/g, '')
-            .replace('T', '-')}.lgsx`,
-          buttonLabel: 'Export',
-          filters: [{ name: 'SeedVault File', extensions: ['lgsx'] }]
-        })
+        if (global && global.remote && global.writeFileSync) {
+          const now = new Date()
+          let prefix = 'SeedVault'
+          const path = global.remote.dialog.showSaveDialog(global.remote.getCurrentWindow(), {
+            title: 'Export keyfile',
+            defaultPath: `Logos${prefix}-${now
+              .toISOString()
+              .slice(0, 16)
+              .replace(/[-:]/g, '')
+              .replace('T', '-')}.lgsx`,
+            buttonLabel: 'Export',
+            filters: [{ name: 'SeedVault File', extensions: ['lgsx'] }]
+          })
 
-        if (!path) {
-          throw Error('Export cancelled')
+          if (!path) {
+            throw Error('Export cancelled')
+          }
+          global.writeFileSync(path, Buffer.from(this.wallet))
+          this.$router.push({ name: 'locked' })
+          return false
+        } else {
+          console.error('TODO Unsupported Browser Action')
+          return false
         }
-
-        fs.writeFileSync(path, Buffer.from(this.wallet))
-        this.$router.push({ name: 'locked' })
-        return false
       } catch (error) {
         return error.message
       }
