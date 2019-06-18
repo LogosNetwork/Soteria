@@ -28,6 +28,7 @@
   "exportlogosvault": "Seed Vault",
   "seedvault": "Seed Vault",
   "importvault": "Import Seed Vault",
+  "decryptVault": "Decrypt Seed Vault",
   "uploadSeedVault": "Upload Seed Vault",
   "saveencryptedseed": "Save encryped seed",
   "storeseed": "Export Seed",

@@ -6,12 +6,25 @@
         class="p-3"
       >
         <font-awesome-icon
+          v-if="!validFile"
+          size="4x"
+          class="icon mb-3"
+          :icon="['fal','file-import']"
+        />
+        <h4
+          v-if="!validFile"
+          v-t="'importvault'"
+          class="mb-3"
+        />
+        <font-awesome-icon
+          v-if="validFile"
           size="4x"
           class="icon mb-3"
           :icon="['fal','key']"
         />
         <h4
-          v-t="'importvault'"
+          v-if="validFile"
+          v-t="'decryptVault'"
           class="mb-3"
         />
         <div class="form-group text-left">
@@ -78,7 +91,7 @@
               <b-button
                 v-t="'selectDifferent'"
                 variant="link"
-                class="btn-sm"
+                class="btn-sm text-white"
                 style="padding-left:0px"
                 @click="clearFiles()"
               />

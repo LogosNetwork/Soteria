@@ -19,13 +19,13 @@
         </div>
       </div>
       <b-button-group
-        class="w-100 justify-content-center align-items-center"
+        class="justify-content-center align-items-center"
         size="sm"
       >
         <b-button
           v-t="'typeSeed'"
           variant="link"
-          class="btn-sm mb-3"
+          class="btn-sm mb-3 text-white"
           @click="insertSeed()"
         />
       </b-button-group>

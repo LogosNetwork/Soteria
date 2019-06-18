@@ -42,6 +42,7 @@ library.add(faCircle)
 library.add(faHandReceiving)
 library.add(faPaperPlane)
 library.add(faSyncAlt)
+library.add(faFileImport)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
