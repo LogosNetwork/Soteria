@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import '../styles/shame.scss'
+import './assets/styles/shame.scss'
 import LogosWallet from './api/wallet'
 import App from './App'
 import router from './router'

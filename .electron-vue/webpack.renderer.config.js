@@ -33,7 +33,7 @@ let rendererConfig = {
         use: ['vue-style-loader', 'css-loader', {
           loader: 'sass-loader',
           options: {
-            data: `@import "${path.resolve(__dirname, '../src/styles/vars.scss')}";`
+            data: `@import "${path.resolve(__dirname, '../src/renderer/assets/styles/vars.scss')}";`
           }
         }]
       },
@@ -74,12 +74,10 @@ let rendererConfig = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        use: {
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'imgs/[name]--[folder].[ext]'
-          }
+        loader: 'url-loader',
+        query: {
+          limit: 10000,
+          name: 'imgs/[name]--[folder].[ext]'
         }
       },
       {
