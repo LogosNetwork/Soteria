@@ -131,7 +131,20 @@ export default {
           this.$router.push({ name: 'locked' })
           return false
         } else {
-          console.error('TODO Unsupported Browser Action')
+          const now = new Date()
+          let prefix = 'SeedVault'
+          const defaultPath = `Logos${prefix}-${now
+            .toISOString()
+            .slice(0, 16)
+            .replace(/[-:]/g, '')
+            .replace('T', '-')}.lgsx`
+          const url = window.URL.createObjectURL(new Blob([this.wallet]))
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', defaultPath)
+          document.body.appendChild(link)
+          link.click()
+          this.$router.push({ name: 'locked' })
           return false
         }
       } catch (error) {
