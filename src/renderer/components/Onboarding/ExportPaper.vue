@@ -64,14 +64,12 @@
           </ol>
         </b-modal>
         <b-button
-          v-if="canPrint"
           v-t="'printTemplate'"
           variant="link"
           class="btn-sm mb-3 "
           @click="printTemplate()"
         />
         <b-button
-          v-if="canPrint"
           v-b-tooltip.hover
           v-t="'printMnemonic'"
           :title="$t('printWarning')"
@@ -106,6 +104,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapState } from 'vuex'
 import bip39 from 'bip39'
 
@@ -138,9 +137,6 @@ export default {
     mnemonicBorder () {
       if (this.isPrintingTemplate === true) return 'mnemonicBorder'
       return ''
-    },
-    canPrint () {
-      return global && global.remote
     }
   },
   methods: {
@@ -151,21 +147,25 @@ export default {
       this.$router.push({ name: 'insertMnemonic' })
     },
     print () {
+      this.isPrintingTemplate = false
       if (global && global.remote) {
         const contents = global.remote.webContents.getFocusedWebContents()
-        this.isPrintingTemplate = false
         contents.print()
-      } else {
-        console.error('TODO Unsupported Browser Action')
+      } else if (window) {
+        Vue.nextTick(() => {
+          window.print()
+        })
       }
     },
     printTemplate () {
+      this.isPrintingTemplate = true
       if (global && global.remote) {
         const contents = global.remote.webContents.getFocusedWebContents()
-        this.isPrintingTemplate = true
         contents.print()
-      } else {
-        console.error('TODO Unsupported Browser Action')
+      } else if (window) {
+        Vue.nextTick(() => {
+          window.print()
+        })
       }
     }
   }

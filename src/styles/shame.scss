@@ -114,3 +114,8 @@ button[disabled="disabled"] {
 .nav-tabs>li {
   float: none;
 }
+@media print {
+  .tooltip {
+    display: none;
+  }
+}
