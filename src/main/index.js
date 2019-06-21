@@ -1,9 +1,6 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-// Store must be imported for the vuex-electron sharedMutations
-/* eslint no-unused-vars: 0 */
-import store from '../renderer/store'
 
 /**
  * Set `__static` path to static files in production

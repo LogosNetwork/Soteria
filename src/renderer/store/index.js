@@ -8,8 +8,7 @@ if (global && global.createPersistedState && global.createSharedMutations) {
   plugins = [
     global.createPersistedState({
       ignoredPaths: ['Onboarding']
-    }),
-    global.createSharedMutations()
+    })
   ]
 }
 export default new Vuex.Store({
