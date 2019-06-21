@@ -64,12 +64,14 @@
           </ol>
         </b-modal>
         <b-button
+          v-if="canPrint"
           v-t="'printTemplate'"
           variant="link"
           class="btn-sm mb-3 "
           @click="printTemplate()"
         />
         <b-button
+          v-if="canPrint"
           v-b-tooltip.hover
           v-t="'printMnemonic'"
           :title="$t('printWarning')"
@@ -136,6 +138,9 @@ export default {
     mnemonicBorder () {
       if (this.isPrintingTemplate === true) return 'mnemonicBorder'
       return ''
+    },
+    canPrint () {
+      return global && global.remote
     }
   },
   methods: {
