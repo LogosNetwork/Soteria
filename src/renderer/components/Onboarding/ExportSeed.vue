@@ -144,6 +144,7 @@ export default {
           link.setAttribute('download', defaultPath)
           document.body.appendChild(link)
           link.click()
+          link.remove()
           this.$router.push({ name: 'locked' })
           return false
         }
