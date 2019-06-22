@@ -165,6 +165,7 @@ export default {
       this.$Wallet.load(this.wallet).then((val) => {
         this.setValidated(true)
         this.setSeed(null)
+        this.$Wallet.ResetWalletReactivity()
         this.$router.push({ path: '/wallet/dashboard' })
       }).catch(() => {
         this.error = 'Invalid Password'

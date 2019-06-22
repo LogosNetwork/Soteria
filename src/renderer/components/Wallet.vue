@@ -85,7 +85,7 @@ export default {
     if (this.$Wallet.seed === null) {
       this.$router.push({ path: '/' })
     } else if (this.$Wallet && this.$Wallet.accounts.length === 0) {
-      this.addAccount()
+      this.$Wallet.VueCreateAccount()
     }
   },
   beforeDestroy: function () {
@@ -99,16 +99,6 @@ export default {
       'setActiveAddress',
       'setSynced'
     ]),
-    addAccount: async function () {
-      let newAccount = await this.$Wallet.createAccount(null, false)
-      delete this.$Wallet._accounts[newAccount.address]
-      this.$set(this.$Wallet._accounts, newAccount.address, newAccount)
-      for (let token in this.$Wallet._tokenAccounts) {
-        let tkAccount = this.$Wallet._tokenAccounts[token]
-        delete this.$Wallet._tokenAccounts[token]
-        this.$set(this.$Wallet._tokenAccounts, tkAccount.address, tkAccount)
-      }
-    },
     recordData () {
       this.setWallet(this.$Wallet.encrypt())
     }

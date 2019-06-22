@@ -96,15 +96,8 @@ export default {
     saveLabel (address) {
       Vue.set(this.editing, address, false)
     },
-    addAccount: async function () {
-      let newAccount = await this.$Wallet.createAccount(null, false)
-      delete this.$Wallet._accounts[newAccount.address]
-      this.$set(this.$Wallet._accounts, newAccount.address, newAccount)
-      for (let token in this.$Wallet._tokenAccounts) {
-        let tkAccount = this.$Wallet._tokenAccounts[token]
-        delete this.$Wallet._tokenAccounts[token]
-        this.$set(this.$Wallet._tokenAccounts, tkAccount.address, tkAccount)
-      }
+    addAccount () {
+      this.$Wallet.VueCreateAccount()
     }
   }
 }
