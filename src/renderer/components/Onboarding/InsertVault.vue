@@ -6,97 +6,21 @@
         class="p-3"
       >
         <font-awesome-icon
-          v-if="!validFile"
           size="4x"
           class="icon mb-3"
           :icon="['fal','file-import']"
         />
         <h4
-          v-if="!validFile"
           v-t="'importvault'"
           class="mb-3"
         />
-        <font-awesome-icon
-          v-if="validFile"
-          size="4x"
-          class="icon mb-3"
-          :icon="['fal','key']"
-        />
-        <h4
-          v-if="validFile"
-          v-t="'decryptVault'"
-          class="mb-3"
-        />
         <div class="form-group text-left">
-          <div v-show="!validFile">
-            <b-form-file
-              ref="fileinput"
-              v-model="seedVault"
-              accept=".lgsx"
-              :placeholder="$t('chooseyourseedvault')"
-            />
-          </div>
-          <div v-if="validFile">
-            <label
-              v-t="'unlockSeedVault'"
-              for="pwd"
-            />
-            <div class="input-group input-group-lg">
-              <form
-                id="unlockWalletForm"
-                @submit.stop.prevent="unlockWallet()"
-              >
-                <div class="input-group input-group-lg">
-                  <b-form-input
-                    id="pwd"
-                    v-model="password"
-                    :type="inputType"
-                    :placeholder="$t('password').toLowerCase()"
-                    required
-                  />
-                  <div class="input-group-append eyeButton">
-                    <b-button
-                      v-b-tooltip.hover
-                      :title="$t('togglePasswordVisibility')"
-                      :pressed="showPassword"
-                      variant="link"
-                      class="btn btn-default btn-sm"
-                      @click="changePasswordVisibility()"
-                    >
-                      <font-awesome-icon
-                        v-if="showPassword"
-                        class="icon"
-                        :icon="['fal','eye']"
-                      />
-                      <font-awesome-icon
-                        v-if="!showPassword"
-                        class="icon"
-                        :icon="['fal','eye-slash']"
-                      />
-                      <span
-                        v-t="'togglePasswordVisibility'"
-                        class="sr-only"
-                      />
-                    </b-button>
-                  </div>
-                </div>
-                <small
-                  v-if="error"
-                  id="error"
-                  class="form-text text-danger"
-                >{{ error }}</small>
-              </form>
-            </div>
-            <div>
-              <b-button
-                v-t="'selectDifferent'"
-                variant="link"
-                class="btn-sm text-white"
-                style="padding-left:0px"
-                @click="clearFiles()"
-              />
-            </div>
-          </div>
+          <b-form-file
+            ref="fileinput"
+            v-model="seedVault"
+            accept=".lgsx"
+            :placeholder="$t('chooseyourseedvault')"
+          />
         </div>
       </div>
     </div>
@@ -108,16 +32,9 @@
         >
           <b-button
             v-t="'previous'"
-            class="w-50"
+            class="w-100"
             variant="secondary"
             @click="previous()"
-          />
-          <b-button
-            v-t="'unlockwallet'"
-            :disabled="!validFile || password === null"
-            class="w-50"
-            variant="primary"
-            @click="unlockWallet()"
           />
         </b-button-group>
       </b-col>
@@ -132,23 +49,13 @@ export default {
   name: 'InsertVault',
   data () {
     return {
-      error: null,
-      password: null,
-      showPassword: false,
-      deleteText: null,
-      seedVault: null,
-      inputType: 'password'
+      seedVault: null
     }
   },
   computed: {
     ...mapState('EncryptedWallet', {
-      wallet: state => state.wallet,
-      validated: state => state.validated
-    }),
-    validFile () {
-      if (this.seedVault === null) return null
-      return Boolean(this.seedVault)
-    }
+      wallet: state => state.wallet
+    })
   },
   watch: {
     seedVault: function (newVault, oldVault) {
@@ -157,6 +64,7 @@ export default {
         reader.onload = (e) => {
           const text = reader.result
           this.setWallet(text)
+          this.$router.push({ path: '/locked' })
         }
         reader.readAsText(newVault)
       }
@@ -167,30 +75,10 @@ export default {
       'setSeed'
     ]),
     ...mapActions('EncryptedWallet', [
-      'setValidated',
       'setWallet'
     ]),
     previous () {
       this.$router.go(-1)
-    },
-    clearFiles () {
-      this.seedVault = null
-      this.$refs.fileinput.reset()
-    },
-    unlockWallet () {
-      this.error = null
-      this.$Wallet.setPassword(this.password)
-      this.$Wallet.load(this.wallet).then((val) => {
-        this.setValidated(true)
-        this.setSeed(null)
-        this.$router.push({ path: '/wallet/dashboard' })
-      }).catch(() => {
-        this.error = 'Invalid Password'
-      })
-    },
-    changePasswordVisibility () {
-      this.showPassword = !this.showPassword
-      this.inputType = this.inputType === 'password' ? 'text' : 'password'
     }
   }
 }
@@ -200,28 +88,6 @@ export default {
   #passwordDecrypt {
     max-width:450px;
     width:100vw;
-  }
-  #unlockWalletForm {
-    width: 100%;
-  }
-  #error {
-    height: 15px;
-  }
-  .eyeButton {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
-    height: 48px;
-    width: 59px;
-    background: $input-bg;
-    border: 1px solid $input-border-color;
-    border-left: none;
-  }
-  .eyeButton > .btn-link {
-    color: theme-color("base");
-  }
-  .eyeButton > .btn-link:hover > .icon {
-    color: theme-color("base");
-    opacity: 0.5;
   }
   .decrypt-container {
     overflow:hidden;
