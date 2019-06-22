@@ -166,7 +166,9 @@ export default {
         this.setValidated(true)
         this.setSeed(null)
         this.$Wallet.ResetWalletReactivity()
-        this.$router.push({ path: '/wallet/dashboard' })
+        this.$Wallet.ConfigureSoteria().then((res) => {
+          this.$router.push({ path: '/wallet/dashboard' })
+        })
       }).catch(() => {
         this.error = 'Invalid Password'
       })

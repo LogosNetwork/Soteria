@@ -1,4 +1,5 @@
 import LogosWallet from '@logosnetwork/logos-webwallet-sdk'
+import axios from 'axios'
 
 export { LogosWallet }
 
@@ -25,6 +26,20 @@ export default {
     wallet.VueCreateAccount = async () => {
       await Vue.prototype.$Wallet.createAccount(null, false)
       Vue.prototype.$Wallet.ResetWalletReactivity()
+    }
+    // TODO
+    // Set proper syncing / verifying SDK options with user overrides
+    // Set the settings for local Logos Node RPC Integration
+    wallet.ConfigureSoteria = async () => {
+      let response = await axios.get(`https://pla.bs/delegates`)
+      if (Vue.prototype.$Wallet.mqtt !== 'wss://pla.bs:8443') {
+        Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
+      }
+      Vue.prototype.$Wallet.rpc = {
+        proxy: 'https://pla.bs',
+        delegates: Object.values(response.data)
+      }
+      return true
     }
     Vue.prototype.$Wallet = wallet
   }

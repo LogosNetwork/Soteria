@@ -38,7 +38,6 @@
 <script>
 import Sidebar from '@/components/Wallet/Sidebar.vue'
 import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
 
 export default {
   name: 'Wallet',
@@ -59,24 +58,15 @@ export default {
   mounted: function () {
     if (this.$Wallet.seed) {
       this.setSynced(false)
-      axios.get(`https://pla.bs/delegates`).then(res => {
-        if (this.$Wallet.mqtt !== 'wss://pla.bs:8443') {
-          this.$Wallet.mqtt = 'wss://pla.bs:8443'
+      if (this.activeAddress) {
+        if (this.$Wallet.accountsObject[this.activeAddress]) {
+          this.$Wallet.currentAccountAddress = this.activeAddress
+        } else {
+          this.setActiveAddress(this.$Wallet.currentAccountAddress)
         }
-        this.$Wallet.rpc = {
-          proxy: 'https://pla.bs',
-          delegates: Object.values(res.data)
-        }
-        if (this.activeAddress) {
-          if (this.$Wallet.accountsObject[this.activeAddress]) {
-            this.$Wallet.currentAccountAddress = this.activeAddress
-          } else {
-            this.setActiveAddress(this.$Wallet.currentAccountAddress)
-          }
-        }
-        this.$Wallet.sync().then((result) => {
-          this.setSynced(result)
-        })
+      }
+      this.$Wallet.sync().then((result) => {
+        this.setSynced(result)
       })
       window.addEventListener('beforeunload', this.recordData)
     }

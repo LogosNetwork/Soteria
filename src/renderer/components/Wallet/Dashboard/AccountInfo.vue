@@ -62,6 +62,7 @@ export default {
       languageCode: state => state.selectedLanguageCode.value
     }),
     balance: function () {
+      if (!this.$Wallet.account) return 0
       return parseInt(Logos.convert.fromReason(this.$Wallet.account.balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
     }
   },
