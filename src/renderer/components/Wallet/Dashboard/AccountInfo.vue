@@ -51,6 +51,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Logos from '@logosnetwork/logos-rpc-client'
+import bigInt from 'big-integer'
 
 export default {
   name: 'AccountInfo',
@@ -62,8 +63,16 @@ export default {
       languageCode: state => state.selectedLanguageCode.value
     }),
     balance: function () {
-      if (!this.$Wallet.account) return 0
-      return parseInt(Logos.convert.fromReason(this.$Wallet.account.balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      if (this.activeAddress !== null) {
+        if (!this.$Wallet.account) return 0
+        return parseInt(Logos.convert.fromReason(this.$Wallet._accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      } else {
+        let sum = bigInt(0)
+        for (let account of this.$Wallet.accounts) {
+          sum = sum.add(bigInt(account.balance))
+        }
+        return parseInt(Logos.convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      }
     }
   },
   methods: {
