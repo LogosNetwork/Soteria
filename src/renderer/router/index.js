@@ -78,6 +78,21 @@ export default new Router({
           name: 'dashboard',
           path: 'dashboard',
           component: require('@/components/Wallet/Dashboard').default
+        },
+        {
+          name: 'send',
+          path: 'send',
+          component: require('@/components/Wallet/Send').default
+        },
+        {
+          name: 'receive',
+          path: 'receive',
+          component: require('@/components/Wallet/Receive').default
+        },
+        {
+          name: 'settings',
+          path: 'settings',
+          component: require('@/components/Wallet/Settings').default
         }
       ]
     },

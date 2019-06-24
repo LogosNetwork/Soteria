@@ -6,6 +6,7 @@
         class="nav nav-tabs scroller"
       >
         <b-nav-item
+          v-if="aggregate"
           href="#"
           class="mb-0"
           :class="{ active: activeAddress === null }"
@@ -66,6 +67,12 @@ import Vue from 'vue'
 
 export default {
   name: 'Accounts',
+  props: {
+    aggregate: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     return {
       editing: {}

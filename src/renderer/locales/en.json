@@ -56,6 +56,7 @@
   "add": "Add",
   "walletNavigation": "Wallet Navigation",
   "wallet": "Wallet",
+  "dashboard": "Dashboard",
   "governance": "Governance",
   "settings": "Settings",
   "logout": "Log out",
@@ -70,5 +71,7 @@
   "recentTransactions": "Recent Transactions",
   "balance": "Balance",
   "notOpened": "This account has not been opened",
-  "syncingWallet": "Syncing Wallet with the Logos Blockchain"
+  "syncingWallet": "Syncing Wallet with the Logos Blockchain",
+  "copy": "Copy",
+  "copyAddress": "Copy Logos Address"
 }

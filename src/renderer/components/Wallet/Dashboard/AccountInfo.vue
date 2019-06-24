@@ -22,6 +22,7 @@
       </div>
       <div class="align-self-center">
         <b-button
+          to="send"
           variant="outline-primary"
           class="text-white"
           size="sm"
@@ -33,6 +34,7 @@
           <span v-t="'send'" />
         </b-button>
         <b-button
+          to="receive"
           variant="outline-primary"
           class="text-white"
           size="sm"

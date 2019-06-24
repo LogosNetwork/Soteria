@@ -16,5 +16,6 @@ $form-feedback-invalid-color: rgba(theme-color("danger"),0.05);
 $input-focus-bg: rgba(theme-color("primary"),0.05);
 $custom-select-indicator-color: #fff;
 $input-disabled-bg: rgba(theme-color("base"),0.05);
-
+$card-bg: rgba(theme-color("base"),0.05);
+$card-border-color: theme-color("secondary");
 @import "node_modules/bootstrap/scss/variables";

@@ -1,10 +1,14 @@
 <template>
   <b-container fluid>
     <b-row>
-      <b-col class="accountList">
-        <Accounts />
+      <b-col
+        class="overflow-hidden"
+        :class="{ accountList: tokenfilter }"
+      >
+        <Accounts :aggregate="aggregate" />
       </b-col>
       <b-col
+        v-if="tokenfilter"
         cols="auto"
         class="text-right"
       >
@@ -23,6 +27,16 @@ export default {
   components: {
     'Accounts': Accounts,
     'TokenPanelToggle': TokenPanelToggle
+  },
+  props: {
+    aggregate: {
+      type: Boolean,
+      default: true
+    },
+    tokenfilter: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>
@@ -30,6 +44,5 @@ export default {
 <style scoped lang="scss">
 .accountList {
   max-width: calc(100% - 55px);
-  overflow: hidden;
 }
 </style>
