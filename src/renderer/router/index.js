@@ -80,11 +80,6 @@ export default new Router({
           component: require('@/components/Wallet/Dashboard').default
         },
         {
-          name: 'send',
-          path: 'send',
-          component: require('@/components/Wallet/Send').default
-        },
-        {
           name: 'settings',
           path: 'settings',
           component: require('@/components/Wallet/Settings').default

@@ -22,7 +22,7 @@
       </div>
       <div class="align-self-center">
         <b-button
-          to="send"
+          v-b-modal.send
           variant="outline-primary"
           class="text-white"
           size="sm"
@@ -33,6 +33,13 @@
           />
           <span v-t="'send'" />
         </b-button>
+        <b-modal
+          id="send"
+          hide-footer
+          hide-header
+        >
+          <Send />
+        </b-modal>
         <b-button
           v-b-modal.receive
           variant="outline-primary"
@@ -62,11 +69,13 @@ import { mapState, mapActions } from 'vuex'
 import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
 import Receive from '@/components/Wallet/Receive'
+import Send from '@/components/Wallet/Send'
 
 export default {
   name: 'AccountInfo',
   components: {
-    'Receive': Receive
+    Receive,
+    Send
   },
   computed: {
     ...mapState('Wallet', {
