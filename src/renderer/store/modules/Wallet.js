@@ -1,7 +1,10 @@
+import Vue from 'vue'
+
 const state = {
   tokenFilter: null,
   showFilter: false,
   activeAddress: null,
+  contacts: [],
   synced: false
 }
 
@@ -21,6 +24,20 @@ const mutations = {
   },
   setSynced (state, synced) {
     state.synced = synced
+  },
+  setContacts (state, contacts) {
+    state.contacts = contacts
+  },
+  addContact (state, contact) {
+    let index = state.contacts.findIndex(existingContact => existingContact.address === contact.address)
+    if (index !== -1) {
+      Vue.$set(state.contacts, index, contact)
+    } else {
+      state.contacts.push(contact)
+    }
+  },
+  removeContact (state, address) {
+    state.contacts = state.contacts.filter(contact => contact.address !== address)
   }
 }
 
@@ -37,6 +54,15 @@ const actions = {
   },
   setSynced ({ commit }, synced) {
     commit('setSynced', synced)
+  },
+  setContacts ({ commit }, contacts) {
+    commit('setContacts', contacts)
+  },
+  addContact ({ commit }, contact) {
+    commit('addContact', contact)
+  },
+  removeContact ({ commit }, address) {
+    commit('removeContract', address)
   }
 }
 

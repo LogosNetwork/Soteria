@@ -109,6 +109,7 @@
               <b-button
                 variant="outline-primary"
                 class="text-white"
+                :pressed="amount === availableToSend"
                 @click="setMax()"
               >
                 <span
@@ -140,7 +141,7 @@
             :disabled="!isValidAmount || !destinationAccount"
             class="w-100"
             variant="primary"
-            @click="confirmSend()"
+            @click="send()"
           />
         </b-button-group>
       </b-col>
@@ -167,13 +168,16 @@ export default {
       amount: '',
       isScanning: false,
       destinationAccount: null,
-      errorMessage: null,
-      localAccounts: []
+      errorMessage: null
     }
   },
   computed: {
     ...mapState('Wallet', {
-      activeAddress: state => state.activeAddress
+      activeAddress: state => state.activeAddress,
+      contacts: state => state.contacts
+    }),
+    ...mapState('Language', {
+      languageCode: state => state.selectedLanguageCode.value
     }),
     currentAccountAddress () {
       if (this.activeAddress !== null) {
@@ -183,7 +187,6 @@ export default {
       }
     },
     combinedAccounts () {
-      // TODO Contact / Address Book Support
       let results = []
       for (let address in this.$Wallet.accountsObject) {
         if (address !== this.currentAccountAddress) {
@@ -199,12 +202,12 @@ export default {
           address: token
         })
       }
-      return results.concat(this.localAccounts)
+      return results.concat(this.contacts)
     },
     availableToSend () {
       return Logos.convert.fromReason(bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
     },
-    isValidAmount: function () {
+    isValidAmount () {
       if (this.amount === '') return null
       if (this.amount) {
         if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
@@ -224,7 +227,7 @@ export default {
     }
   },
   watch: {
-    combinedAccounts: function (newAccounts, oldAccounts) {
+    combinedAccounts (newAccounts, oldAccounts) {
       if (newAccounts.length > 0) {
         let valid = false
         for (let account of newAccounts) {
@@ -251,7 +254,8 @@ export default {
   },
   methods: {
     ...mapActions('Wallet', [
-      'setActiveAddress'
+      'setActiveAddress',
+      'addContact'
     ]),
     scan () {
       this.isScanning = !this.isScanning
@@ -285,8 +289,8 @@ export default {
         this.$Utils.keyFromAccount(newAddress)
         let newAccount = { label: newAddress, address: newAddress }
         if (!this.findAccount(newAddress)) {
-          // TODO Prompt user to add label for address book?
-          this.localAccounts.push(newAccount)
+          // Should we prompt users to add label for address book?
+          this.addContact(newAccount)
           this.destinationAccount = newAccount
         }
       } catch (err) {
@@ -306,7 +310,23 @@ export default {
       }
     },
     setMax () {
+      this.amount = this.availableToSend()
+    },
+    confirmSend () {
       // TODO
+    },
+    send () {
+      console.log('hello')
+      let amount = Logos.convert.toReason(this.amount, 'LOGOS')
+      if (bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance)
+        .greaterOrEquals(
+          bigInt(amount).plus(bigInt(this.$Utils.minimumFee))
+        )) {
+        this.$Wallet.account.createSendRequest([{
+          destination: this.destinationAccount.address,
+          amount: amount
+        }])
+      }
     }
   }
 }
