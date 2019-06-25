@@ -17,6 +17,13 @@
             type="text"
             :disabled="true"
           />
+          <b-form-input
+            ref="myAddress"
+            :value="currentAccountAddress"
+            type="text"
+            tabindex="-1"
+            class="hiddenInput"
+          />
           <div class="input-group-append copyButton">
             <b-button
               v-b-tooltip.hover
@@ -54,6 +61,16 @@
           />
         </b-card>
       </div>
+      <b-alert
+        class="copyAlert"
+        :show="dismissCountDown"
+        dismissible
+        fade
+        variant="success"
+        @dismiss-count-down="countDownChanged"
+      >
+        Copied address to clipboard!
+      </b-alert>
     </b-container>
   </div>
 </template>
@@ -71,7 +88,9 @@ export default {
   },
   data () {
     return {
-      amount: '0'
+      amount: '0',
+      dismissCountDown: 0,
+      dismissSecs: 5
     }
   },
   computed: {
@@ -98,14 +117,31 @@ export default {
     ...mapActions('Wallet', [
       'setActiveAddress'
     ]),
-    copy: function () {
-      return null
+    copy () {
+      this.$refs.myAddress.select()
+      document.execCommand('copy')
+      window.getSelection().removeAllRanges()
+      this.dismissCountDown = this.dismissSecs
+    },
+    countDownChanged (dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+  .copyAlert {
+    position: absolute;
+    bottom: -75px;
+    width: calc(100% - 60px);
+  }
+  .hiddenInput {
+    position:absolute;
+    left:-1000px;
+    width:1000px;
+    top:-1000px;
+  }
   .copyButton {
     border-top-right-radius: 0.3rem;
     border-bottom-right-radius: 0.3rem;

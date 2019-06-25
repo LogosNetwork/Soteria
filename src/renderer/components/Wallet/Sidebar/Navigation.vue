@@ -15,32 +15,6 @@
       />
       <span v-t="'dashboard'" />
     </b-button>
-    <b-button
-      class="navigationSelector"
-      variant="transparent"
-      :class="{ active: $route.name === 'send' }"
-      to="send"
-    >
-      <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
-        :icon="['fal','paper-plane']"
-      />
-      <span v-t="'send'" />
-    </b-button>
-    <b-button
-      class="navigationSelector"
-      variant="transparent"
-      :class="{ active: $route.name === 'receive' }"
-      to="receive"
-    >
-      <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
-        :icon="['fal','hand-receiving']"
-      />
-      <span v-t="'receive'" />
-    </b-button>
     <!-- <b-button
       class="navigationSelector"
       variant="transparent"

@@ -34,7 +34,7 @@
           <span v-t="'send'" />
         </b-button>
         <b-button
-          to="receive"
+          v-b-modal.receive
           variant="outline-primary"
           class="text-white"
           size="sm"
@@ -45,6 +45,13 @@
           />
           <span v-t="'receive'" />
         </b-button>
+        <b-modal
+          id="receive"
+          hide-footer
+          hide-header
+        >
+          <Receive />
+        </b-modal>
       </div>
     </div>
   </b-container>
@@ -54,9 +61,13 @@
 import { mapState, mapActions } from 'vuex'
 import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
+import Receive from '@/components/Wallet/Receive'
 
 export default {
   name: 'AccountInfo',
+  components: {
+    'Receive': Receive
+  },
   computed: {
     ...mapState('Wallet', {
       activeAddress: state => state.activeAddress
