@@ -47,6 +47,19 @@ fieldset[disabled] .multiselect {
     pointer-events : none;
 }
 
+.input-group-lg > .multiselect > .multiselect__select,
+.input-group-lg > .multiselect > .multiselect__tags {
+    height        : calc(1.5em + 1rem + 2px);
+    padding       : 0.5rem 1rem;
+    line-height   : 1.5;
+    border-radius : 0.3rem;
+    font-size     : 1.25rem;
+}
+
+.input-group-lg > .multiselect > .multiselect__select {
+    width: calc(1.5em + 1rem + 2px);
+}
+
 .multiselect,
 .multiselect__input,
 .multiselect__single {
@@ -57,9 +70,8 @@ fieldset[disabled] .multiselect {
 
 .multiselect {
     box-sizing : content-box;
-    display    : block;
+    display    : inline;
     position   : relative;
-    width      : 100%;
     min-height : $vue-multiselect-min-height;
     text-align : left;
     color      : $vue-multiselect-color;
@@ -71,6 +83,14 @@ fieldset[disabled] .multiselect {
     &:focus {
         outline : none;
     }
+}
+
+.multiselect.scan {
+    width: calc(100% - 51px);
+}
+
+.multiselect.scan > .multiselect__content-wrapper {
+    width: calc(100% + 51px);
 }
 
 .multiselect--disabled {
@@ -116,7 +136,9 @@ fieldset[disabled] .multiselect {
     margin-bottom  : $vue-multiselect-padding-y;
     vertical-align : top;
 }
-
+.multiselect__input {
+    color : $vue-multiselect-color;
+}
 .multiselect__input::placeholder {
     color : $vue-multiselect-placeholder-color;
 }

@@ -6,28 +6,50 @@
       :addaccount="false"
     />
     <b-container
-      class="text-left"
+      class="text-left mt-3"
       fluid
     >
-      <div class="mt-3">
-        <label
-          v-t="'to'"
-          for="address"
-        />
-        <div class="input-group input-group-lg">
-          <b-form-input
-            id="address"
-            v-model="destinationAddress"
-            :placeholder="$t('address').toLowerCase()"
-            type="text"
-          />
-          <div class="input-group-append scanButton">
+      <b-form-group
+        :label="$t('to')"
+        label-size="lg"
+      >
+        <b-input-group size="lg">
+          <multiselect
+            id="toSelector"
+            v-model="destinationAccount"
+            class="scan text-base"
+            required
+            :tag-placeholder="$t('addThisAccount')"
+            track-by="address"
+            label="label"
+            :custom-label="labelWithAddress"
+            :options="combinedAccounts"
+            :multiple="false"
+            :taggable="true"
+            :placeholder="$t('searchOrAdd')"
+            @tag="addAccount"
+          >
+            <template
+              slot="singleLabel"
+              slot-scope="{ option }"
+            >
+              <span v-if="option.label !== option.address">
+                <strong>{{ option.label }}</strong>  -
+              </span>
+              <LogosAddress
+                :inactive="true"
+                :force="true"
+                :address="option.address"
+              />
+            </template>
+          </Multiselect>
+          <b-input-group-append>
             <b-button
               v-b-tooltip.hover
               :title="$t('scanQR')"
               :pressed="isScanning"
-              variant="link"
-              class="btn btn-default btn-sm"
+              variant="outline-primary"
+              class="text-white"
               @click="scan()"
             >
               <font-awesome-icon
@@ -39,49 +61,69 @@
                 class="sr-only"
               />
             </b-button>
-          </div>
+          </b-input-group-append>
+        </b-input-group>
+      </b-form-group>
+
+      <div
+        v-if="isScanning"
+        class="mt-3"
+      >
+        <qrcode-stream
+          :paused="!isScanning"
+          @init="onInit"
+          @decode="onDecode"
+        />
+        <div class="error">
+          {{ errorMessage }}
         </div>
-        <div
-          v-if="isScanning"
-          class="mt-3"
+      </div>
+
+      <div
+        v-if="!isScanning"
+        class="mt-3"
+      >
+        <b-form-group
+          :label="$t('amount')"
+          label-size="lg"
+          :description="currentAccountAddress ? `${availableToSend} ${$t('lgsAvailableToSend')}` : `${$t('noAccountFound')}`"
         >
-          <qrcode-stream
-            :paused="!isScanning"
-            @init="onInit"
-            @decode="onDecode"
-          />
-          <div class="error">
-            {{ errorMessage }}
-          </div>
-        </div>
-        <div
-          v-if="!isScanning"
-          class="mt-3"
-        >
-          <label
-            v-t="'amount'"
-            for="amount"
-          />
-          <div class="input-group input-group-lg">
+          <b-input-group size="lg">
+            <b-input-group-text slot="prepend">
+              <font-awesome-icon
+                class="text-primary"
+                :icon="['fal','lambda']"
+              />
+            </b-input-group-text>
             <b-form-input
               id="amount"
               v-model="amount"
-              :placeholder="$t('amount').toLowerCase()"
-              type="text"
+              autocomplete="off"
+              aria-describedby="amountError"
+              :state="isValidAmount"
+              required
+              type="number"
+              :placeholder="$t('amountInLogos')"
             />
-            <div class="input-group-append maxButton">
+            <b-input-group-append>
               <b-button
-                variant="link"
-                class="btn btn-default btn-sm"
+                variant="outline-primary"
+                class="text-white"
                 @click="setMax()"
               >
                 <span
                   v-t="'max'"
                 />
               </b-button>
-            </div>
-          </div>
-        </div>
+            </b-input-group-append>
+          </b-input-group>
+          <b-form-invalid-feedback
+            v-if="isValidAmount === false"
+            id="amountError"
+            v-t="'sendAmountError'"
+            class="text-danger"
+          />
+        </b-form-group>
       </div>
     </b-container>
     <b-row
@@ -95,7 +137,7 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="true"
+            :disabled="!isValidAmount || !destinationAccount"
             class="w-100"
             variant="primary"
             @click="confirmSend()"
@@ -109,37 +151,102 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import AccountList from '@/components/Wallet/Dashboard/AccountList.vue'
-import { QrcodeStream } from 'vue-qrcode-reader'
+import bigInt from 'big-integer'
+import Logos from '@logosnetwork/logos-rpc-client'
 
 export default {
   name: 'Send',
   components: {
     AccountList,
-    QrcodeStream
+    'QrcodeStream': () => import(/* webpackChunkName: "QRCode-Reader" */'vue-qrcode-reader').then(({ QrcodeStream }) => QrcodeStream),
+    'Multiselect': () => import(/* webpackChunkName: "Multiselect" */'vue-multiselect'),
+    'LogosAddress': () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   data () {
     return {
-      amount: '0',
+      amount: '',
       isScanning: false,
-      destinationAddress: '',
-      errorMessage: null
+      destinationAccount: null,
+      errorMessage: null,
+      localAccounts: []
     }
   },
   computed: {
     ...mapState('Wallet', {
       activeAddress: state => state.activeAddress
     }),
-    currentAccountAddress: function () {
+    currentAccountAddress () {
       if (this.activeAddress !== null) {
         return this.activeAddress
       } else {
         return this.$Wallet.accounts[0].address
       }
+    },
+    combinedAccounts () {
+      // TODO Contact / Address Book Support
+      let results = []
+      for (let address in this.$Wallet.accountsObject) {
+        if (address !== this.currentAccountAddress) {
+          results.push({
+            label: `${this.$Wallet.accountsObject[address].label}`,
+            address: address
+          })
+        }
+      }
+      for (let token in this.$Wallet.tokenAccounts) {
+        results.push({
+          label: `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`,
+          address: token
+        })
+      }
+      return results.concat(this.localAccounts)
+    },
+    availableToSend () {
+      return Logos.convert.fromReason(bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+    },
+    isValidAmount: function () {
+      if (this.amount === '') return null
+      if (this.amount) {
+        if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
+        let amountInRaw = Logos.convert.toReason(this.amount, 'LOGOS')
+        return (
+          bigInt(amountInRaw).greater(0) &&
+          bigInt(this.$Wallet.account.balance)
+            .greaterOrEquals(
+              bigInt(amountInRaw)
+                .plus(
+                  bigInt(this.$Utils.minimumFee)
+                )
+            )
+        )
+      }
+      return false
     }
   },
-  created: function () {
+  watch: {
+    combinedAccounts: function (newAccounts, oldAccounts) {
+      if (newAccounts.length > 0) {
+        let valid = false
+        for (let account of newAccounts) {
+          if (this.destinationAccount && account.address === this.destinationAccount.address) {
+            this.destinationAccount = account
+            valid = true
+          }
+        }
+        if (valid === false) {
+          this.destinationAccount = newAccounts[0]
+        }
+      } else {
+        this.destinationAccount = null
+      }
+    }
+  },
+  created () {
     if (this.activeAddress === null && this.$Wallet.accounts.length > 0) {
       this.setActiveAddress(this.$Wallet.accounts[0].address)
+    }
+    if (this.combinedAccounts.length > 0) {
+      this.destinationAccount = this.combinedAccounts[0]
     }
   },
   methods: {
@@ -151,7 +258,7 @@ export default {
     },
     onDecode (content) {
       if (content.match(/^lgs:lgs_[13456789abcdefghijkmnopqrstuwxyz]{60}$/)) {
-        this.destinationAddress = content.substring(4, 68)
+        this.addAccount(content.substring(4, 68))
         this.isScanning = false
       }
     },
@@ -173,6 +280,31 @@ export default {
           }
         })
     },
+    addAccount (newAddress) {
+      try {
+        this.$Utils.keyFromAccount(newAddress)
+        let newAccount = { label: newAddress, address: newAddress }
+        if (!this.findAccount(newAddress)) {
+          // TODO Prompt user to add label for address book?
+          this.localAccounts.push(newAccount)
+          this.destinationAccount = newAccount
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    findAccount (newAddress) {
+      return this.combinedAccounts.find((account) => {
+        return account.address === newAddress
+      })
+    },
+    labelWithAddress ({ label, address }) {
+      if (label !== address) {
+        return `${label} — ${address.substring(0, 9)}...${address.substring(59, 64)}`
+      } else {
+        return `${address.substring(0, 9)}...${address.substring(59, 64)}`
+      }
+    },
     setMax () {
       // TODO
     }
@@ -181,29 +313,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .maxButton {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
+  .formButton {
     height: 48px;
-    background: $input-bg;
-    border: 1px solid $input-border-color;
-    border-left: none;
   }
-  .scanButton {
-    border-top-right-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
-    height: 48px;
-    width: 59px;
-    background: $input-bg;
-    border: 1px solid $input-border-color;
-    border-left: none;
-  }
-  .maxButton > .btn-link,
-  .scanButton > .btn-link {
+  .formButton > .btn-link {
     color: theme-color("base");
   }
-  .maxButton > .btn-link:hover,
-  .scanButton > .btn-link:hover > .icon {
+  .formButton > .btn-link:hover {
     color: theme-color("base");
     opacity: 0.5;
   }

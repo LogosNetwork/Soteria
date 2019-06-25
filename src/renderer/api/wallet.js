@@ -9,6 +9,7 @@ export default {
       return
     }
     this.installed = true
+    Vue.prototype.$Utils = LogosWallet.Utils
     Vue.prototype.$LogosWallet = LogosWallet.Wallet
     let wallet = new LogosWallet.Wallet()
     wallet.ResetWalletReactivity = () => {
@@ -32,9 +33,7 @@ export default {
     // Set the settings for local Logos Node RPC Integration
     wallet.ConfigureSoteria = async () => {
       let response = await axios.get(`https://pla.bs/delegates`)
-      if (Vue.prototype.$Wallet.mqtt !== 'wss://pla.bs:8443') {
-        Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
-      }
+      Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
       Vue.prototype.$Wallet.rpc = {
         proxy: 'https://pla.bs',
         delegates: Object.values(response.data)

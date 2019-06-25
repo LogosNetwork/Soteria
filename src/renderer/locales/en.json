@@ -80,5 +80,11 @@
   "scanQR": "Scan a QR Code Address",
   "amount": "Amount",
   "from": "From",
-  "max": "Max"
+  "max": "Max",
+  "searchOrAdd": "Search or add an account",
+  "addThisAccount": "Add this account",
+  "amountInLogos": "Amount in Logos",
+  "lgsAvailableToSend": "Logos available to send",
+  "noAccountFound": "No account found",
+  "sendAmountError": "This is a required field and must be a positive decimal or integer value that is less than the current accounts balance"
 }
