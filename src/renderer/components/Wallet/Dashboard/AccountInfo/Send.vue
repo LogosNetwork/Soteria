@@ -312,11 +312,7 @@ export default {
     setMax () {
       this.amount = this.availableToSend()
     },
-    confirmSend () {
-      // TODO
-    },
     send () {
-      console.log('hello')
       let amount = Logos.convert.toReason(this.amount, 'LOGOS')
       if (bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance)
         .greaterOrEquals(
@@ -326,6 +322,7 @@ export default {
           destination: this.destinationAccount.address,
           amount: amount
         }])
+        this.$emit('sent')
       }
     }
   }

@@ -39,7 +39,7 @@
           hide-footer
           hide-header
         >
-          <Send />
+          <Send @sent="$bvModal.hide('send')" />
         </b-modal>
         <b-button
           v-b-modal.receive
@@ -69,8 +69,8 @@
 import { mapState, mapActions } from 'vuex'
 import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
-import Receive from '@/components/Wallet/Receive'
-import Send from '@/components/Wallet/Send'
+import Receive from '@/components/Wallet/Dashboard/AccountInfo/Receive'
+import Send from '@/components/Wallet/Dashboard/AccountInfo/Send'
 
 export default {
   name: 'AccountInfo',
