@@ -54,7 +54,7 @@ export default new Router({
         {
           name: 'insertVault',
           path: 'insertVault',
-          component: require('@/components/Onboarding/insertVault').default
+          component: require('@/components/Onboarding/InsertVault').default
         },
         {
           name: 'importSeed',
