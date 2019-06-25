@@ -9,7 +9,10 @@
       fluid
     >
       <div class="mt-3">
-        <label for="address">Address</label>
+        <label
+          v-t="'address'"
+          for="address"
+        />
         <div class="input-group input-group-lg">
           <b-form-input
             id="address"
@@ -69,7 +72,7 @@
         variant="success"
         @dismiss-count-down="countDownChanged"
       >
-        Copied address to clipboard!
+        <span v-t="'copyToClipboard'" />
       </b-alert>
     </b-container>
   </div>

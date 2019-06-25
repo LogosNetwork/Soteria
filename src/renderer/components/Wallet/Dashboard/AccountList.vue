@@ -5,7 +5,10 @@
         class="overflow-hidden"
         :class="{ accountList: tokenfilter }"
       >
-        <Accounts :aggregate="aggregate" />
+        <Accounts
+          :aggregate="aggregate"
+          :addaccount="addaccount"
+        />
       </b-col>
       <b-col
         v-if="tokenfilter"
@@ -34,6 +37,10 @@ export default {
       default: true
     },
     tokenfilter: {
+      type: Boolean,
+      default: true
+    },
+    addaccount: {
       type: Boolean,
       default: true
     }

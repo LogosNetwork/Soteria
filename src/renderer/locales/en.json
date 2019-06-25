@@ -73,5 +73,12 @@
   "notOpened": "This account has not been opened",
   "syncingWallet": "Syncing Wallet with the Logos Blockchain",
   "copy": "Copy",
-  "copyAddress": "Copy Logos Address"
+  "copyAddress": "Copy Logos Address",
+  "address": "Address",
+  "copyToClipboard": "Copied address to clipboard!",
+  "to": "To",
+  "scanQR": "Scan a QR Code Address",
+  "amount": "Amount",
+  "from": "From",
+  "max": "Max"
 }

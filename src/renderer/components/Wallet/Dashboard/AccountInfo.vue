@@ -35,6 +35,7 @@
         </b-button>
         <b-modal
           id="send"
+          body-class="pb-0"
           hide-footer
           hide-header
         >

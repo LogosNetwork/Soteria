@@ -119,7 +119,13 @@ let rendererConfig = {
         ? path.resolve(__dirname, '../node_modules')
         : false
     }),
-    new CspHtmlWebpackPlugin(),
+    new CspHtmlWebpackPlugin({
+      'base-uri': "'self'",
+      'object-src': "'none'",
+      'script-src': ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+      'style-src': ["'unsafe-inline'", "'self'", "'unsafe-eval'"],
+      'worker-src': "blob:"
+    }),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {

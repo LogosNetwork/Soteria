@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="accountList">
+    <div
+      :class="{ accountList: addaccount === true }"
+      class="d-inline-block"
+    >
       <ul
         role="tablist"
         class="nav nav-tabs scroller"
@@ -43,6 +46,7 @@
       </ul>
     </div>
     <b-button
+      v-if="addaccount"
       v-b-tooltip.hover
       variant="link"
       class="p-0 align-top"
@@ -69,6 +73,10 @@ export default {
   name: 'Accounts',
   props: {
     aggregate: {
+      type: Boolean,
+      default: true
+    },
+    addaccount: {
       type: Boolean,
       default: true
     }
@@ -113,7 +121,6 @@ export default {
 <style scoped lang="scss">
 .accountList {
   width: calc(100% - 28px);
-  display: inline-block;
 }
 .text-inherit {
   color: inherit
