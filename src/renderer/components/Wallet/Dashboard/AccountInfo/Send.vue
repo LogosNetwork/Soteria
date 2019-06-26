@@ -303,10 +303,14 @@ export default {
       try {
         this.$Utils.keyFromAccount(newAddress)
         let newAccount = { label: newAddress, address: newAddress }
-        if (this.currentAccountAddress !== newAddress &&
-          !this.findAccount(newAddress)) {
-          this.addContact(newAccount)
-          this.destinationAccount = newAccount
+        if (this.currentAccountAddress !== newAddress) {
+          let existingAccount = this.findAccount(newAddress)
+          if (!existingAccount) {
+            this.addContact(newAccount)
+            this.destinationAccount = newAccount
+          } else {
+            this.destinationAccount = existingAccount
+          }
         }
       } catch (err) {
         console.log(err)
@@ -325,7 +329,7 @@ export default {
       }
     },
     setMax () {
-      this.amount = this.availableToSend()
+      this.amount = this.availableToSend
     },
     send () {
       let amount = Logos.convert.toReason(this.amount, 'LOGOS')
