@@ -9,43 +9,44 @@
       fluid
     >
       <div class="mt-3">
-        <label
-          v-t="'address'"
-          for="address"
-        />
-        <div class="input-group input-group-lg">
-          <b-form-input
-            id="address"
-            :value="currentAccountAddress"
-            type="text"
-            :disabled="true"
-          />
-          <b-form-input
-            ref="myAddress"
-            :value="currentAccountAddress"
-            type="text"
-            tabindex="-1"
-            class="hiddenInput"
-          />
-          <div class="input-group-append copyButton">
-            <b-button
-              v-b-tooltip.hover
-              :title="$t('copy')"
-              variant="link"
-              class="btn btn-default btn-sm"
-              @click="copy()"
-            >
-              <font-awesome-icon
-                class="icon"
-                :icon="['fal','copy']"
-              />
-              <span
-                v-t="'copyAddress'"
-                class="sr-only"
-              />
-            </b-button>
-          </div>
-        </div>
+        <b-form-group
+          :label="$t('address')"
+          label-size="lg"
+        >
+          <b-input-group size="lg">
+            <b-form-input
+              id="address"
+              :value="currentAccountAddress"
+              type="text"
+              :disabled="true"
+            />
+            <b-form-input
+              ref="myAddress"
+              :value="currentAccountAddress"
+              type="text"
+              tabindex="-1"
+              class="hiddenInput"
+            />
+            <b-input-group-append>
+              <b-button
+                v-b-tooltip.hover
+                :title="$t('copy')"
+                variant="outline-primary"
+                class="text-white"
+                @click="copy()"
+              >
+                <font-awesome-icon
+                  class="icon"
+                  :icon="['fal','copy']"
+                />
+                <span
+                  v-t="'copyAddress'"
+                  class="sr-only"
+                />
+              </b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
       </div>
       <div class="mt-3">
         <label for="qrCode">Scan</label>

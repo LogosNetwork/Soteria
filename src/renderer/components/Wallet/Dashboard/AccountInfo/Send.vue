@@ -188,8 +188,11 @@ export default {
     },
     combinedAccounts () {
       let results = []
+      const map = new Map()
+      map.set(this.currentAccountAddress, true)
       for (let address in this.$Wallet.accountsObject) {
-        if (address !== this.currentAccountAddress) {
+        if (!map.has(address)) {
+          map.set(address, true)
           results.push({
             label: `${this.$Wallet.accountsObject[address].label}`,
             address: address
@@ -197,12 +200,24 @@ export default {
         }
       }
       for (let token in this.$Wallet.tokenAccounts) {
-        results.push({
-          label: `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`,
-          address: token
-        })
+        if (!map.has(token)) {
+          map.set(token, true)
+          results.push({
+            label: `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`,
+            address: token
+          })
+        }
       }
-      return results.concat(this.contacts)
+      for (let contact of this.contacts) {
+        if (!map.has(contact.address)) {
+          map.set(contact.address, true)
+          results.push({
+            label: contact.label,
+            address: contact.address
+          })
+        }
+      }
+      return results
     },
     availableToSend () {
       return Logos.convert.fromReason(bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
@@ -288,8 +303,8 @@ export default {
       try {
         this.$Utils.keyFromAccount(newAddress)
         let newAccount = { label: newAddress, address: newAddress }
-        if (!this.findAccount(newAddress)) {
-          // Should we prompt users to add label for address book?
+        if (this.currentAccountAddress !== newAddress &&
+          !this.findAccount(newAddress)) {
           this.addContact(newAccount)
           this.destinationAccount = newAccount
         }
