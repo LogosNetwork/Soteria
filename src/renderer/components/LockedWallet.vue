@@ -86,11 +86,12 @@
                 id="clearWalletModal"
                 ref="clearWallet"
                 :title="$t('areyousure')"
+                :ok-title="$t('delete.keyword')"
+                :ok-variant="'danger'"
                 @ok="handleOk"
               >
                 <p
                   v-t="'forgotPasswordWarning'"
-                  class="text-danger"
                 />
                 <form @submit.stop.prevent="handleSubmit">
                   <b-form-input

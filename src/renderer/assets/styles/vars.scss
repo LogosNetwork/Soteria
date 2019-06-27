@@ -20,4 +20,5 @@ $custom-select-color: theme-color("base");
 $input-disabled-bg: rgba(theme-color("base"),0.05);
 $card-bg: rgba(theme-color("base"),0.05);
 $card-border-color: theme-color("secondary");
+$list-group-bg: transparent;
 @import "node_modules/bootstrap/scss/variables";

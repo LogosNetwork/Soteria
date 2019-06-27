@@ -22,7 +22,7 @@
   "lastchancedelete": "There is already a wallet associated with this application. By creating a new wallet or importing a new seed this will remove any existing data stored in this application.",
   "delete": {
     "placeholder": "Type delete to confirm the deletion of this wallet",
-    "keyword": "delete"
+    "keyword": "Delete"
   },
   "writedownyourseed": "Write it down",
   "exportlogosvault": "Seed Vault",
@@ -67,7 +67,9 @@
   "filterByCurrency": "Filter By Currency",
   "accountName": "Account Name",
   "send": "Send",
+  "sent": "sent",
   "receive": "Receive",
+  "received": "Received",
   "recentTransactions": "Recent Transactions",
   "balance": "Balance",
   "notOpened": "This account has not been opened",

@@ -12,6 +12,8 @@ import VueInputAutowidth from 'vue-input-autowidth'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
@@ -51,6 +53,12 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
 Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 Vue.component('multiselect', Multiselect)
+
+dayjs.extend(relativeTime)
+Vue.filter('fromNow', (timestamp) => {
+  timestamp = timestamp.substring(0, timestamp.length - 3)
+  return dayjs.unix(timestamp).fromNow()
+})
 
 Vue.use(BootstrapVue)
 Vue.use(VueInputAutowidth)
