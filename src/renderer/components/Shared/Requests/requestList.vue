@@ -65,7 +65,8 @@ export default {
         props: {
           requestInfo: this.requests[itemIndex],
           address: this.address,
-          small: this.small
+          small: this.small,
+          lastItem: itemIndex === Object.keys(this.requests).length - 1
         }
       }
       if (this.requests[itemIndex].view) {

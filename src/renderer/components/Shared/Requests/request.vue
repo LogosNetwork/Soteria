@@ -1,5 +1,8 @@
 <template>
-  <div class="mb-3 shadow-sm">
+  <div
+    class="shadow-sm"
+    :class="{ 'mb-3': !lastItem }"
+  >
     <send
       v-if="request.type === 'send'"
       :request-info="request"
@@ -112,6 +115,10 @@ export default {
       default: null
     },
     small: {
+      type: Boolean,
+      default: false
+    },
+    lastItem: {
       type: Boolean,
       default: false
     }

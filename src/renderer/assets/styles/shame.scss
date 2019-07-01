@@ -92,6 +92,7 @@ button[disabled="disabled"] {
   visibility: hidden;
   background-clip: padding-box;
 }
+.scroller.visible::-webkit-scrollbar-thumb,
 .scroller:hover::-webkit-scrollbar-thumb {
   visibility: visible;
 }
@@ -101,6 +102,7 @@ button[disabled="disabled"] {
   visibility: hidden;
   background-clip: padding-box;
 }
+.scroller.visible::-webkit-scrollbar-track,
 .scroller:hover::-webkit-scrollbar-track {
   visibility: visible;
 }
