@@ -56,7 +56,7 @@
             :value="qrAddress"
             :options="{
               margin: 2,
-              width: 200,
+              width: 175,
               color: {
                 dark: '#000',
                 light: '#FFF'
@@ -94,7 +94,7 @@ export default {
     return {
       amount: '0',
       dismissCountDown: 0,
-      dismissSecs: 5
+      dismissSecs: 3
     }
   },
   computed: {

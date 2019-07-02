@@ -91,6 +91,7 @@ fieldset[disabled] .multiselect {
 
 .multiselect.scan > .multiselect__content-wrapper {
     width: calc(100% + 51px);
+    border: 1px solid #000;
 }
 
 .multiselect--disabled {
@@ -162,6 +163,8 @@ fieldset[disabled] .multiselect {
 .multiselect__single {
     padding-left  : $vue-multiselect-padding-x / 2;
     margin-bottom : $vue-multiselect-padding-y;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .multiselect__tags-wrap {

@@ -56,12 +56,15 @@ export default {
   },
   methods: {
     updateRemains () {
-      this.remains = Math.ceil((Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 203) / 82)
+      this.remains = Math.ceil((Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 187) / 82)
       return this.remains
     },
     getItemProps (itemIndex) {
+      if (!this.requests[itemIndex].view && this.address) {
+        this.requests[itemIndex].view = this.address
+      }
       let data = {
-        key: this.requests[itemIndex].hash,
+        key: `${this.requests[itemIndex].hash}_${this.address}`,
         props: {
           requestInfo: this.requests[itemIndex],
           address: this.address,
@@ -69,7 +72,9 @@ export default {
           lastItem: itemIndex === Object.keys(this.requests).length - 1
         }
       }
-      if (this.requests[itemIndex].view) {
+      if (this.address) {
+        data.key = `${data.key}_${this.address}`
+      } else if (this.requests[itemIndex].view) {
         data.key = `${data.key}_${this.requests[itemIndex].view}`
       }
       return data

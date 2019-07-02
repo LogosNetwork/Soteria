@@ -14,7 +14,7 @@
       :requests="requests"
       :address="activeAddress"
       :small="true"
-      class="mt-3 transactionHistoryContainer scroller visible"
+      class="transactionHistoryContainer scroller visible"
     />
   </b-container>
 </template>
@@ -38,7 +38,12 @@ export default {
     requests () {
       if (this.activeAddress !== null) {
         if (!this.$Wallet.account) return []
-        return this.$Wallet.account.chain.concat(this.$Wallet.account.receiveChain)
+        let results = this.$Wallet.account.chain.concat(this.$Wallet.account.receiveChain)
+        return results.sort((a, b) => {
+          if (a.timestamp > b.timestamp) return -1
+          if (a.timestamp < b.timestamp) return 1
+          return 0
+        })
       } else {
         let dedupedRequests = new Map()
         let result = []
@@ -62,6 +67,8 @@ export default {
         return result.sort((a, b) => {
           if (a.timestamp > b.timestamp) return -1
           if (a.timestamp < b.timestamp) return 1
+          if (a._origin === a.view) return 1
+          if (b._origin === b.view) return -1
           return 0
         })
       }
@@ -72,6 +79,6 @@ export default {
 
 <style scoped lang="scss">
 .transactionHistoryContainer {
-  height: calc(100vh - 203px) !important;
+  height: calc(100vh - 187px) !important;
 }
 </style>

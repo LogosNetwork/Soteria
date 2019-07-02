@@ -9,7 +9,10 @@
       :title="address"
       :to="'/'+address"
     >
-      <span v-if="forceExpand">
+      <span v-if="replace && label !== null">
+        {{ label }}
+      </span>
+      <span v-else-if="forceExpand">
         {{ address }}
       </span>
       <span v-else>
@@ -21,7 +24,10 @@
       :title="address"
       :to="'/'+address"
     >
-      <span v-if="force">
+      <span v-if="replace && label !== null">
+        {{ label }}
+      </span>
+      <span v-else-if="force">
         {{ abrvAddress }}
       </span>
       <span v-else>
@@ -34,7 +40,10 @@
       class="d-lg-none"
       :title="address"
     >
-      <span v-if="forceExpand">
+      <span v-if="replace && label !== null">
+        {{ label }}
+      </span>
+      <span v-else-if="forceExpand">
         {{ address }}
       </span>
       <span v-else>
@@ -45,7 +54,10 @@
       class="d-none d-lg-inline-block"
       :title="address"
     >
-      <span v-if="force">
+      <span v-if="replace && label !== null">
+        {{ label }}
+      </span>
+      <span v-else-if="force">
         {{ abrvAddress }}
       </span>
       <span v-else>
@@ -56,6 +68,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'LogosAddress',
   props: {
@@ -77,15 +91,44 @@ export default {
     suffixCount: {
       type: Number,
       default: 5
+    },
+    replace: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    ...mapState('Wallet', {
+      contacts: state => state.contacts
+    }),
     abrvAddress: function () {
       if (this.address) {
         return this.address.substring(0, 4 + this.prefixCount) + this.separator + this.address.substring(64 - this.suffixCount, 64)
       } else {
         return ''
       }
+    },
+    label () {
+      for (let address in this.$Wallet.accountsObject) {
+        if (address === this.address) {
+          return `${this.$Wallet.accountsObject[address].label}`
+        }
+      }
+      for (let token in this.$Wallet.tokenAccounts) {
+        if (token === this.address) {
+          return `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`
+        }
+      }
+      for (let contact of this.contacts) {
+        if (contact.address === this.address) {
+          if (contact.label.match(/^lgs_[13456789abcdefghijkmnopqrstuwxyz]{60}$/)) {
+            return null
+          } else {
+            return contact.label
+          }
+        }
+      }
+      return null
     }
   }
 }

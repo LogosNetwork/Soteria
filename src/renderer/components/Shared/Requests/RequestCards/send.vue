@@ -10,19 +10,39 @@
             v-if="isReceive"
           >
             <font-awesome-icon
-              :icon="faArrowDown"
+              :icon="faHandReceiving"
               class="text-success mr-2"
             />
             <LogosAddress
-              :address="viewAddress"
+              v-if="!activeAddress"
+              :address="requestInfo.view"
               :force="small"
               :inactive="true"
+              :replace="true"
             />
-            <span v-t="'received'" />
+            <span
+              v-if="!activeAddress"
+              v-t="'received'"
+              class="text-lowercase"
+            />
+            <span
+              v-else
+              v-t="'received'"
+            />
             <span class="text-success">
               {{ totalReceived }}
               <span v-t="'logos'" />
             </span>
+            <span
+              v-t="'from'"
+              class="text-lowercase"
+            />
+            <LogosAddress
+              :address="requestInfo.origin"
+              :force="small"
+              :inactive="true"
+              :replace="true"
+            />
           </div>
           <div
             v-else
@@ -32,14 +52,38 @@
               class="text-danger mr-2"
             />
             <LogosAddress
+              v-if="!activeAddress"
               :address="requestInfo.origin"
               :force="small"
               :inactive="true"
+              :replace="true"
             />
-            <span v-t="'sent'" />
+            <span
+              v-if="!activeAddress"
+              v-t="'sent'"
+              class="text-lowercase"
+            />
+            <span
+              v-else
+              v-t="'sent'"
+            />
             <span class="text-danger">
               {{ requestInfo.totalAmountLogos }}
               <span v-t="'logos'" />
+            </span>
+            <span
+              v-t="'to'"
+              class="text-lowercase"
+            />
+            <LogosAddress
+              v-if="requestInfo.transactions.length === 1"
+              :address="requestInfo.transactions[0].destination"
+              :force="small"
+              :inactive="true"
+              :replace="true"
+            />
+            <span v-else>
+              {{ requestInfo.transactions.length }} <span v-t="'accounts'" />
             </span>
           </div>
           <div class="timestamp text-right">
@@ -56,7 +100,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { faPaperPlane, faArrowDown } from '@fortawesome/pro-light-svg-icons'
+import { faPaperPlane, faHandReceiving } from '@fortawesome/pro-light-svg-icons'
 import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
 
@@ -82,10 +126,13 @@ export default {
   data () {
     return {
       faPaperPlane,
-      faArrowDown
+      faHandReceiving
     }
   },
   computed: {
+    ...mapState('Wallet', {
+      activeAddress: state => state.activeAddress
+    }),
     ...mapState('Language', {
       languageCode: state => state.selectedLanguageCode.value
     }),
