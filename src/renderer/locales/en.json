@@ -62,6 +62,7 @@
   "settings": "Settings",
   "logout": "Log out",
   "search": "Search",
+  "token": "Token",
   "tokens": "Tokens",
   "searchTokens": "Search for a token",
   "tokenFilter": "Filter the wallet by currency",
@@ -85,9 +86,13 @@
   "from": "From",
   "max": "Max",
   "searchOrAdd": "Search or add an account",
+  "searchToken": "Search for token",
   "addThisAccount": "Add this account",
   "amountInLogos": "Amount in Logos",
+  "amountIn": "Amount in",
   "lgsAvailableToSend": "Logos available to send",
   "noAccountFound": "No account found",
-  "sendAmountError": "This is a required field and must be a positive decimal or integer value that is less than the current accounts balance"
+  "sendAmountError": "This is a required field and must be a positive decimal or integer value that is less than the current accounts balance",
+  "baseUnitsOf": "base units of",
+  "areAvailableToSend": "are available to send"
 }

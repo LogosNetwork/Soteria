@@ -10,6 +10,35 @@
       fluid
     >
       <b-form-group
+        v-if="!isScanning && availableTokens.length > 0"
+        :label="$t('token')"
+        label-size="lg"
+      >
+        <b-input-group size="lg">
+          <multiselect
+            id="tokenSelector"
+            v-model="token"
+            required
+            track-by="tokenID"
+            label="label"
+            :custom-label="tokenLabel"
+            :options="availableTokens"
+            :multiple="false"
+            :placeholder="$t('searchToken')"
+            class="w-100"
+          >
+            <template
+              slot="singleLabel"
+              slot-scope="{ option }"
+            >
+              <span>
+                {{ option.name }} ({{ option.symbol }})
+              </span>
+            </template>
+          </Multiselect>
+        </b-input-group>
+      </b-form-group>
+      <b-form-group
         :label="$t('to')"
         label-size="lg"
       >
@@ -17,11 +46,10 @@
           <multiselect
             id="toSelector"
             v-model="destinationAccount"
-            class="scan text-base"
+            class="scan"
             required
             :tag-placeholder="$t('addThisAccount')"
             track-by="address"
-            label="label"
             :custom-label="labelWithAddress"
             :options="combinedAccounts"
             :multiple="false"
@@ -34,7 +62,7 @@
               slot-scope="{ option }"
             >
               <span v-if="option.label !== option.address">
-                <strong>{{ option.label }}</strong>  -
+                {{ option.label }}  -
               </span>
               <LogosAddress
                 :inactive="true"
@@ -48,7 +76,7 @@
               v-b-tooltip.hover
               :title="$t('scanQR')"
               :pressed="isScanning"
-              variant="outline-primary"
+              variant="outline-black"
               class="text-white"
               @click="scan()"
             >
@@ -81,12 +109,12 @@
 
       <div
         v-if="!isScanning"
-        class="mt-3"
       >
         <b-form-group
           :label="$t('amount')"
           label-size="lg"
-          :description="currentAccountAddress ? `${availableToSend} ${$t('lgsAvailableToSend')}` : `${$t('noAccountFound')}`"
+          :description="currentAccountAddress ? availableToSend.text : `${$t('noAccountFound')}`"
+          class="mt-3"
         >
           <b-input-group size="lg">
             <b-input-group-text slot="prepend">
@@ -103,13 +131,13 @@
               :state="isValidAmount"
               required
               type="number"
-              :placeholder="$t('amountInLogos')"
+              :placeholder="sendingTokens ? `${$t('amountIn')} ${token.name}` : $t('amountInLogos')"
             />
             <b-input-group-append>
               <b-button
-                variant="outline-primary"
+                variant="outline-black"
                 class="text-white"
-                :pressed="amount === availableToSend"
+                :pressed="amount === availableToSend.amount"
                 @click="setMax()"
               >
                 <span
@@ -138,7 +166,7 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="!isValidAmount || !destinationAccount"
+            :disabled="!isValidAmount || !destinationAccount || (sendingTokens && !validDestination)"
             class="w-100"
             variant="primary"
             @click="send()"
@@ -168,7 +196,10 @@ export default {
       amount: '',
       isScanning: false,
       destinationAccount: null,
-      errorMessage: null
+      errorMessage: null,
+      token: null,
+      validDestination: null,
+      invalidDestinationError: ''
     }
   },
   computed: {
@@ -186,6 +217,50 @@ export default {
         return this.$Wallet.accounts[0].address
       }
     },
+    availableTokens () {
+      let tokens = []
+      if (this.account && this.account.tokenBalances) {
+        for (let tokenID in this.account.tokenBalances) {
+          let forgeToken = this.$Wallet.tokenAccounts[this.$Utils.parseAccount(tokenID)]
+          if (forgeToken.feeType === 'flat') {
+            if (bigInt(this.account.tokenBalances[tokenID])
+              .minus(bigInt(forgeToken.feeRate)).greater(0)) {
+              tokens.push({
+                name: forgeToken.name,
+                symbol: forgeToken.symbol,
+                tokenID: tokenID,
+                balance: this.account.tokenBalances[tokenID]
+              })
+            }
+          } else {
+            if (bigInt(this.account.tokenBalances[tokenID]).greater(0)) {
+              tokens.push({
+                name: forgeToken.name,
+                symbol: forgeToken.symbol,
+                tokenID: tokenID,
+                balance: this.account.tokenBalances[tokenID]
+              })
+            }
+          }
+        }
+      }
+      if (tokens.length > 0) {
+        tokens.unshift({
+          name: 'Logos',
+          symbol: 'lgs',
+          tokenID: null,
+          balance: this.account.balance
+        })
+      }
+      return tokens
+    },
+    account () {
+      return this.$Wallet.accountsObject[this.activeAddress]
+    },
+    tokenAccount () {
+      if (!this.sendingTokens) return null
+      return this.$Wallet.tokenAccounts[this.$Utils.parseAccount(this.token.tokenID)]
+    },
     combinedAccounts () {
       let results = []
       const map = new Map()
@@ -202,10 +277,12 @@ export default {
       for (let token in this.$Wallet.tokenAccounts) {
         if (!map.has(token)) {
           map.set(token, true)
-          results.push({
-            label: `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`,
-            address: token
-          })
+          if (!this.sendingTokens) {
+            results.push({
+              label: `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`,
+              address: token
+            })
+          }
         }
       }
       for (let contact of this.contacts) {
@@ -219,29 +296,94 @@ export default {
       }
       return results
     },
+    sendingTokens () {
+      return this.token !== null && this.token.tokenID !== null
+    },
+    issuerInfo () {
+      if (!this.tokenAccount) return null
+      try {
+        return JSON.parse(this.tokenAccount.issuerInfo)
+      } catch (e) {
+        return {}
+      }
+    },
     availableToSend () {
-      return Logos.convert.fromReason(bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+      let result = {
+        text: '',
+        amount: ''
+      }
+      if (!this.sendingTokens) {
+        let amount = Logos.convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+        result.amount = amount
+        result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
+      } else {
+        let amount = null
+        let amountInBaseUnit = this.account.tokenBalances[this.token.tokenID]
+        if (this.tokenAccount.feeType === 'flat') {
+          amountInBaseUnit = bigInt(amountInBaseUnit).minus(bigInt(this.tokenAccount.feeRate)).toString()
+        }
+        if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
+          amount = Logos.convert.fromTo(amountInBaseUnit, 0, this.issuerInfo.decimals)
+          result.amount = amount
+          result.text = `${amount} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
+        } else {
+          amount = amountInBaseUnit
+          result.amount = amount
+          result.text = `${amount} ${this.$t('baseUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
+        }
+      }
+      return result
     },
     isValidAmount () {
       if (this.amount === '') return null
       if (this.amount) {
         if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
-        let amountInRaw = Logos.convert.toReason(this.amount, 'LOGOS')
-        return (
-          bigInt(amountInRaw).greater(0) &&
-          bigInt(this.$Wallet.account.balance)
-            .greaterOrEquals(
-              bigInt(amountInRaw)
-                .plus(
-                  bigInt(this.$Utils.minimumFee)
-                )
-            )
-        )
+        if (!this.sendingTokens) {
+          let amountInRaw = Logos.convert.toReason(this.amount, 'LOGOS')
+          return (
+            bigInt(amountInRaw).greater(0) &&
+            bigInt(this.$Wallet.account.balance)
+              .greaterOrEquals(
+                bigInt(amountInRaw)
+                  .plus(
+                    bigInt(this.$Utils.minimumFee)
+                  )
+              )
+          )
+        } else {
+          let amountInRaw = null
+          if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined' &&
+            this.issuerInfo.decimals > 0) {
+            if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
+            amountInRaw = Logos.convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
+          } else {
+            amountInRaw = this.transaction.amount
+            if (!/^([0-9]+)$/.test(amountInRaw)) return false
+          }
+          if (amountInRaw === null) return false
+          if (this.tokenAccount.feeType === 'flat') {
+            return (bigInt(this.account.tokenBalances[this.token.tokenID])
+              .minus(bigInt(this.tokenAccount.feeRate))
+              .greaterOrEquals(bigInt(amountInRaw)))
+          } else {
+            return (bigInt(this.account.tokenBalances[this.token.tokenID])
+              .greaterOrEquals(bigInt(amountInRaw)))
+          }
+        }
       }
       return false
     }
   },
   watch: {
+    token (oldToken, newToken) {
+      this.isValidDestination(this.destinationAccount)
+      this.amount = ''
+    },
+    destinationAccount (oldAccount, newAccount) {
+      if (this.destinationAccount !== null) {
+        this.isValidDestination(this.destinationAccount)
+      }
+    },
     combinedAccounts (newAccounts, oldAccounts) {
       if (newAccounts.length > 0) {
         let valid = false
@@ -265,6 +407,9 @@ export default {
     }
     if (this.combinedAccounts.length > 0) {
       this.destinationAccount = this.combinedAccounts[0]
+    }
+    if (this.availableTokens.length > 0) {
+      this.token = this.availableTokens[0]
     }
   },
   methods: {
@@ -321,6 +466,9 @@ export default {
         return account.address === newAddress
       })
     },
+    tokenLabel ({ name, symbol }) {
+      return `${name} (${symbol})`
+    },
     labelWithAddress ({ label, address }) {
       if (label !== address) {
         return `${label} — ${address.substring(0, 9)}...${address.substring(59, 64)}`
@@ -329,19 +477,93 @@ export default {
       }
     },
     setMax () {
-      this.amount = this.availableToSend
+      this.amount = this.availableToSend.amount
+    },
+    isValidDestination: async function (account) {
+      if (this.destinationAccount.address.match(/^lgs_[13456789abcdefghijkmnopqrstuwxyz]{60}$/) === null) return false
+      if (!this.sendingTokens) return true
+      this.validDestination = null
+      this.invalidDestinationError = ''
+      if (this.tokenAccount && account && account.address) {
+        let address = account.address
+        let rpc = this.$Wallet.rpcClient()
+        let accountInfo = await rpc.accounts.info(address)
+        if (!accountInfo) {
+          this.validDestination = false
+          this.invalidDestinationError = 'Unable to validate this account.'
+          return
+        }
+        if (accountInfo.error && accountInfo.error === 'failed to get account') {
+          this.validDestination = false
+          this.invalidDestinationError = 'This account must be opened first before sending tokens to it.'
+          return
+        }
+        if (accountInfo.error && accountInfo.error === 'Bad account number') {
+          this.validDestination = false
+          this.invalidDestinationError = 'This is not a valid address.'
+          return
+        }
+        if (accountInfo.type !== 'LogosAccount') {
+          this.validDestination = false
+          this.invalidDestinationError = 'You cannot send tokens to TokenAccounts.'
+          return
+        }
+        let tokenInfo = this.tokenAccount.getAccountStatus(account.address)
+        if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
+          this.validDestination = false
+          this.invalidDestinationError = 'This account has not been whitelisted.'
+        } else if (tokenInfo.frozen === true) {
+          this.validDestination = false
+          this.invalidDestinationError = `This account is frozen and cannot receive or send ${this.tokenAccount.symbol}.`
+        } else {
+          this.validDestination = true
+        }
+      }
     },
     send () {
-      let amount = Logos.convert.toReason(this.amount, 'LOGOS')
-      if (bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance)
-        .greaterOrEquals(
-          bigInt(amount).plus(bigInt(this.$Utils.minimumFee))
-        )) {
-        this.$Wallet.account.createSendRequest([{
-          destination: this.destinationAccount.address,
-          amount: amount
-        }])
-        this.$emit('sent')
+      if (this.sendingTokens && this.isValidDestination) {
+        let amountInBaseUnit = null
+        if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
+          amountInBaseUnit = Logos.convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
+        } else {
+          amountInBaseUnit = this.amount
+        }
+        if (this.tokenAccount.feeType === 'flat') {
+          if (bigInt(this.account.tokenBalances[this.token.tokenID])
+            .minus(bigInt(this.tokenAccount.feeRate))
+            .greaterOrEquals(bigInt(amountInBaseUnit))) {
+            this.$Wallet.account.createTokenSendRequest(
+              this.tokenAccount.address,
+              [{
+                destination: this.destinationAccount.address,
+                amount: amountInBaseUnit
+              }]
+            )
+          }
+        } else {
+          if (bigInt(this.currentAccount.tokenBalances[this.token.tokenID])
+            .greaterOrEquals(bigInt(amountInBaseUnit))) {
+            this.$Wallet.account.createTokenSendRequest(
+              this.tokenAccount.address,
+              [{
+                destination: this.destinationAccount.address,
+                amount: amountInBaseUnit
+              }]
+            )
+          }
+        }
+      } else {
+        let amount = Logos.convert.toReason(this.amount, 'LOGOS')
+        if (bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance)
+          .greaterOrEquals(
+            bigInt(amount).plus(bigInt(this.$Utils.minimumFee))
+          )) {
+          this.$Wallet.account.createSendRequest([{
+            destination: this.destinationAccount.address,
+            amount: amount
+          }])
+          this.$emit('sent')
+        }
       }
     }
   }

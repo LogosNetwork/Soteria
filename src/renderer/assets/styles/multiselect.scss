@@ -2,7 +2,7 @@ $vue-multiselect-padding-x : $custom-select-padding-x !default;
 $vue-multiselect-padding-y : $custom-select-padding-y !default;
 $vue-multiselect-min-height : $custom-select-height !default;
 $vue-multiselect-border-radius : $border-radius !default;
-$vue-multiselect-border-color : $custom-select-border-color !default;
+$vue-multiselect-border-color : #000 !default;
 $vue-multiselect-border-width : 1px !default;
 $vue-multiselect-disabled-opacity : $btn-disabled-opacity !default;
 $vue-multiselect-placeholder-color : $text-muted !default;
@@ -91,7 +91,11 @@ fieldset[disabled] .multiselect {
 
 .multiselect.scan > .multiselect__content-wrapper {
     width: calc(100% + 51px);
-    border: 1px solid #000;
+}
+
+.multiselect.scan > .multiselect__tags {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .multiselect--disabled {

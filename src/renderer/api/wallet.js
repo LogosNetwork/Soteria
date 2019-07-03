@@ -33,6 +33,12 @@ export default {
     // Set the settings for local Logos Node RPC Integration
     wallet.ConfigureSoteria = async () => {
       let response = await axios.get(`https://pla.bs/delegates`)
+      // Pulls in token info
+      Vue.prototype.$Wallet.tokenSync = true
+      // Marks the node as trusted and doesn't validate sigs to saves time.
+      // Future optimizations will speed this up but this should be true
+      // for remote node integration.
+      Vue.prototype.$Wallet.validateSync = false
       Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
       Vue.prototype.$Wallet.rpc = {
         proxy: 'https://pla.bs',

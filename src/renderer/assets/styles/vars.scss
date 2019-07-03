@@ -6,12 +6,14 @@ $theme-colors: (
   "bg": #36393F,
   "tertiary": #2B2C31,
   "base": #dcddde,
-  "danger": #dc3545
+  "danger": #dc3545,
+  "black": #000
 );
 
+$border-color: theme-color("black");
 $input-bg: rgba(theme-color("base"),0.05);
 $input-group-addon-bg: rgba(theme-color("base"),0.05);
-$input-border-color: theme-color("secondary");
+$input-border-color: theme-color("black");
 $input-color: theme-color("base");
 $form-feedback-invalid-color: rgba(theme-color("danger"),0.05);
 $input-focus-bg: rgba(theme-color("primary"),0.05);
@@ -19,6 +21,6 @@ $custom-select-indicator-color: #fff;
 $custom-select-color: theme-color("base");
 $input-disabled-bg: rgba(theme-color("base"),0.05);
 $card-bg: rgba(theme-color("base"),0.05);
-$card-border-color: theme-color("secondary");
+$card-border-color: theme-color("black");
 $list-group-bg: transparent;
 @import "node_modules/bootstrap/scss/variables";

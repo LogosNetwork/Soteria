@@ -67,7 +67,7 @@ export default {
     ]),
     logout () {
       this.setWallet(this.$Wallet.encrypt())
-      this.$Wallet._mqttDisconnect()
+      this.$Wallet.mqttDisconnect()
       this.$Wallet.loadOptions({
         seed: null,
         mqtt: null,
