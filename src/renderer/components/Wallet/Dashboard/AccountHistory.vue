@@ -79,6 +79,6 @@ export default {
 
 <style scoped lang="scss">
 .transactionHistoryContainer {
-  height: calc(100vh - 187px) !important;
+  height: calc(100vh - 171px) !important;
 }
 </style>

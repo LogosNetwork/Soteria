@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     updateRemains () {
-      this.remains = Math.ceil((Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 187) / 82)
+      this.remains = Math.ceil((Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 171) / 82)
       return this.remains
     },
     getItemProps (itemIndex) {
@@ -68,8 +68,7 @@ export default {
         props: {
           requestInfo: this.requests[itemIndex],
           address: this.address,
-          small: this.small,
-          lastItem: itemIndex === Object.keys(this.requests).length - 1
+          small: this.small
         }
       }
       if (this.address) {

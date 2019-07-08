@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="text-left"
+    class="text-left border-0"
   >
     <b-card-body>
       <b-card-text>
