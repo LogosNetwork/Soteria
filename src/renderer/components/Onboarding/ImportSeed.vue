@@ -120,7 +120,7 @@ export default {
     padding: 1rem 2rem;
     position: relative;
     width: 100%;
-    z-index: 10;
+    z-index: 2;
   }
   .export {
     width: 100%;

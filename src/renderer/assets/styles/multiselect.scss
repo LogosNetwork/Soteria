@@ -104,7 +104,7 @@ fieldset[disabled] .multiselect {
 }
 
 .multiselect--active {
-    z-index : 50;
+    z-index : 3;
 
     &:not(.multiselect--above) .multiselect__current,
     &:not(.multiselect--above) .multiselect__input,
@@ -301,7 +301,7 @@ fieldset[disabled] .multiselect {
     border-top                 : none;
     border-bottom-left-radius  : $vue-multiselect-border-radius;
     border-bottom-right-radius : $vue-multiselect-border-radius;
-    z-index                    : 50;
+    z-index                    : 3;
     -webkit-overflow-scrolling : touch;
 }
 
