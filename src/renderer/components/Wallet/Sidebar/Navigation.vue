@@ -15,6 +15,19 @@
       />
       <span v-t="'dashboard'" />
     </b-button>
+    <b-button
+      class="navigationSelector"
+      variant="transparent"
+      :class="{ active: $route.name === 'tokens' }"
+      to="tokens"
+    >
+      <font-awesome-icon
+        class="icon mr-2"
+        size="sm"
+        :icon="['fal','coins']"
+      />
+      <span v-t="'tokens'" />
+    </b-button>
     <!-- <b-button
       class="navigationSelector"
       variant="transparent"

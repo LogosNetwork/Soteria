@@ -80,6 +80,11 @@ export default new Router({
           component: require('@/components/Wallet/Dashboard').default
         },
         {
+          name: 'tokens',
+          path: 'tokens',
+          component: require('@/components/Wallet/Tokens').default
+        },
+        {
           name: 'settings',
           path: 'settings',
           component: require('@/components/Wallet/Settings').default
