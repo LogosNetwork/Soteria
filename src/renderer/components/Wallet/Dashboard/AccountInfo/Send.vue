@@ -552,6 +552,7 @@ export default {
             )
           }
         }
+        this.$emit('sent')
       } else {
         let amount = Logos.convert.toReason(this.amount, 'LOGOS')
         if (bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance)
