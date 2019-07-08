@@ -6,7 +6,7 @@
     <send
       v-if="request.type === 'send'"
       :request-info="request"
-      :account="account"
+      :address="address"
       :small="small"
     />
     <burn
@@ -22,7 +22,7 @@
     <tokenSend
       v-if="request.type === 'token_send'"
       :request-info="request"
-      :account="account"
+      :address="address"
       :small="small"
     />
     <distribute
@@ -110,7 +110,7 @@ export default {
       type: Object,
       default: null
     },
-    account: {
+    address: {
       type: String,
       default: null
     },
