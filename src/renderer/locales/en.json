@@ -94,5 +94,6 @@
   "noAccountFound": "No account found",
   "sendAmountError": "This is a required field and must be a positive decimal or integer value that is less than the current accounts balance",
   "baseUnitsOf": "base units of",
-  "areAvailableToSend": "are available to send"
+  "areAvailableToSend": "are available to send",
+  "createToken": "Create Token"
 }
