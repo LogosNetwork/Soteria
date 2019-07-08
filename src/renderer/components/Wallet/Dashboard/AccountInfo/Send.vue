@@ -117,7 +117,10 @@
           class="mt-3"
         >
           <b-input-group size="lg">
-            <b-input-group-text slot="prepend">
+            <b-input-group-text
+              v-if="!sendingTokens"
+              slot="prepend"
+            >
               <font-awesome-icon
                 class="text-primary"
                 :icon="['fal','lambda']"
