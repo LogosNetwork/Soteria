@@ -1,9 +1,12 @@
 <template>
-  <b-container fluid>
+  <b-container
+    fluid
+    class="accountContainer"
+  >
     <b-row>
       <b-col
-        class="overflow-hidden"
-        :class="{ accountList: tokenfilter }"
+        class="accountList"
+        :class="{ tkFilter: tokenfilter }"
       >
         <Accounts
           :aggregate="aggregate"
@@ -49,7 +52,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.accountList {
+.accountList:not(.tkFilter) {
+  max-width: 100%;
+}
+.tkFilter {
   max-width: calc(100% - 55px);
+  padding-right: 0px;
+}
+.accountContainer {
+  height: 25px;
 }
 </style>

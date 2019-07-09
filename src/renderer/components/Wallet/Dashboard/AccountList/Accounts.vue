@@ -48,19 +48,15 @@
     <b-button
       v-if="addaccount"
       v-b-tooltip.hover
-      variant="link"
-      class="p-0 align-top"
+      size="sm"
+      variant="outline-primary"
+      class="align-top text-white btn-xs"
       :title="$t('addNewAccount')"
       @click="addAccount"
     >
-      <font-awesome-layers class="fa-lg">
-        <font-awesome-icon :icon="['fal','square']" />
-        <font-awesome-icon
-          :icon="['fal','plus']"
-          transform="shrink-6"
-          :style="{ color: 'white' }"
-        />
-      </font-awesome-layers>
+      <font-awesome-icon
+        :icon="['fal','plus']"
+      />
     </b-button>
   </div>
 </template>
@@ -120,10 +116,13 @@ export default {
 
 <style scoped lang="scss">
 .accountList {
-  width: calc(100% - 28px);
+  width: calc(100% - 30px);
 }
 .text-inherit {
   color: inherit
+}
+.nav-tabs {
+  max-height: 39px;
 }
 .nav-link {
   color: $gray-600;
@@ -144,5 +143,12 @@ export default {
 }
 .nav-item:first-child > .nav-link {
   margin-left: 0px;
+}
+.btn-xs {
+  padding: 0rem 0.4rem;
+}
+.btn-xs > svg {
+  position: relative;
+  left: 0.5px;
 }
 </style>

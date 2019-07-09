@@ -4,24 +4,19 @@
       v-if="!showFilter"
       v-b-tooltip.hover
       :title="$t('tokenFilter')"
-      variant="link"
-      class="p-0"
+      size="sm"
+      variant="outline-primary"
+      class="align-top text-white btn-xs"
       @click="setShowFilter()"
     >
-      <font-awesome-layers style="font-size: 1.42em;">
+      <font-awesome-layers>
         <font-awesome-icon
           :icon="['fal','filter']"
-          transform="left-2"
-        />
-        <font-awesome-icon
-          :icon="['fal','circle']"
-          transform="shrink-4 right-4 down-2"
-          :style="{ color: 'white' }"
+          transform="left-5"
         />
         <font-awesome-icon
           :icon="['fal','coins']"
-          transform="shrink-10 right-4 down-2"
-          :style="{ color: 'white' }"
+          transform="right-6 down-2 shrink-3"
         />
       </font-awesome-layers>
     </b-button>
@@ -65,5 +60,8 @@ export default {
 .slide-leave-to {
   -webkit-transform: translate3d(100%, 0, 0);
   transform: translate3d(100%, 0, 0);
+}
+.btn-xs {
+  padding: 0rem 0.5rem;
 }
 </style>
