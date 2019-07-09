@@ -85,6 +85,16 @@ export default new Router({
           component: require('@/components/Wallet/Tokens').default
         },
         {
+          name: 'governance',
+          path: 'governance',
+          component: require('@/components/Wallet/Governance').default
+        },
+        {
+          name: 'staking',
+          path: 'staking',
+          component: require('@/components/Wallet/Staking').default
+        },
+        {
           name: 'settings',
           path: 'settings',
           component: require('@/components/Wallet/Settings').default

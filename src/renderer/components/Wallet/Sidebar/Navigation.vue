@@ -28,7 +28,7 @@
       />
       <span v-t="'tokens'" />
     </b-button>
-    <!-- <b-button
+    <b-button
       class="navigationSelector"
       variant="transparent"
       :class="{ active: $route.name === 'governance' }"
@@ -40,7 +40,20 @@
         :icon="['fal','landmark']"
       />
       <span v-t="'governance'" />
-    </b-button> -->
+    </b-button>
+    <b-button
+      class="navigationSelector"
+      variant="transparent"
+      :class="{ active: $route.name === 'staking' }"
+      to="staking"
+    >
+      <font-awesome-icon
+        class="icon mr-2"
+        size="sm"
+        :icon="['fal','chart-line']"
+      />
+      <span v-t="'staking'" />
+    </b-button>
     <b-button
       class="navigationSelector"
       variant="transparent"

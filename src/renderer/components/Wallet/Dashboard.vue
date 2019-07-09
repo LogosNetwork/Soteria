@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AccountList :tokenfilter="false" />
+    <AccountList />
     <AccountInfo />
     <AccountHistory />
   </div>
