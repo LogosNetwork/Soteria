@@ -13,7 +13,7 @@
         <b-button
           class="tokenClose"
           variant="link"
-          @click="setShowFilter()"
+          @click="$bvModal.hide('tokenFilterModal')"
         >
           <font-awesome-icon
             :icon="['fal','times']"
@@ -105,19 +105,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
 export default {
   name: 'TokenSelector',
   data () {
     return {
       tokenName: null
     }
-  },
-  methods: {
-    ...mapActions('Wallet', [
-      'setShowFilter'
-    ])
   }
 }
 </script>
@@ -132,6 +125,7 @@ export default {
   padding-right: 1rem;
   background: theme-color("secondary");
   overflow-y: auto;
+  z-index: 1;
 }
 .panel.slide-enter-active > .form-group > div:nth-child(2) > .inputWrapper,
 .panel.slide-leave-active > .form-group > div:nth-child(2) > .inputWrapper {

@@ -135,3 +135,30 @@ input[type=number]::-webkit-outer-spin-button {
   height: 100vh;
   padding-top: 8px;
 }
+.modal-right > .modal-content {
+  height: 100vh;
+  position: fixed;
+  width: 300px;
+  right: 0;
+  top: 0;
+}
+.modal-right.modal-dialog {
+  position: absolute;
+  right: 0px;
+  margin: 0px;
+  -webkit-transform: translateX(300px);
+  -moz-transform: translateX(300px);
+  -ms-transform: translateX(300px);
+  transform: translateX(300px);
+  opacity: 0;
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+  -moz-transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+  transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+.modal.show .modal-right.modal-dialog {
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+  opacity: 1;
+}

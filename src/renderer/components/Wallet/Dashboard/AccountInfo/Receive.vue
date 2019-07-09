@@ -31,7 +31,7 @@
               <b-button
                 v-b-tooltip.hover
                 :title="$t('copy')"
-                variant="outline-primary"
+                variant="outline-black"
                 class="text-white"
                 @click="copy()"
               >
