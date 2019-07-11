@@ -1,6 +1,6 @@
 <template>
   <b-form-group
-    v-if="$Wallet && $Wallet.accounts.length > 0"
+    v-if="$Wallet && Object.values($Wallet.accounts).length > 0"
     class="text-left fitPanel scroller pt-3 pb-3 mb-0"
     :label="$t('logosAccounts')"
     :label-sr-only="true"

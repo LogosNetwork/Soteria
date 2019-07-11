@@ -213,18 +213,21 @@ export default {
     ...mapState('Language', {
       languageCode: state => state.selectedLanguageCode.value
     }),
+    accountArray: function () {
+      return Object.values(this.$Wallet.accounts)
+    },
     currentAccountAddress () {
       if (this.activeAddress !== null) {
         return this.activeAddress
       } else {
-        return this.$Wallet.accounts[0].address
+        return this.accountArray[0].address
       }
     },
     availableTokens () {
       let tokens = []
       if (this.account && this.account.tokenBalances) {
         for (let tokenID in this.account.tokenBalances) {
-          let forgeToken = this.$Wallet.tokenAccounts[this.$Utils.parseAccount(tokenID)]
+          let forgeToken = this.$Wallet.tokenAccounts[this.$Utils.accountFromHexKey(tokenID)]
           if (forgeToken.feeType === 'flat') {
             if (bigInt(this.account.tokenBalances[tokenID])
               .minus(bigInt(forgeToken.feeRate)).greater(0)) {
@@ -258,21 +261,21 @@ export default {
       return tokens
     },
     account () {
-      return this.$Wallet.accountsObject[this.activeAddress]
+      return this.$Wallet.accounts[this.activeAddress]
     },
     tokenAccount () {
       if (!this.sendingTokens) return null
-      return this.$Wallet.tokenAccounts[this.$Utils.parseAccount(this.token.tokenID)]
+      return this.$Wallet.tokenAccounts[this.$Utils.accountFromHexKey(this.token.tokenID)]
     },
     combinedAccounts () {
       let results = []
       const map = new Map()
       map.set(this.currentAccountAddress, true)
-      for (let address in this.$Wallet.accountsObject) {
+      for (let address in this.$Wallet.accounts) {
         if (!map.has(address)) {
           map.set(address, true)
           results.push({
-            label: `${this.$Wallet.accountsObject[address].label}`,
+            label: `${this.$Wallet.accounts[address].label}`,
             address: address
           })
         }
@@ -405,8 +408,8 @@ export default {
     }
   },
   created () {
-    if (this.activeAddress === null && this.$Wallet.accounts.length > 0) {
-      this.setActiveAddress(this.$Wallet.accounts[0].address)
+    if (this.activeAddress === null && this.accountArray.length > 0) {
+      this.setActiveAddress(this.accountArray[0].address)
     }
     if (this.combinedAccounts.length > 0) {
       this.destinationAccount = this.combinedAccounts[0]
@@ -558,7 +561,7 @@ export default {
         this.$emit('sent')
       } else {
         let amount = Logos.convert.toReason(this.amount, 'LOGOS')
-        if (bigInt(this.$Wallet.accountsObject[this.currentAccountAddress].balance)
+        if (bigInt(this.$Wallet.accounts[this.currentAccountAddress].balance)
           .greaterOrEquals(
             bigInt(amount).plus(bigInt(this.$Utils.minimumFee))
           )) {

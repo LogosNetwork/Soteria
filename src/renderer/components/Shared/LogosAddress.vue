@@ -109,9 +109,9 @@ export default {
       }
     },
     label () {
-      for (let address in this.$Wallet.accountsObject) {
+      for (let address in this.$Wallet.accounts) {
         if (address === this.address) {
-          return `${this.$Wallet.accountsObject[address].label}`
+          return `${this.$Wallet.accounts[address].label}`
         }
       }
       for (let token in this.$Wallet.tokenAccounts) {

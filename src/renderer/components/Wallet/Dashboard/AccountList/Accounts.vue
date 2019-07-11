@@ -29,7 +29,7 @@
           <input
             v-if="editing[account.address]"
             :ref="`editable${account.address}`"
-            v-model="$Wallet.accountsObject[account.address].label"
+            v-model="$Wallet.accounts[account.address].label"
             v-autowidth="{maxWidth: '250px', minWidth: '20px', comfortZone: 0}"
             type="text"
             :placeholder="$t('accountName')"

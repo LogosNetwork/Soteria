@@ -101,11 +101,14 @@ export default {
     ...mapState('Wallet', {
       activeAddress: state => state.activeAddress
     }),
+    accountArray: function () {
+      return Object.values(this.$Wallet.accounts)
+    },
     currentAccountAddress: function () {
       if (this.activeAddress !== null) {
         return this.activeAddress
       } else {
-        return this.$Wallet.accounts[0].address
+        return this.accountArray[0].address
       }
     },
     qrAddress: function () {
@@ -113,8 +116,8 @@ export default {
     }
   },
   created: function () {
-    if (this.activeAddress === null && this.$Wallet.accounts.length > 0) {
-      this.setActiveAddress(this.$Wallet.accounts[0].address)
+    if (this.activeAddress === null && this.accountArray.length > 0) {
+      this.setActiveAddress(this.accountArray[0].address)
     }
   },
   methods: {

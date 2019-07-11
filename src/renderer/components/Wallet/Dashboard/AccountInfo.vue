@@ -91,7 +91,7 @@ export default {
         return parseInt(Logos.convert.fromReason(this.$Wallet._accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         let sum = bigInt(0)
-        for (let account of this.$Wallet.accounts) {
+        for (let account in this.$Wallet.accounts) {
           sum = sum.add(bigInt(account.balance))
         }
         return parseInt(Logos.convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })

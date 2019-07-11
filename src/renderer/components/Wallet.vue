@@ -59,7 +59,7 @@ export default {
     if (this.$Wallet.seed) {
       this.setSynced(false)
       if (this.activeAddress) {
-        if (this.$Wallet.accountsObject[this.activeAddress]) {
+        if (this.$Wallet.accounts[this.activeAddress]) {
           this.$Wallet.currentAccountAddress = this.activeAddress
         } else {
           this.setActiveAddress(this.$Wallet.currentAccountAddress)
@@ -74,7 +74,7 @@ export default {
   created () {
     if (this.$Wallet.seed === null) {
       this.$router.push({ path: '/' })
-    } else if (this.$Wallet && this.$Wallet.accounts.length === 0) {
+    } else if (this.$Wallet && Object.values(this.$Wallet.accounts).length === 0) {
       this.$Wallet.VueCreateAccount()
     }
   },
