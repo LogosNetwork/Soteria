@@ -21,6 +21,7 @@
     </b-button>
     <b-modal
       id="tokenFilterModal"
+      :body-class="['scroller', 'visible']"
       hide-footer
       hide-header
       no-fade
@@ -32,12 +33,12 @@
 </template>
 
 <script>
-import TokenPanel from '@/components/Wallet/Dashboard/AccountList/TokenPanel.vue'
+import TokenPanel from '@/components/Wallet/Dashboard/AccountList/TokenFilter/TokenPanel.vue'
 
 export default {
   name: 'TokenPanelToggle',
   components: {
-    'TokenPanel': TokenPanel
+    TokenPanel
   }
 }
 </script>

@@ -96,5 +96,9 @@
   "baseUnitsOf": "base units of",
   "areAvailableToSend": "are available to send",
   "createToken": "Create Token",
-  "staking": "Staking"
+  "staking": "Staking",
+  "all": "All",
+  "trackThisTokenInTheDashboard": "Track this token in the dashboard",
+  "stopTrackingThisTokenInTheDashboard": "Stop tracking this token in the dashboard",
+  "closeTheTokenFilter": "Close the token filter"
 }

@@ -18,7 +18,7 @@
         cols="auto"
         class="text-right"
       >
-        <TokenPanelToggle />
+        <TokenFilter />
       </b-col>
     </b-row>
   </b-container>
@@ -26,13 +26,13 @@
 
 <script>
 import Accounts from '@/components/Wallet/Dashboard/AccountList/Accounts.vue'
-import TokenPanelToggle from '@/components/Wallet/Dashboard/AccountList/TokenPanelToggle.vue'
+import TokenFilter from '@/components/Wallet/Dashboard/AccountList/TokenFilter.vue'
 
 export default {
   name: 'AccountList',
   components: {
-    'Accounts': Accounts,
-    'TokenPanelToggle': TokenPanelToggle
+    Accounts,
+    TokenFilter
   },
   props: {
     aggregate: {

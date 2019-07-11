@@ -1,11 +1,11 @@
 <template>
   <div
-    class="w-100 btn-group-toggle text-left pt-3"
+    class="w-100 text-left pt-3"
   >
     <b-button
       class="navigationSelector"
       variant="transparent"
-      :class="{ active: $route.name === 'dashboard' }"
+      :pressed="$route.name === 'dashboard' "
       to="dashboard"
     >
       <font-awesome-icon
@@ -18,7 +18,7 @@
     <b-button
       class="navigationSelector"
       variant="transparent"
-      :class="{ active: $route.name === 'tokens' }"
+      :pressed="$route.name === 'tokens'"
       to="tokens"
     >
       <font-awesome-icon
@@ -31,7 +31,7 @@
     <b-button
       class="navigationSelector"
       variant="transparent"
-      :class="{ active: $route.name === 'governance' }"
+      :pressed="$route.name === 'governance'"
       to="governance"
     >
       <font-awesome-icon
@@ -44,7 +44,7 @@
     <b-button
       class="navigationSelector"
       variant="transparent"
-      :class="{ active: $route.name === 'staking' }"
+      :pressed="$route.name === 'staking'"
       to="staking"
     >
       <font-awesome-icon
@@ -57,7 +57,7 @@
     <b-button
       class="navigationSelector"
       variant="transparent"
-      :class="{ active: $route.name === 'settings' }"
+      :pressed="$route.name === 'settings'"
       to="settings"
     >
       <font-awesome-icon

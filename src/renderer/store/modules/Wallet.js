@@ -1,8 +1,12 @@
 import Vue from 'vue'
 
 const state = {
+  favorites: {
+    'logos': {
+      tokenID: 'logos'
+    }
+  },
   tokenFilter: null,
-  showFilter: false,
   activeAddress: null,
   contacts: [],
   synced: false
@@ -13,11 +17,19 @@ const getters = {
 }
 
 const mutations = {
-  setTokenFilter (state, tokenFilter) {
-    state.tokenFilter = tokenFilter
+  addFavorite (state, tokenID) {
+    let favorite = { tokenID }
+    if (tokenID !== 'logos') favorite.tokenAddress = Vue.$Utils.keyFromAccount(tokenID)
+    Vue.set(state.favorites, tokenID, favorite)
   },
-  setShowFilter (state, bool) {
-    state.showFilter = bool
+  removeFavorite (state, tokenID) {
+    Vue.delete(state.favorites, tokenID)
+  },
+  setFavorites (state, favorites) {
+    state.favorites = favorites
+  },
+  setTokenFilter (state, tokenID) {
+    state.tokenFilter = tokenID // null is all | logos is 'logos' | Tokens are filtered by tokenID
   },
   setActiveAddress (state, address) {
     state.activeAddress = address
@@ -42,12 +54,17 @@ const mutations = {
 }
 
 const actions = {
-  setTokenFilter ({ commit }, tokenFilter) {
-    commit('setTokenFilter', tokenFilter)
+  addFavorite ({ commit }, tokenID) {
+    commit('addFavorite', tokenID)
   },
-  setShowFilter ({ commit, state }, bool = null) {
-    if (bool === null) bool = !state.showFilter
-    commit('setShowFilter', bool)
+  removeFavorite ({ commit }, tokenID) {
+    commit('removeFavorite', tokenID)
+  },
+  setFavorites ({ commit }, favorites) {
+    commit('setFavorites', favorites)
+  },
+  setTokenFilter ({ commit }, tokenID) {
+    commit('setTokenFilter', tokenID)
   },
   setActiveAddress ({ commit }, address) {
     commit('setActiveAddress', address)
