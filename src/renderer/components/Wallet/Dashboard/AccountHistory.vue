@@ -47,7 +47,8 @@ export default {
       } else {
         let dedupedRequests = new Map()
         let result = []
-        for (let account in this.$Wallet.accounts) {
+        for (let address in this.$Wallet.accounts) {
+          let account = this.$Wallet.accounts[address]
           let accountsRequests = account.chain.concat(account.receiveChain)
           for (let request of accountsRequests) {
             if (!dedupedRequests.has(request.hash)) {
