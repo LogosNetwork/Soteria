@@ -118,7 +118,7 @@ export default {
   },
   computed: {
     request () {
-      if (this.requestInfo.constructor.name !== 'Object') {
+      if (this.requestInfo && this.requestInfo.constructor.name !== 'Object') {
         const request = JSON.parse(this.requestInfo.toJSON())
         if (this.requestInfo.view) request.view = this.requestInfo.view
         if (request.token_id) {

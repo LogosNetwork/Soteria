@@ -162,17 +162,18 @@ export default {
     ]),
     unlockWallet () {
       this.error = null
-      this.$Wallet.setPassword(this.password)
-      this.$Wallet.load(this.wallet).then((val) => {
+      this.$Wallet.password = this.password
+      try {
+        this.$Wallet.load(this.wallet)
         this.setValidated(true)
         this.setSeed(null)
         this.$Wallet.ResetWalletReactivity()
         this.$Wallet.ConfigureSoteria().then((res) => {
           this.$router.push({ path: '/wallet/dashboard' })
         })
-      }).catch(() => {
+      } catch (err) {
         this.error = 'Invalid Password'
-      })
+      }
     },
     handleSubmit () {
       if (this.deleteText.toLowerCase() === this.$t('delete.keyword').toLowerCase()) {

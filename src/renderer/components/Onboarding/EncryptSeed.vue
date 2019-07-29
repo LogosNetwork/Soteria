@@ -176,11 +176,10 @@ export default {
       const encryptedWallet = tempWallet.encrypt()
       this.setWallet(encryptedWallet)
       if (this.validated) {
-        this.$Wallet.setPassword(this.password)
-        this.$Wallet.load(encryptedWallet).then((val) => {
-          this.$Wallet.ConfigureSoteria().then((res) => {
-            this.$router.push({ path: '/wallet/dashboard' })
-          })
+        this.$Wallet.password = this.password
+        this.$Wallet.load(encryptedWallet)
+        this.$Wallet.ConfigureSoteria().then((res) => {
+          this.$router.push({ path: '/wallet/dashboard' })
         })
       } else {
         this.$router.push({ name: 'exportSeed' })

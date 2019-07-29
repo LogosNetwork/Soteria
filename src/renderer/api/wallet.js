@@ -1,7 +1,7 @@
-import LogosWallet from '@logosnetwork/logos-webwallet-sdk'
+import { Wallet, Utils } from '@logosnetwork/logos-webwallet-sdk'
 import axios from 'axios'
 
-export { LogosWallet }
+export { Wallet }
 
 export default {
   install (Vue) {
@@ -9,9 +9,9 @@ export default {
       return
     }
     this.installed = true
-    Vue.prototype.$Utils = LogosWallet.Utils
-    Vue.prototype.$LogosWallet = LogosWallet.Wallet
-    const wallet = new LogosWallet.Wallet()
+    Vue.prototype.$Utils = Utils
+    Vue.prototype.$LogosWallet = Wallet
+    const wallet = new Wallet()
     wallet.ResetWalletReactivity = () => {
       for (const token in Vue.prototype.$Wallet._tokenAccounts) {
         const tkAccount = Vue.prototype.$Wallet._tokenAccounts[token]
