@@ -51,7 +51,7 @@ import token from '@/components/Shared/Requests/token.vue'
 export default {
   name: 'IssueAdditional',
   components: {
-    'token': token
+    token: token
   },
   props: {
     requestInfo: {

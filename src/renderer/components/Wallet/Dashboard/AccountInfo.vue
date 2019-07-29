@@ -90,8 +90,8 @@ export default {
         return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.$Wallet._accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         let sum = bigInt(0)
-        for (let address in this.$Wallet.accounts) {
-          let account = this.$Wallet.accounts[address]
+        for (const address in this.$Wallet.accounts) {
+          const account = this.$Wallet.accounts[address]
           sum = sum.add(bigInt(account.balance))
         }
         return parseInt(this.$Wallet.rpcClient().convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })

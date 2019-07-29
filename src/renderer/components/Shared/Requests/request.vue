@@ -86,21 +86,21 @@
 export default {
   name: 'Request',
   components: {
-    'send': () => import(/* webpackChunkName: "sendCard" */'@/components/Shared/Requests/RequestCards/send.vue'),
-    'burn': () => import(/* webpackChunkName: "burnCard" */'@/components/Shared/Requests/RequestCards/burn.vue'),
-    'issuerInfo': () => import(/* webpackChunkName: "issuerInfoCard" */'@/components/Shared/Requests/RequestCards/issuerInfo.vue'),
-    'distribute': () => import(/* webpackChunkName: "distributeCard" */'@/components/Shared/Requests/RequestCards/distribute.vue'),
-    'adjustFee': () => import(/* webpackChunkName: "adjustFeeCard" */'@/components/Shared/Requests/RequestCards/adjustFee.vue'),
-    'changeSetting': () => import(/* webpackChunkName: "changeSettingCard" */'@/components/Shared/Requests/RequestCards/changeSetting.vue'),
-    'adjustUserStatus': () => import(/* webpackChunkName: "adjustUserStatusCard" */'@/components/Shared/Requests/RequestCards/adjustUserStatus.vue'),
-    'issuance': () => import(/* webpackChunkName: "issuanceCard" */'@/components/Shared/Requests/RequestCards/issuance.vue'),
-    'issueAdditional': () => import(/* webpackChunkName: "issueAdditionalCard" */'@/components/Shared/Requests/RequestCards/issueAdditional.vue'),
-    'withdrawFee': () => import(/* webpackChunkName: "withdrawFeeCard" */'@/components/Shared/Requests/RequestCards/withdrawFee.vue'),
-    'withdrawLogos': () => import(/* webpackChunkName: "withdrawLogosCard" */'@/components/Shared/Requests/RequestCards/withdrawLogos.vue'),
-    'updateController': () => import(/* webpackChunkName: "updateControllerCard" */'@/components/Shared/Requests/RequestCards/updateController.vue'),
-    'revoke': () => import(/* webpackChunkName: "revokeCard" */'@/components/Shared/Requests/RequestCards/revoke.vue'),
-    'immuteSetting': () => import(/* webpackChunkName: "immuteSettingCard" */'@/components/Shared/Requests/RequestCards/immuteSetting.vue'),
-    'tokenSend': () => import(/* webpackChunkName: "tokenSendCard" */'@/components/Shared/Requests/RequestCards/tokenSend.vue')
+    send: () => import(/* webpackChunkName: "sendCard" */'@/components/Shared/Requests/RequestCards/send.vue'),
+    burn: () => import(/* webpackChunkName: "burnCard" */'@/components/Shared/Requests/RequestCards/burn.vue'),
+    issuerInfo: () => import(/* webpackChunkName: "issuerInfoCard" */'@/components/Shared/Requests/RequestCards/issuerInfo.vue'),
+    distribute: () => import(/* webpackChunkName: "distributeCard" */'@/components/Shared/Requests/RequestCards/distribute.vue'),
+    adjustFee: () => import(/* webpackChunkName: "adjustFeeCard" */'@/components/Shared/Requests/RequestCards/adjustFee.vue'),
+    changeSetting: () => import(/* webpackChunkName: "changeSettingCard" */'@/components/Shared/Requests/RequestCards/changeSetting.vue'),
+    adjustUserStatus: () => import(/* webpackChunkName: "adjustUserStatusCard" */'@/components/Shared/Requests/RequestCards/adjustUserStatus.vue'),
+    issuance: () => import(/* webpackChunkName: "issuanceCard" */'@/components/Shared/Requests/RequestCards/issuance.vue'),
+    issueAdditional: () => import(/* webpackChunkName: "issueAdditionalCard" */'@/components/Shared/Requests/RequestCards/issueAdditional.vue'),
+    withdrawFee: () => import(/* webpackChunkName: "withdrawFeeCard" */'@/components/Shared/Requests/RequestCards/withdrawFee.vue'),
+    withdrawLogos: () => import(/* webpackChunkName: "withdrawLogosCard" */'@/components/Shared/Requests/RequestCards/withdrawLogos.vue'),
+    updateController: () => import(/* webpackChunkName: "updateControllerCard" */'@/components/Shared/Requests/RequestCards/updateController.vue'),
+    revoke: () => import(/* webpackChunkName: "revokeCard" */'@/components/Shared/Requests/RequestCards/revoke.vue'),
+    immuteSetting: () => import(/* webpackChunkName: "immuteSettingCard" */'@/components/Shared/Requests/RequestCards/immuteSetting.vue'),
+    tokenSend: () => import(/* webpackChunkName: "tokenSendCard" */'@/components/Shared/Requests/RequestCards/tokenSend.vue')
   },
   props: {
     requestInfo: {
@@ -119,11 +119,11 @@ export default {
   computed: {
     request () {
       if (this.requestInfo.constructor.name !== 'Object') {
-        let request = JSON.parse(this.requestInfo.toJSON())
+        const request = JSON.parse(this.requestInfo.toJSON())
         if (this.requestInfo.view) request.view = this.requestInfo.view
         if (request.token_id) {
-          let tokenAddress = this.$Utils.accountFromHexKey(request.token_id)
-          let tokenAccount = this.$Wallet.tokenAccounts[tokenAddress]
+          const tokenAddress = this.$Utils.accountFromHexKey(request.token_id)
+          const tokenAccount = this.$Wallet.tokenAccounts[tokenAddress]
           request.tokenInfo = {
             name: tokenAccount.name,
             symbol: tokenAccount.symbol,
@@ -160,14 +160,14 @@ export default {
               typeof request.tokenInfo.issuerInfo.decimals !== 'undefined' &&
               request.tokenInfo.issuerInfo.decimals > 0) {
               request.totalAmountInToken = this.$Wallet.rpcClient().convert.fromTo(request.totalAmount, 0, request.tokenInfo.issuerInfo.decimals)
-              for (let transaction of request.transactions) {
+              for (const transaction of request.transactions) {
                 transaction.amountInToken = this.$Wallet.rpcClient().convert.fromTo(transaction.amount, 0, request.tokenInfo.issuerInfo.decimals)
               }
             }
           }
         } else if (request.transactions) {
           request.totalAmountLogos = this.$Wallet.rpcClient().convert.fromReason(this.requestInfo.totalAmount, 'LOGOS')
-          for (let transaction of request.transactions) {
+          for (const transaction of request.transactions) {
             transaction.amountInLogos = this.$Wallet.rpcClient().convert.fromReason(transaction.amount, 'LOGOS')
           }
         }

@@ -59,7 +59,7 @@ import { faCoins, faCircle, faUserCircle } from '@fortawesome/pro-light-svg-icon
 export default {
   name: 'Token',
   components: {
-    'LogosAddress': () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   props: {
     tokenInfo: {

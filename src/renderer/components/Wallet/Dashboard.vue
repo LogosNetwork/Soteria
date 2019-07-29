@@ -14,9 +14,9 @@ import AccountHistory from '@/components/Wallet/Dashboard/AccountHistory.vue'
 export default {
   name: 'Dashboard',
   components: {
-    'AccountList': AccountList,
-    'AccountInfo': AccountInfo,
-    'AccountHistory': AccountHistory
+    AccountList: AccountList,
+    AccountInfo: AccountInfo,
+    AccountHistory: AccountHistory
   }
 }
 </script>

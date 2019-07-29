@@ -93,7 +93,7 @@ export default {
     ]),
     setCurrentAccount (address) {
       this.setActiveAddress(address)
-      for (let addr in this.editing) {
+      for (const addr in this.editing) {
         if (addr !== address) this.saveLabel(addr)
       }
       if (address !== null) this.$Wallet.currentAccountAddress = address

@@ -41,8 +41,8 @@ import token from '@/components/Shared/Requests/token.vue'
 export default {
   name: 'IssuerInfo',
   components: {
-    'token': token,
-    'codepad': () => import(/* webpackChunkName: "Codepad" */ '@/components/Shared/codepad.vue')
+    token: token,
+    codepad: () => import(/* webpackChunkName: "Codepad" */ '@/components/Shared/codepad.vue')
   },
   props: {
     requestInfo: {

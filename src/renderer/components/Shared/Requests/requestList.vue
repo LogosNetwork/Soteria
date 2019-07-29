@@ -63,7 +63,7 @@ export default {
       if (!this.requests[itemIndex].view && this.address) {
         this.requests[itemIndex].view = this.address
       }
-      let data = {
+      const data = {
         key: `${this.requests[itemIndex].hash}_${this.address}`,
         props: {
           requestInfo: this.requests[itemIndex],

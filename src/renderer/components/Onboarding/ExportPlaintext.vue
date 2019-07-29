@@ -68,9 +68,9 @@ export default {
       seed: state => state.seed
     }),
     splitSeed () {
-      let vals = []
-      let mySeedSplit = this.seed.match(/.{1,16}/g)
-      for (let val of mySeedSplit) {
+      const vals = []
+      const mySeedSplit = this.seed.match(/.{1,16}/g)
+      for (const val of mySeedSplit) {
         vals.push(val.match(/.{1,4}/g))
       }
       return vals

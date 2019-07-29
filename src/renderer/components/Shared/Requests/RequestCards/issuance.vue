@@ -107,9 +107,9 @@ import token from '@/components/Shared/Requests/token.vue'
 export default {
   name: 'Issuance',
   components: {
-    'LogosAddress': () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue'),
-    'token': token,
-    'codepad': () => import(/* webpackChunkName: "Codepad" */ '@/components/Shared/codepad.vue')
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue'),
+    token: token,
+    codepad: () => import(/* webpackChunkName: "Codepad" */ '@/components/Shared/codepad.vue')
   },
   props: {
     requestInfo: {

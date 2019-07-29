@@ -109,17 +109,17 @@ export default {
       }
     },
     label () {
-      for (let address in this.$Wallet.accounts) {
+      for (const address in this.$Wallet.accounts) {
         if (address === this.address) {
           return `${this.$Wallet.accounts[address].label}`
         }
       }
-      for (let token in this.$Wallet.tokenAccounts) {
+      for (const token in this.$Wallet.tokenAccounts) {
         if (token === this.address) {
           return `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`
         }
       }
-      for (let contact of this.contacts) {
+      for (const contact of this.contacts) {
         if (contact.address === this.address) {
           if (contact.label.match(/^lgs_[13456789abcdefghijkmnopqrstuwxyz]{60}$/)) {
             return null

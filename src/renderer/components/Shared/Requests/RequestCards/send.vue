@@ -106,7 +106,7 @@ import bigInt from 'big-integer'
 export default {
   name: 'Send',
   components: {
-    'LogosAddress': () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   props: {
     requestInfo: {
@@ -143,13 +143,13 @@ export default {
     },
     isReceive () {
       if (!this.address) {
-        for (let transaction in this.requestInfo.transactions) {
+        for (const transaction in this.requestInfo.transactions) {
           if (this.requestInfo.transactions[transaction].destination === this.requestInfo.view) {
             return true
           }
         }
       } else {
-        for (let transaction in this.requestInfo.transactions) {
+        for (const transaction in this.requestInfo.transactions) {
           if (this.requestInfo.transactions[transaction].destination === this.address) {
             return true
           }
@@ -160,7 +160,7 @@ export default {
     totalReceived () {
       if (this.isReceive) {
         let sum = bigInt(0)
-        for (let transaction in this.requestInfo.transactions) {
+        for (const transaction in this.requestInfo.transactions) {
           if (this.requestInfo.transactions[transaction].destination === this.requestInfo.view) {
             sum = sum.plus(bigInt(this.requestInfo.transactions[transaction].amount))
           }

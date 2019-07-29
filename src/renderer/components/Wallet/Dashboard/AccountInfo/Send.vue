@@ -189,9 +189,9 @@ export default {
   name: 'Send',
   components: {
     AccountList,
-    'QrcodeStream': () => import(/* webpackChunkName: "QRCode-Reader" */'vue-qrcode-reader').then(({ QrcodeStream }) => QrcodeStream),
-    'Multiselect': () => import(/* webpackChunkName: "Multiselect" */'vue-multiselect'),
-    'LogosAddress': () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
+    QrcodeStream: () => import(/* webpackChunkName: "QRCode-Reader" */'vue-qrcode-reader').then(({ QrcodeStream }) => QrcodeStream),
+    Multiselect: () => import(/* webpackChunkName: "Multiselect" */'vue-multiselect'),
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   data () {
     return {
@@ -223,10 +223,10 @@ export default {
       }
     },
     availableTokens () {
-      let tokens = []
+      const tokens = []
       if (this.account && this.account.tokenBalances) {
-        for (let tokenID in this.account.tokenBalances) {
-          let forgeToken = this.$Wallet.tokenAccounts[this.$Utils.accountFromHexKey(tokenID)]
+        for (const tokenID in this.account.tokenBalances) {
+          const forgeToken = this.$Wallet.tokenAccounts[this.$Utils.accountFromHexKey(tokenID)]
           if (forgeToken.feeType === 'flat') {
             if (bigInt(this.account.tokenBalances[tokenID])
               .minus(bigInt(forgeToken.feeRate)).greater(0)) {
@@ -267,10 +267,10 @@ export default {
       return this.$Wallet.tokenAccounts[this.$Utils.accountFromHexKey(this.token.tokenID)]
     },
     combinedAccounts () {
-      let results = []
+      const results = []
       const map = new Map()
       map.set(this.currentAccountAddress, true)
-      for (let address in this.$Wallet.accounts) {
+      for (const address in this.$Wallet.accounts) {
         if (!map.has(address)) {
           map.set(address, true)
           results.push({
@@ -279,7 +279,7 @@ export default {
           })
         }
       }
-      for (let token in this.$Wallet.tokenAccounts) {
+      for (const token in this.$Wallet.tokenAccounts) {
         if (!map.has(token)) {
           map.set(token, true)
           if (!this.sendingTokens) {
@@ -290,7 +290,7 @@ export default {
           }
         }
       }
-      for (let contact of this.contacts) {
+      for (const contact of this.contacts) {
         if (!map.has(contact.address)) {
           map.set(contact.address, true)
           results.push({
@@ -313,12 +313,12 @@ export default {
       }
     },
     availableToSend () {
-      let result = {
+      const result = {
         text: '',
         amount: ''
       }
       if (!this.sendingTokens) {
-        let amount = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+        const amount = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
         result.amount = amount
         result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
       } else {
@@ -344,7 +344,7 @@ export default {
       if (this.amount) {
         if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
         if (!this.sendingTokens) {
-          let amountInMinorUnit = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
+          const amountInMinorUnit = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
           return (
             bigInt(amountInMinorUnit).greater(0) &&
             bigInt(this.$Wallet.account.balance)
@@ -392,7 +392,7 @@ export default {
     combinedAccounts (newAccounts, oldAccounts) {
       if (newAccounts.length > 0) {
         let valid = false
-        for (let account of newAccounts) {
+        for (const account of newAccounts) {
           if (this.destinationAccount && account.address === this.destinationAccount.address) {
             this.destinationAccount = account
             valid = true
@@ -452,9 +452,9 @@ export default {
     addAccount (newAddress) {
       try {
         this.$Utils.keyFromAccount(newAddress)
-        let newAccount = { label: newAddress, address: newAddress }
+        const newAccount = { label: newAddress, address: newAddress }
         if (this.currentAccountAddress !== newAddress) {
-          let existingAccount = this.findAccount(newAddress)
+          const existingAccount = this.findAccount(newAddress)
           if (!existingAccount) {
             this.addContact(newAccount)
             this.destinationAccount = newAccount
@@ -490,9 +490,9 @@ export default {
       this.validDestination = null
       this.invalidDestinationError = ''
       if (this.tokenAccount && account && account.address) {
-        let address = account.address
-        let rpc = this.$Wallet.rpcClient()
-        let accountInfo = await rpc.accounts.info(address)
+        const address = account.address
+        const rpc = this.$Wallet.rpcClient()
+        const accountInfo = await rpc.accounts.info(address)
         if (!accountInfo) {
           this.validDestination = false
           this.invalidDestinationError = 'Unable to validate this account.'
@@ -513,7 +513,7 @@ export default {
           this.invalidDestinationError = 'You cannot send tokens to TokenAccounts.'
           return
         }
-        let tokenInfo = this.tokenAccount.getAccountStatus(account.address)
+        const tokenInfo = this.tokenAccount.getAccountStatus(account.address)
         if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
           this.validDestination = false
           this.invalidDestinationError = 'This account has not been whitelisted.'
@@ -559,7 +559,7 @@ export default {
         }
         this.$emit('sent')
       } else {
-        let amount = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
+        const amount = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
         if (bigInt(this.$Wallet.accounts[this.currentAccountAddress].balance)
           .greaterOrEquals(
             bigInt(amount).plus(bigInt(this.$Utils.minimumFee))

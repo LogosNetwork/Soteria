@@ -78,7 +78,7 @@ export default {
         if (!this.phraseList[i] || this.phraseList[i].length === 0) return null
       }
       if (bip39.validateMnemonic(this.phraseList.join(' '))) {
-        let seed = bip39.mnemonicToEntropy(this.phraseList.join(' ')).toUpperCase()
+        const seed = bip39.mnemonicToEntropy(this.phraseList.join(' ')).toUpperCase()
         return (this.seed === null || this.seed === seed)
       } else {
         return null
@@ -97,7 +97,7 @@ export default {
     },
     validateMnemonic () {
       if (bip39.validateMnemonic(this.phraseList.join(' '))) {
-        let seed = bip39.mnemonicToEntropy(this.phraseList.join(' ')).toUpperCase()
+        const seed = bip39.mnemonicToEntropy(this.phraseList.join(' ')).toUpperCase()
         if (this.seed === null) {
           this.setValidated(true)
           this.setSeed(seed)

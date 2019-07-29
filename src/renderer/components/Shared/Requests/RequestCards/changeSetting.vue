@@ -37,7 +37,7 @@ import token from '@/components/Shared/Requests/token.vue'
 export default {
   name: 'ChangeSetting',
   components: {
-    'token': token
+    token: token
   },
   props: {
     requestInfo: {

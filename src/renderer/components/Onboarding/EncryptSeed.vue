@@ -167,13 +167,13 @@ export default {
       this.$router.go(-1)
     },
     createWallet () {
-      let tempWallet = new this.$LogosWallet({
+      const tempWallet = new this.$LogosWallet({
         password: this.password,
         seed: this.seed,
         mqtt: false,
         rpc: false
       })
-      let encryptedWallet = tempWallet.encrypt()
+      const encryptedWallet = tempWallet.encrypt()
       this.setWallet(encryptedWallet)
       if (this.validated) {
         this.$Wallet.setPassword(this.password)

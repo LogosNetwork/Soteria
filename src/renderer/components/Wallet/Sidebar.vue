@@ -18,7 +18,7 @@ import Navigation from '@/components/Wallet/Sidebar/Navigation.vue'
 export default {
   name: 'Sidebar',
   components: {
-    'Navigation': Navigation
+    Navigation: Navigation
   }
 }
 </script>

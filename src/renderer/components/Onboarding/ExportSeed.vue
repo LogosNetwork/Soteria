@@ -112,7 +112,7 @@ export default {
       try {
         if (global && global.remote && global.writeFileSync) {
           const now = new Date()
-          let prefix = 'SeedVault'
+          const prefix = 'SeedVault'
           const path = global.remote.dialog.showSaveDialog(global.remote.getCurrentWindow(), {
             title: 'Export keyfile',
             defaultPath: `Logos${prefix}-${now
@@ -132,7 +132,7 @@ export default {
           return false
         } else {
           const now = new Date()
-          let prefix = 'SeedVault'
+          const prefix = 'SeedVault'
           const defaultPath = `Logos${prefix}-${now
             .toISOString()
             .slice(0, 16)

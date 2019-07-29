@@ -38,26 +38,26 @@ export default {
     requests () {
       if (this.activeAddress !== null) {
         if (!this.$Wallet.account) return []
-        let results = this.$Wallet.account.chain.concat(this.$Wallet.account.receiveChain)
+        const results = this.$Wallet.account.chain.concat(this.$Wallet.account.receiveChain)
         return results.sort((a, b) => {
           if (a.timestamp > b.timestamp) return -1
           if (a.timestamp < b.timestamp) return 1
           return 0
         })
       } else {
-        let dedupedRequests = new Map()
-        let result = []
-        for (let address in this.$Wallet.accounts) {
-          let account = this.$Wallet.accounts[address]
-          let accountsRequests = account.chain.concat(account.receiveChain)
-          for (let request of accountsRequests) {
+        const dedupedRequests = new Map()
+        const result = []
+        for (const address in this.$Wallet.accounts) {
+          const account = this.$Wallet.accounts[address]
+          const accountsRequests = account.chain.concat(account.receiveChain)
+          for (const request of accountsRequests) {
             if (!dedupedRequests.has(request.hash)) {
               request.view = account.address
               result.push(request)
               dedupedRequests.set(request.hash, new Set([account.address]))
             } else if (dedupedRequests.has(request.hash) &&
               !dedupedRequests.get(request.hash).has(account.address)) {
-              let addressSet = dedupedRequests.get(request.hash)
+              const addressSet = dedupedRequests.get(request.hash)
               request.view = account.address
               result.push(request)
               addressSet.add(account.address)

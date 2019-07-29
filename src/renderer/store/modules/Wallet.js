@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 const state = {
   favorites: {
-    'logos': {
+    logos: {
       tokenID: 'logos'
     }
   },
@@ -18,7 +18,7 @@ const getters = {
 
 const mutations = {
   addFavorite (state, tokenID) {
-    let favorite = { tokenID }
+    const favorite = { tokenID }
     if (tokenID !== 'logos') favorite.tokenAddress = Vue.$Utils.keyFromAccount(tokenID)
     Vue.set(state.favorites, tokenID, favorite)
   },
@@ -41,7 +41,7 @@ const mutations = {
     state.contacts = contacts
   },
   addContact (state, contact) {
-    let index = state.contacts.findIndex(existingContact => existingContact.address === contact.address)
+    const index = state.contacts.findIndex(existingContact => existingContact.address === contact.address)
     if (index !== -1) {
       Vue.$set(state.contacts, index, contact)
     } else {

@@ -42,7 +42,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Wallet',
   components: {
-    'Sidebar': Sidebar
+    Sidebar: Sidebar
   },
   data () {
     return {

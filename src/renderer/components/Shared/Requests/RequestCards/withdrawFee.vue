@@ -56,8 +56,8 @@ import token from '@/components/Shared/Requests/token.vue'
 export default {
   name: 'WithdrawFee',
   components: {
-    'LogosAddress': () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue'),
-    'token': token
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue'),
+    token: token
   },
   props: {
     requestInfo: {

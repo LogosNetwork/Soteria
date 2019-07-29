@@ -11,15 +11,15 @@ export default {
     this.installed = true
     Vue.prototype.$Utils = LogosWallet.Utils
     Vue.prototype.$LogosWallet = LogosWallet.Wallet
-    let wallet = new LogosWallet.Wallet()
+    const wallet = new LogosWallet.Wallet()
     wallet.ResetWalletReactivity = () => {
-      for (let token in Vue.prototype.$Wallet._tokenAccounts) {
-        let tkAccount = Vue.prototype.$Wallet._tokenAccounts[token]
+      for (const token in Vue.prototype.$Wallet._tokenAccounts) {
+        const tkAccount = Vue.prototype.$Wallet._tokenAccounts[token]
         delete Vue.prototype.$Wallet._tokenAccounts[token]
         Vue.prototype.$set(Vue.prototype.$Wallet._tokenAccounts, token, tkAccount)
       }
-      for (let address in Vue.prototype.$Wallet._accounts) {
-        let account = Vue.prototype.$Wallet._accounts[address]
+      for (const address in Vue.prototype.$Wallet._accounts) {
+        const account = Vue.prototype.$Wallet._accounts[address]
         delete Vue.prototype.$Wallet._accounts[address]
         Vue.prototype.$set(Vue.prototype.$Wallet._accounts, address, account)
       }
@@ -32,7 +32,7 @@ export default {
     // Set proper syncing / verifying SDK options with user overrides
     // Set the settings for local Logos Node RPC Integration
     wallet.ConfigureSoteria = async () => {
-      let response = await axios.get(`https://pla.bs/delegates`)
+      const response = await axios.get(`https://pla.bs/delegates`)
       // Pulls in token info
       Vue.prototype.$Wallet.tokenSync = true
       // Marks the node as trusted and doesn't validate sigs to saves time.
