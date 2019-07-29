@@ -29,7 +29,7 @@
       </b-list-group-item>
       <b-list-group-item>
         <span v-if="requestInfo.fee_type.toLowerCase() === 'flat'">
-          <strong>Fee Rate: </strong>{{ requestInfo.fee_rate }} base units of {{ requestInfo.tokenInfo.symbol }}
+          <strong>Fee Rate: </strong>{{ requestInfo.fee_rate }} minor units of {{ requestInfo.tokenInfo.symbol }}
         </span>
         <span v-if="requestInfo.fee_type.toLowerCase() === 'percentage'">
           <strong>Fee Rate: </strong>{{ requestInfo.fee_rate }}%

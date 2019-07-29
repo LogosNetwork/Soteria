@@ -30,7 +30,7 @@
             @click="setCurrentAccount(account.address)"
           >
           <div>{{ account.label }}</div>
-          <small>{{ accountBalance(account.balance) }} <span v-t="'logos'" /></small>
+          <small>{{ account.balanceInLogos }} <span v-t="'logos'" /></small>
         </label>
       </div>
     </div>
@@ -45,8 +45,6 @@
 </template>
 
 <script>
-import Logos from '@logosnetwork/logos-rpc-client'
-
 export default {
   name: 'AccountSelector',
   methods: {
@@ -55,9 +53,6 @@ export default {
     },
     addAccount () {
       this.$Wallet.VueCreateAccount()
-    },
-    accountBalance (reason) {
-      return Logos.convert.fromReason(reason, 'LOGOS')
     }
   }
 }

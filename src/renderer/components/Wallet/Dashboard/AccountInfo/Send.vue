@@ -184,7 +184,6 @@
 import { mapState, mapActions } from 'vuex'
 import AccountList from '@/components/Wallet/Dashboard/AccountList.vue'
 import bigInt from 'big-integer'
-import Logos from '@logosnetwork/logos-rpc-client'
 
 export default {
   name: 'Send',
@@ -319,23 +318,23 @@ export default {
         amount: ''
       }
       if (!this.sendingTokens) {
-        let amount = Logos.convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+        let amount = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
         result.amount = amount
         result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
       } else {
         let amount = null
-        let amountInBaseUnit = this.account.tokenBalances[this.token.tokenID]
+        let amountInMinorUnit = this.account.tokenBalances[this.token.tokenID]
         if (this.tokenAccount.feeType === 'flat') {
-          amountInBaseUnit = bigInt(amountInBaseUnit).minus(bigInt(this.tokenAccount.feeRate)).toString()
+          amountInMinorUnit = bigInt(amountInMinorUnit).minus(bigInt(this.tokenAccount.feeRate)).toString()
         }
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
-          amount = Logos.convert.fromTo(amountInBaseUnit, 0, this.issuerInfo.decimals)
+          amount = this.$Wallet.rpcClient().convert.fromTo(amountInMinorUnit, 0, this.issuerInfo.decimals)
           result.amount = amount
           result.text = `${amount} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
         } else {
-          amount = amountInBaseUnit
+          amount = amountInMinorUnit
           result.amount = amount
-          result.text = `${amount} ${this.$t('baseUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
+          result.text = `${amount} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
         }
       }
       return result
@@ -345,35 +344,35 @@ export default {
       if (this.amount) {
         if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
         if (!this.sendingTokens) {
-          let amountInRaw = Logos.convert.toReason(this.amount, 'LOGOS')
+          let amountInMinorUnit = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
           return (
-            bigInt(amountInRaw).greater(0) &&
+            bigInt(amountInMinorUnit).greater(0) &&
             bigInt(this.$Wallet.account.balance)
               .greaterOrEquals(
-                bigInt(amountInRaw)
+                bigInt(amountInMinorUnit)
                   .plus(
                     bigInt(this.$Utils.minimumFee)
                   )
               )
           )
         } else {
-          let amountInRaw = null
+          let amountInMinorUnit = null
           if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined' &&
             this.issuerInfo.decimals > 0) {
             if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
-            amountInRaw = Logos.convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
+            amountInMinorUnit = this.$Wallet.rpcClient().convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
           } else {
-            amountInRaw = this.transaction.amount
-            if (!/^([0-9]+)$/.test(amountInRaw)) return false
+            amountInMinorUnit = this.transaction.amount
+            if (!/^([0-9]+)$/.test(amountInMinorUnit)) return false
           }
-          if (amountInRaw === null) return false
+          if (amountInMinorUnit === null) return false
           if (this.tokenAccount.feeType === 'flat') {
             return (bigInt(this.account.tokenBalances[this.token.tokenID])
               .minus(bigInt(this.tokenAccount.feeRate))
-              .greaterOrEquals(bigInt(amountInRaw)))
+              .greaterOrEquals(bigInt(amountInMinorUnit)))
           } else {
             return (bigInt(this.account.tokenBalances[this.token.tokenID])
-              .greaterOrEquals(bigInt(amountInRaw)))
+              .greaterOrEquals(bigInt(amountInMinorUnit)))
           }
         }
       }
@@ -528,39 +527,39 @@ export default {
     },
     send () {
       if (this.sendingTokens && this.isValidDestination) {
-        let amountInBaseUnit = null
+        let amountInMinorUnit = null
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
-          amountInBaseUnit = Logos.convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
+          amountInMinorUnit = this.$Wallet.rpcClient().convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
         } else {
-          amountInBaseUnit = this.amount
+          amountInMinorUnit = this.amount
         }
         if (this.tokenAccount.feeType === 'flat') {
           if (bigInt(this.account.tokenBalances[this.token.tokenID])
             .minus(bigInt(this.tokenAccount.feeRate))
-            .greaterOrEquals(bigInt(amountInBaseUnit))) {
+            .greaterOrEquals(bigInt(amountInMinorUnit))) {
             this.$Wallet.account.createTokenSendRequest(
               this.tokenAccount.address,
               [{
                 destination: this.destinationAccount.address,
-                amount: amountInBaseUnit
+                amount: amountInMinorUnit
               }]
             )
           }
         } else {
           if (bigInt(this.currentAccount.tokenBalances[this.token.tokenID])
-            .greaterOrEquals(bigInt(amountInBaseUnit))) {
+            .greaterOrEquals(bigInt(amountInMinorUnit))) {
             this.$Wallet.account.createTokenSendRequest(
               this.tokenAccount.address,
               [{
                 destination: this.destinationAccount.address,
-                amount: amountInBaseUnit
+                amount: amountInMinorUnit
               }]
             )
           }
         }
         this.$emit('sent')
       } else {
-        let amount = Logos.convert.toReason(this.amount, 'LOGOS')
+        let amount = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
         if (bigInt(this.$Wallet.accounts[this.currentAccountAddress].balance)
           .greaterOrEquals(
             bigInt(amount).plus(bigInt(this.$Utils.minimumFee))

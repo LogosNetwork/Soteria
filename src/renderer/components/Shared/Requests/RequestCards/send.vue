@@ -101,7 +101,6 @@
 <script>
 import { mapState } from 'vuex'
 import { faPaperPlane, faHandReceiving } from '@fortawesome/pro-light-svg-icons'
-import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
 
 export default {
@@ -166,7 +165,7 @@ export default {
             sum = sum.plus(bigInt(this.requestInfo.transactions[transaction].amount))
           }
         }
-        return parseInt(Logos.convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseInt(this.$Wallet.rpcClient().convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
       }
       return null
     }

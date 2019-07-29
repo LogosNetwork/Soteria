@@ -95,7 +95,6 @@
 <script>
 import { mapState } from 'vuex'
 import { faPaperPlane, faHandReceiving } from '@fortawesome/pro-light-svg-icons'
-import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
 
 export default {
@@ -150,7 +149,7 @@ export default {
       if (this.requestInfo.tokenInfo.issuerInfo &&
         typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
         this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
-        return parseInt(Logos.convert.fromTo(this.requestInfo.totalAmount, 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseInt(this.$Wallet.rpcClient().convert.fromTo(this.requestInfo.totalAmount, 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         return parseInt(this.requestInfo.totalAmount, 10).toLocaleString(this.languageCode, { useGrouping: true })
       }
@@ -166,7 +165,7 @@ export default {
         if (this.requestInfo.tokenInfo.issuerInfo &&
           typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
           this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
-          return parseInt(Logos.convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
+          return parseInt(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
         } else {
           return parseInt(sum.toString(), 10).toLocaleString(this.languageCode, { useGrouping: true })
         }

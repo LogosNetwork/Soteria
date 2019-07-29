@@ -67,7 +67,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Logos from '@logosnetwork/logos-rpc-client'
 import bigInt from 'big-integer'
 import Receive from '@/components/Wallet/Dashboard/AccountInfo/Receive'
 import Send from '@/components/Wallet/Dashboard/AccountInfo/Send'
@@ -88,14 +87,14 @@ export default {
     balance: function () {
       if (this.activeAddress !== null) {
         if (!this.$Wallet.account) return 0
-        return parseInt(Logos.convert.fromReason(this.$Wallet._accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.$Wallet._accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         let sum = bigInt(0)
         for (let address in this.$Wallet.accounts) {
           let account = this.$Wallet.accounts[address]
           sum = sum.add(bigInt(account.balance))
         }
-        return parseInt(Logos.convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseInt(this.$Wallet.rpcClient().convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
       }
     }
   },

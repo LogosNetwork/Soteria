@@ -93,7 +93,7 @@
   "lgsAvailableToSend": "Logos available to send",
   "noAccountFound": "No account found",
   "sendAmountError": "This is a required field and must be a positive decimal or integer value that is less than the current accounts balance",
-  "baseUnitsOf": "base units of",
+  "minorUnitsOf": "minor units of",
   "areAvailableToSend": "are available to send",
   "createToken": "Create Token",
   "staking": "Staking",
