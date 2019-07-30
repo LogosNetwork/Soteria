@@ -392,9 +392,14 @@ fieldset[disabled] .multiselect {
 }
 
 .multiselect--disabled .multiselect__current,
-.multiselect--disabled .multiselect__select {
-    background : $vue-multiselect-disabled-bg;
+.multiselect--disabled .multiselect__select,
+.multiselect--disabled .multiselect__tags {
     color      : $vue-multiselect-disabled-color;
+}
+
+.multiselect--disabled .multiselect__current,
+.multiselect--disabled .multiselect__tags {
+    background : $vue-multiselect-disabled-bg;
 }
 
 .multiselect__option--disabled {

@@ -6,20 +6,24 @@ $theme-colors: (
   "bg": #36393F,
   "tertiary": #2B2C31,
   "base": #dcddde,
+  "darkBase": #373a3e,
   "danger": #dc3545,
   "black": #000
 );
-
+$black: #000;
+$white: #FFF;
+$theme-color-interval: 8%;
 $border-color: theme-color("black");
-$input-bg: rgba(theme-color("base"),0.05);
-$input-group-addon-bg: rgba(theme-color("base"),0.05);
+$input-bg: theme-color("darkBase");
+$input-group-addon-bg: theme-color("darkBase");
 $input-border-color: theme-color("black");
 $input-color: theme-color("base");
-$form-feedback-invalid-color: rgba(theme-color("danger"),0.05);
+$form-feedback-invalid-color: theme-color("danger");
 $input-focus-bg: rgba(theme-color("primary"),0.05);
 $custom-select-indicator-color: #fff;
 $custom-select-color: theme-color("base");
-$input-disabled-bg: rgba(theme-color("base"),0.05);
+$input-disabled-bg: theme-color-level("darkBase", 5);
+$custom-select-disabled-bg: theme-color-level("darkBase", 5);
 $card-bg: rgba(theme-color("base"),0.05);
 $card-border-color: theme-color("black");
 $list-group-bg: transparent;

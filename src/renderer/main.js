@@ -11,7 +11,7 @@ import Multiselect from 'vue-multiselect'
 import VueInputAutowidth from 'vue-input-autowidth'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStar } from '@fortawesome/pro-solid-svg-icons'
-import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode, faChartLine, faStar as faLightStar, faGlobeAmericas } from '@fortawesome/pro-light-svg-icons'
+import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode, faChartLine, faStar as faLightStar, faGlobeAmericas, faQuestionCircle } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -53,6 +53,7 @@ library.add(faChartLine)
 library.add(faStar)
 library.add(faLightStar)
 library.add(faGlobeAmericas)
+library.add(faQuestionCircle)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)

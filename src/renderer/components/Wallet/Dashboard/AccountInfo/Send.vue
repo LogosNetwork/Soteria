@@ -15,7 +15,7 @@
         label-size="lg"
       >
         <b-input-group size="lg">
-          <multiselect
+          <Multiselect
             id="tokenSelector"
             v-model="token"
             required
@@ -43,7 +43,7 @@
         label-size="lg"
       >
         <b-input-group size="lg">
-          <multiselect
+          <Multiselect
             id="toSelector"
             v-model="destinationAccount"
             class="scan"
@@ -320,7 +320,11 @@ export default {
       if (!this.sendingTokens) {
         const amount = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
         result.amount = amount
-        result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
+        if (bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).lesserOrEquals(bigInt(0))) {
+          result.text = this.$t('insufficientFunds')
+        } else {
+          result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
+        }
       } else {
         let amount = null
         let amountInMinorUnit = this.account.tokenBalances[this.token.tokenID]
@@ -330,11 +334,18 @@ export default {
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
           amount = this.$Wallet.rpcClient().convert.fromTo(amountInMinorUnit, 0, this.issuerInfo.decimals)
           result.amount = amount
-          result.text = `${amount} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
+          if (bigInt(amountInMinorUnit).lesserOrEquals(bigInt(0))) {
+            result.text = `${amount} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
+          } else {
+            result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
+          }
         } else {
-          amount = amountInMinorUnit
-          result.amount = amount
-          result.text = `${amount} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
+          result.amount = amountInMinorUnit
+          if (bigInt(amountInMinorUnit).lesserOrEquals(bigInt(0))) {
+            result.text = `${amountInMinorUnit} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
+          } else {
+            result.text = `${amountInMinorUnit} ${this.$t('lgsAvailableToSend')}`
+          }
         }
       }
       return result

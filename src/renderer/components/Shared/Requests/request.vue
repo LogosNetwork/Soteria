@@ -47,6 +47,7 @@
     <issuance
       v-if="request.type === 'issuance'"
       :request-info="request"
+      :address="address"
       :small="small"
     />
     <issueAdditional
@@ -119,7 +120,7 @@ export default {
   computed: {
     request () {
       if (this.requestInfo && this.requestInfo.constructor.name !== 'Object') {
-        const request = JSON.parse(this.requestInfo.toJSON())
+        const request = this.requestInfo.toJSON()
         if (this.requestInfo.view) request.view = this.requestInfo.view
         if (request.token_id) {
           const tokenAddress = this.$Utils.accountFromHexKey(request.token_id)
