@@ -113,7 +113,7 @@ export default {
         if (global && global.remote && global.writeFileSync) {
           const now = new Date()
           const prefix = 'SeedVault'
-          const path = global.remote.dialog.showSaveDialog(global.remote.getCurrentWindow(), {
+          global.remote.dialog.showSaveDialog(global.remote.getCurrentWindow(), {
             title: 'Export keyfile',
             defaultPath: `Logos${prefix}-${now
               .toISOString()
@@ -122,14 +122,13 @@ export default {
               .replace('T', '-')}.lgsx`,
             buttonLabel: 'Export',
             filters: [{ name: 'SeedVault File', extensions: ['lgsx'] }]
+          }).then((result) => {
+            if (!result.filePath) {
+              throw Error('Export cancelled')
+            }
+            global.writeFileSync(result.filePath, Buffer.from(this.wallet))
+            this.$router.push({ name: 'locked' })
           })
-
-          if (!path) {
-            throw Error('Export cancelled')
-          }
-          global.writeFileSync(path, Buffer.from(this.wallet))
-          this.$router.push({ name: 'locked' })
-          return false
         } else {
           const now = new Date()
           const prefix = 'SeedVault'
