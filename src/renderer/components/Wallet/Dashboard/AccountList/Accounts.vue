@@ -87,6 +87,11 @@ export default {
       activeAddress: state => state.activeAddress
     })
   },
+  created () {
+    if (this.activeAddress !== null && !this.$Wallet.accounts[this.activeAddress]) {
+      this.setActiveAddress(this.$Wallet.currentAccountAddress)
+    }
+  },
   methods: {
     ...mapActions('Wallet', [
       'setActiveAddress'

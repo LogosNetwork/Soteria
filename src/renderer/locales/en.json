@@ -104,5 +104,19 @@
   "all": "All",
   "trackThisTokenInTheDashboard": "Track this token in the dashboard",
   "stopTrackingThisTokenInTheDashboard": "Stop tracking this token in the dashboard",
-  "closeTheTokenFilter": "Close the token filter"
+  "closeTheTokenFilter": "Close the token filter",
+  "manageTokens": "Manage Tokens",
+  "feeBalance": "Fee Balance",
+  "feeRate": "Fee Rate",
+  "adminActions": "Admin Actions",
+  "actions": "Actions",
+  "controllers": "Controllers",
+  "tokenActions": {
+    "distribute": "Distribute",
+    "mint": "Mint",
+    "burn": "Burn",
+    "adjustUsers": "Adjust Users",
+    "revoke": "Revoke",
+    "updateInfo": "Update Info"
+  }
 }

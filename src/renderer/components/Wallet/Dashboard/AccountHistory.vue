@@ -14,7 +14,7 @@
       :requests="requests"
       :address="activeAddress"
       :small="true"
-      class="transactionHistoryContainer scroller visible"
+      class="mt-1 transactionHistoryContainer scroller visible"
     />
   </b-container>
 </template>

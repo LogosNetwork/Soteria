@@ -87,7 +87,7 @@ export default {
     balance: function () {
       if (this.activeAddress !== null) {
         if (!this.$Wallet.account) return 0
-        return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.$Wallet._accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.$Wallet.accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         let sum = bigInt(0)
         for (const address in this.$Wallet.accounts) {

@@ -26,7 +26,7 @@
         size="sm"
         :icon="['fal','coins']"
       />
-      <span v-t="'tokens'" />
+      <span v-t="'manageTokens'" />
     </b-button>
     <b-button
       class="navigationSelector"
