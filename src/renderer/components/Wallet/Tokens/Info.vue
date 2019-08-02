@@ -1,89 +1,122 @@
 <template>
   <b-container
+    v-if="tokenAccount"
     fluid
     class="mt-3"
   >
-    <div class="d-flex justify-content-between">
-      <div class="text-center">
-        <div class="align-self-center d-inline-block">
-          <div>
-            <small class="text-uppercase text-muted">
-              <span v-t="'token'" /> <span v-t="'balance'" />
-            </small>
-          </div>
-          <div>
-            <h4 class="d-flex align-items-end justify-content-center">
-              <span class="stats d-inline-block text-truncate">{{ tokenBalance }}</span>
-              <small class="ml-1">{{ tokenAccount.symbol }}</small>
-            </h4>
-          </div>
+    <div class="text-left mb-3">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h3>
+            {{ tokenAccount.name }} - {{ tokenAccount.symbol }}
+          </h3>
+          <code class="bg-secondary text-base p-1 mb-3">{{ tokenAccount.address }}</code>
         </div>
-        <div class="align-self-center d-inline-block ml-3">
-          <div>
-            <small class="text-uppercase text-muted">
-              <span v-t="'circulatingSupply'" />
-            </small>
-          </div>
-          <div>
-            <h4 class="d-flex align-items-end justify-content-center">
-              <span class="stats d-inline-block text-truncate">{{ circulatingSupply }}</span>
-              <small class="ml-1">{{ tokenAccount.symbol }}</small>
-            </h4>
-          </div>
-        </div>
-        <div class="align-self-center d-inline-block ml-3">
-          <div>
-            <small class="text-uppercase text-muted">
-              <span v-t="'logos'" /> <span v-t="'balance'" />
-            </small>
-          </div>
-          <div>
-            <h4 class="d-flex align-items-end justify-content-center">
-              <span class="stats d-inline-block text-truncate">{{ balance }}</span>
-              <font-awesome-icon
-                class="text-primary ml-1"
-                :icon="['fal','lambda']"
-              />
-            </h4>
-          </div>
-        </div>
-        <div
-          v-if="showFeeBalance"
-          class="align-self-center d-inline-block ml-3"
-        >
-          <div>
-            <small class="text-uppercase text-muted">
-              <span v-t="'feeBalance'" />
-            </small>
-          </div>
-          <div>
-            <h4 class="d-flex align-items-end justify-content-center">
-              <span class="stats d-inline-block text-truncate">{{ feeBalance }}</span>
-              <small class="ml-1">{{ tokenAccount.symbol }}</small>
-            </h4>
-          </div>
-        </div>
-        <div class="align-self-center d-inline-block ml-3">
-          <div>
-            <small class="text-uppercase text-muted">
-              <span v-t="'feeRate'" />
-            </small>
-          </div>
-          <div>
-            <h4 class="d-flex align-items-end justify-content-center">
-              <span class="stats d-inline-block text-truncate">{{ feeRate }}</span>
-              <span v-if="tokenAccount.feeType.toLowerCase() === 'flat'">
-                <small class="ml-1">{{ tokenAccount.symbol }}</small>
-              </span>
-              <span v-else-if="tokenAccount.feeType.toLowerCase() === 'percentage'">
-                <small class="ml-1">%</small>
-              </span>
-            </h4>
-          </div>
+        <div>
+          <Actions />
         </div>
       </div>
-      <div class="align-self-center">
-        <Actions />
+    </div>
+    <div>
+      <div class="text-left">
+        <small
+          class="text-uppercase text-muted"
+        >
+          <span v-t="'statistics'" />
+        </small>
+      </div>
+      <div class="d-flex justify-content-between">
+        <div class="text-center">
+          <b-card
+            class="d-inline-block mr-3 border-0 shadow-sm"
+            body-class="p-3"
+          >
+            <div class="statLabel mb-1">
+              <small class="text-uppercase">
+                <span v-t="'token'" /> <span v-t="'balance'" />
+              </small>
+            </div>
+            <div>
+              <h4 class="d-flex align-items-end justify-content-center mb-0">
+                <span class="stats d-inline-block text-truncate">{{ tokenBalance }}</span>
+                <small class="ml-1">{{ tokenAccount.symbol }}</small>
+              </h4>
+            </div>
+          </b-card>
+          <b-card
+            class="d-inline-block mr-3 border-0 shadow-sm"
+            body-class="p-3"
+          >
+            <div class="statLabel mb-1">
+              <small class="text-uppercase">
+                <span v-t="'circulatingSupply'" />
+              </small>
+            </div>
+            <div>
+              <h4 class="d-flex align-items-end justify-content-center mb-0">
+                <span class="stats d-inline-block text-truncate">{{ circulatingSupply }}</span>
+                <small class="ml-1">{{ tokenAccount.symbol }}</small>
+              </h4>
+            </div>
+          </b-card>
+          <b-card
+            class="d-inline-block mr-3 border-0 shadow-sm"
+            body-class="p-3"
+          >
+            <div class="statLabel mb-1">
+              <small class="text-uppercase">
+                <span v-t="'logos'" /> <span v-t="'balance'" />
+              </small>
+            </div>
+            <div>
+              <h4 class="d-flex align-items-end justify-content-center mb-0">
+                <span class="stats d-inline-block text-truncate">{{ balance }}</span>
+                <font-awesome-icon
+                  class="text-primary ml-1"
+                  :icon="['fal','lambda']"
+                />
+              </h4>
+            </div>
+          </b-card>
+          <b-card
+            v-if="showFeeBalance"
+            body-class="p-3"
+            class="d-inline-block mr-3 border-0 shadow-sm"
+          >
+            <div class="statLabel mb-1">
+              <small class="text-uppercase">
+                <span v-t="'feeBalance'" />
+              </small>
+            </div>
+            <div>
+              <h4 class="d-flex align-items-end justify-content-center mb-0">
+                <span class="stats d-inline-block text-truncate">{{ feeBalance }}</span>
+                <small class="ml-1">{{ tokenAccount.symbol }}</small>
+              </h4>
+            </div>
+          </b-card>
+          <b-card
+            class="d-inline-block mr-3 border-0 shadow-sm"
+            body-class="p-3"
+          >
+            <div class="statLabel mb-1">
+              <small class="text-uppercase">
+                <span v-t="'feeRate'" />
+              </small>
+            </div>
+            <div>
+              <h4 class="d-flex align-items-end justify-content-center mb-0">
+                <span class="stats d-inline-block text-truncate">{{ feeRate }}</span>
+                <span v-if="tokenAccount.feeType.toLowerCase() === 'flat'">
+                  <small class="ml-1">{{ tokenAccount.symbol }}</small>
+                </span>
+                <span v-else-if="tokenAccount.feeType.toLowerCase() === 'percentage'">
+                  <small class="ml-1">%</small>
+                </span>
+              </h4>
+            </div>
+          </b-card>
+        </div>
       </div>
     </div>
     <div class="mt-3">
@@ -91,7 +124,7 @@
         <small
           class="text-uppercase text-muted"
         >
-          <span v-t="'token'" /> <span v-t="'settings'" />
+          <span v-t="'settings'" />
         </small>
       </div>
       <div class="ml-3 text-left mt-1">
@@ -228,5 +261,13 @@ export default {
 <style scoped lang="scss">
 .stats {
   max-width: 200px;
+}
+.statLabel {
+  height: 15px;
+}
+.statLabel > small {
+  font-size: 65%;
+  display: inline-block;
+  vertical-align: top;
 }
 </style>

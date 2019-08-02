@@ -1,5 +1,6 @@
 <template>
   <b-container
+    v-if="tokenAccount"
     fluid
     class="mt-3"
   >

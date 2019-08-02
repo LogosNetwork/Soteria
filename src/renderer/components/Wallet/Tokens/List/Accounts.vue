@@ -5,6 +5,7 @@
       class="d-inline-block"
     >
       <ul
+        v-if="Object.values($Wallet.tokenAccounts).length > 0"
         role="tablist"
         class="nav nav-tabs scroller"
       >
@@ -21,6 +22,13 @@
           </span>
         </b-nav-item>
       </ul>
+      <b-button
+        v-else
+        v-b-modal.createToken
+        variant="link"
+      >
+        Create a Token!
+      </b-button>
     </div>
     <b-button
       v-if="addtoken"
