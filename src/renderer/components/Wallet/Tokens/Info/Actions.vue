@@ -42,7 +42,7 @@ export default {
       for (const account in this.$Wallet.accounts) {
         if (!actions['distribute'] && this.tokenAccount.controllerPrivilege(account, 'distribute')) {
           actions.distribute = {
-            icon: 'arrow-down',
+            icon: 'paper-plane',
             text: this.$t('tokenActions.distribute'),
             id: 'distribute'
           }
@@ -74,21 +74,61 @@ export default {
             id: 'revoke'
           }
         }
-        if (!actions['adjustUsers'] &&
-          ((this.tokenAccount.hasSetting('freeze') && this.tokenAccount.controllerPrivilege(account, 'freeze')) ||
-          (this.tokenAccount.hasSetting('whitelist') && this.tokenAccount.controllerPrivilege(account, 'whitelist')))) {
-          actions.adjustUsers = {
-            icon: 'user-edit',
-            text: this.$t('tokenActions.adjustUsers'),
-            id: 'adjustUsers'
+        if (!actions['freeze'] &&
+          (this.tokenAccount.hasSetting('freeze') && this.tokenAccount.controllerPrivilege(account, 'freeze'))) {
+          actions.freeze = {
+            icon: 'snowflake',
+            text: this.$t('tokenActions.freeze'),
+            id: 'freeze'
           }
         }
-        if (!actions['updateInfo'] &&
+        if (!actions['whitelist'] &&
+          (this.tokenAccount.hasSetting('whitelist') && this.tokenAccount.controllerPrivilege(account, 'whitelist'))) {
+          actions.adjustUsers = {
+            icon: 'list-alt',
+            text: this.$t('tokenActions.whitelist'),
+            id: 'whitelist'
+          }
+        }
+        if (!actions['editInfo'] &&
           this.tokenAccount.controllerPrivilege(account, 'update_issuer_info')) {
-          actions.updateInfo = {
+          actions.editInfo = {
             icon: 'edit',
-            text: this.$t('tokenActions.updateInfo'),
-            id: 'updateInfo'
+            text: this.$t('tokenActions.editInfo'),
+            id: 'editInfo'
+          }
+        }
+        if (!actions['withdrawFees'] &&
+          this.tokenAccount.controllerPrivilege(account, 'withdraw_fee')) {
+          actions.withdrawFees = {
+            icon: 'hand-receiving',
+            text: this.$t('tokenActions.withdrawFees'),
+            id: 'withdrawFees'
+          }
+        }
+        if (!actions['withdrawLogos'] &&
+          this.tokenAccount.controllerPrivilege(account, 'withdraw_logos')) {
+          actions.withdrawLogos = {
+            icon: 'lambda',
+            text: this.$t('tokenActions.withdrawLogos'),
+            id: 'withdrawLogos'
+          }
+        }
+        if (!actions['settings'] &&
+          (this.tokenAccount.controllerPrivilege(account, 'change_issuance') ||
+          (this.tokenAccount.hasSetting('modify_issuance') && this.tokenAccount.controllerPrivilege(account, 'change_modify_issuance')) ||
+          this.tokenAccount.controllerPrivilege(account, 'change_revoke') ||
+          (this.tokenAccount.hasSetting('modify_revoke') && this.tokenAccount.controllerPrivilege(account, 'change_modify_revoke')) ||
+          this.tokenAccount.controllerPrivilege(account, 'change_freeze') ||
+          (this.tokenAccount.hasSetting('modify_freeze') && this.tokenAccount.controllerPrivilege(account, 'change_modify_freeze')) ||
+          this.tokenAccount.controllerPrivilege(account, 'change_adjust_fee') ||
+          (this.tokenAccount.hasSetting('modify_adjust_fee') && this.tokenAccount.controllerPrivilege(account, 'change_modify_adjust_fee')) ||
+          this.tokenAccount.controllerPrivilege(account, 'change_whitelist') ||
+          (this.tokenAccount.hasSetting('modify_whitelist') && this.tokenAccount.controllerPrivilege(account, 'change_modify_whitelist')))) {
+          actions.settings = {
+            icon: 'cogs',
+            text: this.$t('settings'),
+            id: 'settings'
           }
         }
       }

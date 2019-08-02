@@ -8,28 +8,42 @@
         <div class="align-self-center d-inline-block">
           <div>
             <small class="text-uppercase text-muted">
-              <span v-t="'logos'" /> <span v-t="'balance'" />
+              <span v-t="'token'" /> <span v-t="'balance'" />
             </small>
           </div>
           <div>
-            <h4>
-              {{ balance }}
-              <font-awesome-icon
-                class="text-primary ml-1"
-                :icon="['fal','lambda']"
-              />
+            <h4 class="d-flex align-items-end justify-content-center">
+              <span class="stats d-inline-block text-truncate">{{ tokenBalance }}</span>
+              <small class="ml-1">{{ tokenAccount.symbol }}</small>
             </h4>
           </div>
         </div>
         <div class="align-self-center d-inline-block ml-3">
           <div>
             <small class="text-uppercase text-muted">
-              <span v-t="'token'" /> <span v-t="'balance'" />
+              <span v-t="'circulatingSupply'" />
             </small>
           </div>
           <div>
-            <h4>
-              {{ tokenBalance }} <small>{{ tokenAccount.symbol }}</small>
+            <h4 class="d-flex align-items-end justify-content-center">
+              <span class="stats d-inline-block text-truncate">{{ circulatingSupply }}</span>
+              <small class="ml-1">{{ tokenAccount.symbol }}</small>
+            </h4>
+          </div>
+        </div>
+        <div class="align-self-center d-inline-block ml-3">
+          <div>
+            <small class="text-uppercase text-muted">
+              <span v-t="'logos'" /> <span v-t="'balance'" />
+            </small>
+          </div>
+          <div>
+            <h4 class="d-flex align-items-end justify-content-center">
+              <span class="stats d-inline-block text-truncate">{{ balance }}</span>
+              <font-awesome-icon
+                class="text-primary ml-1"
+                :icon="['fal','lambda']"
+              />
             </h4>
           </div>
         </div>
@@ -43,27 +57,26 @@
             </small>
           </div>
           <div>
-            <h4>
-              {{ feeBalance }} <small>{{ tokenAccount.symbol }}</small>
+            <h4 class="d-flex align-items-end justify-content-center">
+              <span class="stats d-inline-block text-truncate">{{ feeBalance }}</span>
+              <small class="ml-1">{{ tokenAccount.symbol }}</small>
             </h4>
           </div>
         </div>
-        <div
-          v-if="showFeeBalance"
-          class="align-self-center d-inline-block ml-3"
-        >
+        <div class="align-self-center d-inline-block ml-3">
           <div>
             <small class="text-uppercase text-muted">
               <span v-t="'feeRate'" />
             </small>
           </div>
           <div>
-            <h4>
+            <h4 class="d-flex align-items-end justify-content-center">
+              <span class="stats d-inline-block text-truncate">{{ feeRate }}</span>
               <span v-if="tokenAccount.feeType.toLowerCase() === 'flat'">
-                {{ feeRate }} <small>{{ tokenAccount.symbol }}</small>
+                <small class="ml-1">{{ tokenAccount.symbol }}</small>
               </span>
               <span v-else-if="tokenAccount.feeType.toLowerCase() === 'percentage'">
-                {{ tokenAccount.feeRate }}%
+                <small class="ml-1">%</small>
               </span>
             </h4>
           </div>
@@ -78,7 +91,7 @@
         <small
           class="text-uppercase text-muted"
         >
-          <span v-t="'settings'" />
+          <span v-t="'token'" /> <span v-t="'settings'" />
         </small>
       </div>
       <div class="ml-3 text-left mt-1">
@@ -117,15 +130,21 @@
                 :address="controller.account"
                 :inactive="true"
                 :force="true"
+                :replace="true"
               /><br>
             </b-col>
           </b-row>
         </b-button>
         <b-button
+          v-if="tokenAccount.controllers.length < 10 && updateControllers"
+          v-b-tooltip.hover
+          :title="`Add a controller`"
           class="text-white"
           variant="outline-primary"
         >
-          Add a Controller
+          <font-awesome-icon
+            :icon="['fal', 'plus']"
+          />
         </b-button>
       </div>
     </div>
@@ -134,6 +153,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import bigInt from 'big-integer'
 import Actions from '@/components/Wallet/Tokens/Info/Actions.vue'
 import Settings from '@/components/Wallet/Tokens/Info/Settings.vue'
 
@@ -154,6 +174,14 @@ export default {
     tokenAccount () {
       return this.$Wallet.tokenAccounts[this.activeAddress]
     },
+    updateControllers () {
+      for (const address in this.$Wallet.accounts) {
+        if (this.tokenAccount.controllerPrivilege(address, 'update_controller')) {
+          return true
+        }
+      }
+      return false
+    },
     balance () {
       return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.tokenAccount.balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
     },
@@ -165,7 +193,7 @@ export default {
       return parseInt(balanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
     },
     showFeeBalance () {
-      return (this.tokenAccount.tokenFeeBalance !== '0' || this.tokenAccount.settings.feeRate !== '0')
+      return this.tokenAccount.tokenFeeBalance !== '0' || this.tokenAccount.feeRate !== '0'
     },
     feeRate () {
       const feeRateInMinor = this.tokenAccount.feeRate
@@ -180,6 +208,13 @@ export default {
         return parseInt(this.tokenAccount.convertToMajor(feeBalanceInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
       }
       return parseInt(feeBalanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+    },
+    circulatingSupply () {
+      const supplyInMinor = bigInt(this.tokenAccount.totalSupply).minus(bigInt(this.tokenAccount.tokenBalance)).toString()
+      if (this.tokenAccount.decimals) {
+        return parseInt(this.tokenAccount.convertToMajor(supplyInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      }
+      return parseInt(supplyInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
     }
   },
   methods: {
@@ -191,4 +226,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.stats {
+  max-width: 200px;
+}
 </style>
