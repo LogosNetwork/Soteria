@@ -8,6 +8,7 @@
     :itemcount="requests.length"
     :itemprops="getItemProps"
     :variable="getItemHeight"
+    :scrollelement="scrollelement"
   />
   <small
     v-else
@@ -38,7 +39,8 @@ export default {
   data () {
     return {
       request: Request,
-      remains: this.updateRemains()
+      remains: this.updateRemains(),
+      scrollelement: null
     }
   },
   watch: {
@@ -49,6 +51,8 @@ export default {
     }
   },
   mounted () {
+    // TODO offset calculation?
+    this.scrollelement = document.getElementById('tokenContainer')
     window.addEventListener('resize', this.updateRemains)
   },
   beforeDestroy () {

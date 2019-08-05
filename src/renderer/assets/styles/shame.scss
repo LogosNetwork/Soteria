@@ -77,6 +77,7 @@ button[disabled="disabled"] {
 .scroller {
   overflow-y: scroll;
   min-height: 0px;
+  height: 100%;
 }
 .scroller::-webkit-scrollbar {
   width: 14px;

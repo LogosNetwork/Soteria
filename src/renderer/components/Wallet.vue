@@ -105,6 +105,8 @@ export default {
   }
   .content {
     background-color: theme-color("bg");
+    height: 100%;
+    overflow: hidden;
   }
   .syncer {
     position: absolute;

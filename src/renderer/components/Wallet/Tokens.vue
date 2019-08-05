@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    id="tokenContainer"
+    class="scroller visible"
+  >
     <TokenAccountList :addtoken="true" />
     <TokenAccountInfo />
     <TokenAccountHistory />

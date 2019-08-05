@@ -15,7 +15,7 @@
       :requests="requests"
       :address="activeAddress"
       :small="true"
-      class="mt-1 transactionHistoryContainer scroller visible"
+      class="mt-1"
     />
   </b-container>
 </template>
@@ -53,7 +53,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.transactionHistoryContainer {
-  height: calc(100vh - 323px) !important;
-}
 </style>
