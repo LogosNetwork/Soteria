@@ -1,83 +1,105 @@
 <template>
   <div
-    class="w-100 text-left pt-3"
+    role="navigation"
+    :aria-label="$t('main')"
+    class="w-100 text-center pt-3"
   >
     <b-button
-      class="navigationSelector"
+      v-b-tooltip.right.hover="$t('dashboard')"
+      class="navigationSelector mb-1"
       variant="transparent"
+      :title="$t('dashboard')"
       :pressed="$route.name === 'dashboard' "
       to="dashboard"
     >
       <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
+        size="lg"
         :icon="['fal','tachometer-alt']"
       />
-      <span v-t="'dashboard'" />
+      <span
+        v-t="'dashboard'"
+        class="sr-only"
+      />
     </b-button>
     <b-button
-      class="navigationSelector"
+      v-b-tooltip.right.hover="$t('tokens')"
+      class="navigationSelector mb-1"
       variant="transparent"
+      :title="$t('tokens')"
       :pressed="$route.name === 'tokens'"
       to="tokens"
     >
       <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
+        size="lg"
         :icon="['fal','coins']"
       />
-      <span v-t="'tokens'" />
+      <span
+        v-t="'tokens'"
+        class="sr-only"
+      />
     </b-button>
     <b-button
-      class="navigationSelector"
+      v-b-tooltip.right.hover="$t('governance')"
+      class="navigationSelector mb-1"
       variant="transparent"
+      :title="$t('governance')"
       :pressed="$route.name === 'governance'"
       to="governance"
     >
       <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
+        size="lg"
         :icon="['fal','landmark']"
       />
-      <span v-t="'governance'" />
+      <span
+        v-t="'governance'"
+        class="sr-only"
+      />
     </b-button>
     <b-button
+      v-b-tooltip.right.hover="$t('staking')"
       class="navigationSelector"
       variant="transparent"
+      :title="$t('staking')"
       :pressed="$route.name === 'staking'"
       to="staking"
     >
       <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
+        size="lg"
         :icon="['fal','chart-line']"
       />
-      <span v-t="'staking'" />
     </b-button>
     <b-button
-      class="navigationSelector"
+      v-b-tooltip.right.hover="$t('settings')"
+      class="navigationSelector mb-1"
       variant="transparent"
+      :title="$t('settings')"
       :pressed="$route.name === 'settings'"
       to="settings"
     >
       <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
+        size="lg"
         :icon="['fal','cogs']"
       />
-      <span v-t="'settings'" />
+      <span
+        v-t="'settings'"
+        class="sr-only"
+      />
     </b-button>
     <b-button
-      class="navigationSelector"
+      v-b-tooltip.right.hover="$t('logout')"
+      class="navigationSelector mb-1"
       variant="transparent"
+      :title="$t('logout')"
       @click="logout"
     >
       <font-awesome-icon
-        class="icon mr-2"
-        size="sm"
+        size="lg"
         :icon="['fal','power-off']"
       />
-      <span v-t="'logout'" />
+      <span
+        v-t="'logout'"
+        class="sr-only"
+      />
     </b-button>
   </div>
 </template>
@@ -108,20 +130,23 @@ export default {
 
 <style scoped lang="scss">
   .navigationSelector {
-    text-align: left;
     color: $gray-600;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    width: calc(100% - 2rem);
+    width: 50px;
+    height: 50px;
+  }
+  .navigationSelector > svg {
+    vertical-align: -webkit-baseline-middle;
   }
   .navigationSelector:not(.active):hover {
     cursor: pointer;
-    background-color: theme-color("tertiary");
+    background-color: theme-color("bg");
     color: $gray-400;
   }
   .navigationSelector.active {
     color: theme-color("base");
     background-color: theme-color("bg");
+    border: 1px solid theme-color("black");
+    border-radius: 20%;
   }
   .navigationSelector > small {
     display: block;

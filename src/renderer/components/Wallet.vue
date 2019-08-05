@@ -97,11 +97,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .sidebar { max-width: 200px; }
+  .sidebar { max-width: 82px; }
   .wallet-container {
     overflow:hidden;
     height: calc(100vh);
-    background-color: theme-color("secondary");
+    background-color: theme-color("tertiary");
   }
   .content {
     background-color: theme-color("bg");

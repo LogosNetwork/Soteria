@@ -112,6 +112,7 @@
   "controllers": "Controllers",
   "circulatingSupply": "Circulating Supply",
   "statistics": "Statistics",
+  "main": "Main",
   "tokenActions": {
     "distribute": "Distribute",
     "mint": "Mint",
