@@ -35,7 +35,7 @@
                 <span v-t="'token'" /> <span v-t="'address'" />
               </small>
             </div>
-            <code class="bg-secondary text-base p-1">{{ tokenAccount.address }}</code>
+            <code class="bg-secondary text-base p-1 mt-1 d-inline-block">{{ tokenAccount.address }}</code>
           </div>
           <div class="mb-3">
             <div>
@@ -45,7 +45,7 @@
                 <span v-t="'myWalletBalance'" />
               </small>
             </div>
-            <div class="text-left">
+            <div class="text-left mt-1">
               <h4 class="d-flex align-items-end justify-content-start mb-0">
                 <span class="stats d-inline-block text-truncate">{{ walletBalance }}</span>
                 <small class="ml-1">{{ tokenAccount.symbol }}</small>
@@ -60,7 +60,7 @@
             </small>
           </div>
           <div class="d-flex justify-content-between">
-            <div>
+            <div class="mt-1">
               <b-card
                 class="d-inline-block mr-3 border-0 shadow-sm text-center mb-3"
                 body-class="p-3"
@@ -161,7 +161,7 @@
               <span v-t="'settings'" />
             </small>
           </div>
-          <div class="ml-3 mt-1">
+          <div class="mt-1">
             <Settings :token="tokenAccount" />
           </div>
         </div>
@@ -173,7 +173,7 @@
               <span v-t="'controllers'" />
             </small>
           </div>
-          <div class="mt-1">
+          <div class="mt-1 controllerButtonWrapper">
             <b-button
               v-for="controller in tokenAccount.controllers"
               :key="'controller'+controller.account"
@@ -327,5 +327,8 @@ export default {
 }
 #tokenContainer.scroller {
   max-height: calc(100vh - 48px);
+}
+.controllerButtonWrapper {
+  font-size: 0px;
 }
 </style>
