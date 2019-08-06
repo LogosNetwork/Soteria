@@ -6,7 +6,7 @@
     @click.stop="toggleTokenFilter(token)"
   >
     <div class="d-flex justify-content-between">
-      <div>
+      <div class="text-truncate">
         <font-awesome-icon
           class="icon mr-2"
           size="sm"
@@ -55,6 +55,8 @@ export default {
         return this.$t('all')
       } else if (this.token === 'logos') {
         return this.$t('logos')
+      } else if (this.token) {
+        return this.token
       } else {
         return 'TODO Token Name'
       }

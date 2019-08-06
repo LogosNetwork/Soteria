@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-4">
     Governance Page
   </div>
 </template>

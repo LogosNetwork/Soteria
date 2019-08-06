@@ -2,7 +2,6 @@
   <b-container
     v-if="tokenAccount"
     fluid
-    class="mt-3"
   >
     <div class="text-left mb-3">
       <div class="d-flex justify-content-between">
@@ -10,12 +9,12 @@
           <h3>
             {{ tokenAccount.name }} - {{ tokenAccount.symbol }}
           </h3>
-          <code class="bg-secondary text-base p-1 mb-3">{{ tokenAccount.address }}</code>
         </div>
         <div>
           <Actions />
         </div>
       </div>
+      <code class="bg-secondary text-base p-1 mb-3">{{ tokenAccount.address }}</code>
     </div>
     <div>
       <div class="text-left">

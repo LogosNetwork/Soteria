@@ -5,19 +5,19 @@
     class="w-100 text-center pt-3"
   >
     <b-button
-      v-b-tooltip.right.hover="$t('dashboard')"
+      v-b-tooltip.right.hover="$t('wallet')"
       class="navigationSelector mb-1"
       variant="transparent"
-      :title="$t('dashboard')"
+      :title="$t('wallet')"
       :pressed="$route.name === 'dashboard' "
       to="dashboard"
     >
       <font-awesome-icon
         size="lg"
-        :icon="['fal','tachometer-alt']"
+        :icon="['fal','wallet']"
       />
       <span
-        v-t="'dashboard'"
+        v-t="'wallet'"
         class="sr-only"
       />
     </b-button>

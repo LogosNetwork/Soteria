@@ -15,7 +15,7 @@
           <Sidebar />
         </b-col>
         <b-col class="content">
-          <router-view class="pt-4" />
+          <router-view />
         </b-col>
       </b-row>
       <div

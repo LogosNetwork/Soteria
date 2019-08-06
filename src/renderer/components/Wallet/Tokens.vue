@@ -1,22 +1,24 @@
 <template>
-  <div
-    id="tokenContainer"
-    class="scroller visible"
-  >
-    <TokenAccountList :addtoken="true" />
-    <TokenAccountInfo />
-    <TokenAccountHistory />
+  <div class="d-flex">
+    <TokenAccountNav />
+    <div
+      id="tokenContainer"
+      class="scroller visible pt-4 w-100"
+    >
+      <TokenAccountInfo />
+      <TokenAccountHistory />
+    </div>
   </div>
 </template>
 
 <script>
-import TokenAccountList from '@/components/Wallet/Tokens/List.vue'
+import TokenAccountNav from '@/components/Wallet/Tokens/Nav.vue'
 import TokenAccountInfo from '@/components/Wallet/Tokens/Info.vue'
 import TokenAccountHistory from '@/components/Wallet/Tokens/History.vue'
 export default {
   name: 'Tokens',
   components: {
-    TokenAccountList,
+    TokenAccountNav,
     TokenAccountInfo,
     TokenAccountHistory
   }
