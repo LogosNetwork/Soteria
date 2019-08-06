@@ -75,7 +75,7 @@ button[disabled="disabled"] {
   appearance: none;
 }
 .scroller {
-  overflow-y: scroll;
+  overflow-y: auto;
   min-height: 0px;
   max-height: 100vh;
 }
