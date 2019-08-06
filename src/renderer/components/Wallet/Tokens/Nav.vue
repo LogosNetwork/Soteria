@@ -11,7 +11,7 @@
     </b-form-group>
     <div class="filterButtonWrapper scroller px-3">
       <TokenSelectorButton
-        v-for="account in $Wallet.tokenAccounts"
+        v-for="account in tokenAccounts"
         :key="account.address"
         :token="account"
       />
@@ -60,6 +60,22 @@ export default {
   data () {
     return {
       tokenName: null
+    }
+  },
+  computed: {
+    tokenAccounts () {
+      if (this.tokenName === '' || this.tokenName === null) {
+        return this.$Wallet.tokenAccounts
+      } else {
+        const results = []
+        for (const address in this.$Wallet.tokenAccounts) {
+          const tkAccount = this.$Wallet.tokenAccounts[address]
+          if (`${tkAccount.name} (${tkAccount.symbol})`.toLowerCase().includes(this.tokenName.toLowerCase())) {
+            results.push(tkAccount)
+          }
+        }
+        return results
+      }
     }
   }
 }
