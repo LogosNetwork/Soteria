@@ -113,6 +113,8 @@
   "circulatingSupply": "Circulating Supply",
   "statistics": "Statistics",
   "main": "Main",
+  "myWalletBalance": "My Wallet Balance",
+  "tokenAccount": "Token Account",
   "tokenActions": {
     "distribute": "Distribute",
     "mint": "Mint",

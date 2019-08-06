@@ -107,6 +107,8 @@ export default {
 }
 .filterButtonWrapper {
   height: calc(100vh - 96px - 2rem);
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   margin-top: calc(48px + 1rem);
   margin-bottom: calc(48px + 1rem);
 }

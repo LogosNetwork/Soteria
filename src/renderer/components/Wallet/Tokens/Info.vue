@@ -37,11 +37,26 @@
             </div>
             <code class="bg-secondary text-base p-1">{{ tokenAccount.address }}</code>
           </div>
+          <div class="mb-3">
+            <div>
+              <small
+                class="text-uppercase text-muted"
+              >
+                <span v-t="'myWalletBalance'" />
+              </small>
+            </div>
+            <div class="text-left">
+              <h4 class="d-flex align-items-end justify-content-start mb-0">
+                <span class="stats d-inline-block text-truncate">{{ walletBalance }}</span>
+                <small class="ml-1">{{ tokenAccount.symbol }}</small>
+              </h4>
+            </div>
+          </div>
           <div>
             <small
               class="text-uppercase text-muted"
             >
-              <span v-t="'statistics'" />
+              <span v-t="'tokenAccount'" /> <span v-t="'statistics'" />
             </small>
           </div>
           <div class="d-flex justify-content-between">
@@ -250,6 +265,20 @@ export default {
         return parseInt(this.tokenAccount.convertToMajor(balanceInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
       }
       return parseInt(balanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+    },
+    walletBalance () {
+      let totalBalanceInMinor = bigInt(0)
+      for (const account in this.$Wallet.accounts) {
+        const logosAccount = this.$Wallet.accounts[account]
+        const tokenBalance = logosAccount.tokenBalance(this.tokenAccount.publicKey)
+        if (tokenBalance) {
+          totalBalanceInMinor = totalBalanceInMinor.plus(bigInt(tokenBalance.minor))
+        }
+      }
+      if (this.tokenAccount.decimals) {
+        return parseInt(this.tokenAccount.convertToMajor(totalBalanceInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      }
+      return parseInt(totalBalanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
     },
     showFeeBalance () {
       return this.tokenAccount.tokenFeeBalance !== '0' || this.tokenAccount.feeRate !== '0'
