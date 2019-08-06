@@ -1,10 +1,6 @@
 <template>
   <div class="tokenPanel">
-    <b-form-group
-      v-if="!createTokenShow"
-      class="text-left searchWrapper p-2 mb-0 border-bottom"
-      :class="showToggleSearch ? null : 'onTop'"
-    >
+    <b-form-group class="text-left searchWrapper p-2 mb-0 border-bottom">
       <b-form-input
         id="tokenSearch"
         v-model="tokenName"
@@ -38,7 +34,6 @@
     </b-form-group>
     <b-modal
       id="createToken"
-      v-model="createTokenShow"
       body-class="pb-0"
       modal-class="pl-0"
       content-class="scroller"
@@ -64,17 +59,7 @@ export default {
   },
   data () {
     return {
-      tokenName: null,
-      createTokenShow: false,
-      showToggleSearch: false
-    }
-  },
-  watch: {
-    createTokenShow: function (newShow, oldShow) {
-      // Wait for animation to finish to toggle z-index
-      setTimeout(() => {
-        this.showToggleSearch = this.createTokenShow
-      }, 300)
+      tokenName: null
     }
   }
 }
@@ -85,9 +70,6 @@ export default {
   height: 100vh;
   flex: none;
   background: theme-color("secondary");
-}
-.onTop {
-  z-index: 1052;
 }
 .searchWrapper {
   position: fixed;
@@ -104,7 +86,6 @@ export default {
   bottom: 0;
   width: 225px;
   left: 82px;
-  z-index: 2;
   padding-left: 1rem;
   padding-right: 1rem;
 }
