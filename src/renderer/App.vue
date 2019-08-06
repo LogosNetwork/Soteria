@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div id="closeBar" />
     <router-view />
   </div>
 </template>

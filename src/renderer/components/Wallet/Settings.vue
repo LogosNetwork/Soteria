@@ -1,6 +1,9 @@
 <template>
-  <div class="pt-4">
-    Settings Page
+  <div>
+    <div id="closeBar" />
+    <div class="pt-4">
+      Settings Page
+    </div>
   </div>
 </template>
 

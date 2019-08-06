@@ -1,8 +1,11 @@
 <template>
-  <div class="pt-4">
-    <AccountList />
-    <AccountInfo />
-    <AccountHistory />
+  <div>
+    <div id="closeBar" />
+    <div class="pt-4">
+      <AccountList />
+      <AccountInfo />
+      <AccountHistory />
+    </div>
   </div>
 </template>
 

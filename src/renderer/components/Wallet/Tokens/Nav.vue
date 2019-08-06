@@ -1,20 +1,33 @@
 <template>
-  <div class="tokenPanel scroller">
+  <div class="tokenPanel">
     <b-form-group
-      class="text-left searchWrapper pt-4 pb-3 mb-0"
+      v-if="!createTokenShow"
+      class="text-left searchWrapper p-2 mb-0 border-bottom"
+      :class="showToggleSearch ? null : 'onTop'"
     >
       <b-form-input
         id="tokenSearch"
         v-model="tokenName"
+        size="sm"
         :placeholder="$t('searchTokens')"
         trim
       />
     </b-form-group>
-    <div class="filterButtonWrapper px-2">
+    <div class="filterButtonWrapper scroller px-3">
+      <TokenSelectorButton
+        v-for="account in $Wallet.tokenAccounts"
+        :key="account.address"
+        :token="account"
+      />
+    </div>
+    <b-form-group
+      class="text-left createWrapper p-2 mb-0 border-top"
+    >
       <b-button
         v-b-modal.createToken
         variant="outline-primary"
-        class="align-top text-white w-100 mb-3"
+        size="sm"
+        class="align-top text-white w-100"
       >
         <font-awesome-icon
           :icon="['fal','plus']"
@@ -22,14 +35,10 @@
         />
         <span v-t="'createToken'" />
       </b-button>
-      <TokenSelectorButton
-        v-for="account in $Wallet.tokenAccounts"
-        :key="account.address"
-        :token="account"
-      />
-    </div>
+    </b-form-group>
     <b-modal
       id="createToken"
+      v-model="createTokenShow"
       body-class="pb-0"
       modal-class="pl-0"
       content-class="scroller"
@@ -55,29 +64,53 @@ export default {
   },
   data () {
     return {
-      tokenName: null
+      tokenName: null,
+      createTokenShow: false,
+      showToggleSearch: false
+    }
+  },
+  watch: {
+    createTokenShow: function (newShow, oldShow) {
+      // Wait for animation to finish to toggle z-index
+      setTimeout(() => {
+        this.showToggleSearch = this.createTokenShow
+      }, 300)
     }
   }
 }
 </script>
 <style scoped lang="scss">
 .tokenPanel {
-  width: 190px;
+  width: 225px;
   height: 100vh;
   flex: none;
   background: theme-color("secondary");
+}
+.onTop {
+  z-index: 1052;
 }
 .searchWrapper {
   position: fixed;
   background: theme-color("secondary");
   top: 0;
-  width: 190px;
+  width: 225px;
+  left: 82px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.createWrapper {
+  position: fixed;
+  background: theme-color("secondary");
+  bottom: 0;
+  width: 225px;
   left: 82px;
   z-index: 2;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
-.filterButtonWrapper > button:first-child {
-  margin-top: 81px;
+.filterButtonWrapper {
+  height: calc(100vh - 96px - 2rem);
+  margin-top: calc(48px + 1rem);
+  margin-bottom: calc(48px + 1rem);
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
-  <div class="pt-4">
-    Staking Page
+  <div>
+    <div id="closeBar" />
+    <div class="pt-4">
+      Staking Page
+    </div>
   </div>
 </template>
 

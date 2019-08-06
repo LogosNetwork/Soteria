@@ -4,6 +4,7 @@
       class="text-left"
       variant="outline-primary"
       toggle-class="text-white"
+      size="sm"
       right
       :text="$t('actions')"
     >

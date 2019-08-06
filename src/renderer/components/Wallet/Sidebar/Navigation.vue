@@ -6,7 +6,7 @@
   >
     <b-button
       v-b-tooltip.right.hover="$t('wallet')"
-      class="navigationSelector mb-1"
+      class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
       :title="$t('wallet')"
       :pressed="$route.name === 'dashboard' "
@@ -23,7 +23,7 @@
     </b-button>
     <b-button
       v-b-tooltip.right.hover="$t('tokens')"
-      class="navigationSelector mb-1"
+      class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
       :title="$t('tokens')"
       :pressed="$route.name === 'tokens'"
@@ -40,7 +40,7 @@
     </b-button>
     <b-button
       v-b-tooltip.right.hover="$t('governance')"
-      class="navigationSelector mb-1"
+      class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
       :title="$t('governance')"
       :pressed="$route.name === 'governance'"
@@ -57,7 +57,7 @@
     </b-button>
     <b-button
       v-b-tooltip.right.hover="$t('staking')"
-      class="navigationSelector"
+      class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
       :title="$t('staking')"
       :pressed="$route.name === 'staking'"
@@ -70,7 +70,7 @@
     </b-button>
     <b-button
       v-b-tooltip.right.hover="$t('settings')"
-      class="navigationSelector mb-1"
+      class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
       :title="$t('settings')"
       :pressed="$route.name === 'settings'"
@@ -87,7 +87,7 @@
     </b-button>
     <b-button
       v-b-tooltip.right.hover="$t('logout')"
-      class="navigationSelector mb-1"
+      class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
       :title="$t('logout')"
       @click="logout"
@@ -141,11 +141,12 @@ export default {
     cursor: pointer;
     background-color: theme-color("bg");
     color: $gray-400;
+    border-radius: 20%;
   }
   .navigationSelector.active {
     color: theme-color("base");
     background-color: theme-color("bg");
-    border: 1px solid theme-color("black");
+    border: 1px solid theme-color("darkest");
     border-radius: 20%;
   }
   .navigationSelector > small {

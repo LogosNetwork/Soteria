@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div id="closeBar" />
     <div class="header mt-3 mb-1 d-print-none">
       <font-awesome-icon
         class="icon"
