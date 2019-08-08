@@ -56,18 +56,6 @@
                 <span v-t="'createToken'" />
               </b-dropdown-item-button>
             </b-dropdown>
-            <b-modal
-              id="createToken"
-              body-class="pb-0"
-              modal-class="pl-0"
-              content-class="scroller"
-              size="full"
-              no-fade
-              hide-footer
-              hide-header
-            >
-              <CreateToken />
-            </b-modal>
           </div>
           <div class="d-flex justify-content-between align-items-center">
             <Actions />
@@ -302,7 +290,6 @@ import bigInt from 'big-integer'
 import Actions from '@/components/Wallet/Tokens/Info/Actions.vue'
 import Settings from '@/components/Wallet/Tokens/Info/Settings.vue'
 import TokenAccountHistory from '@/components/Wallet/Tokens/History.vue'
-import CreateToken from '@/components/Wallet/Tokens/CreateToken.vue'
 
 export default {
   name: 'TokenAccountInfo',
@@ -310,7 +297,6 @@ export default {
     Actions,
     Settings,
     TokenAccountHistory,
-    CreateToken,
     LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   data () {
