@@ -1,13 +1,34 @@
 <template>
-  <div class="tokenPanel">
+  <div
+    v-if="tokenAccountSidebar"
+    class="tokenPanel"
+  >
     <b-form-group class="text-left searchWrapper p-2 mb-0 border-bottom">
-      <b-form-input
-        id="tokenSearch"
-        v-model="tokenName"
-        size="sm"
-        :placeholder="$t('searchTokens')"
-        trim
-      />
+      <div class="d-flex justify-content-between">
+        <b-form-input
+          id="tokenSearch"
+          v-model="tokenName"
+          size="sm"
+          :placeholder="$t('searchTokens')"
+          trim
+        />
+        <div>
+          <b-button
+            v-b-tooltip.hover
+            :title="$t('closeTheTokenNav')"
+            variant="outline-link"
+            class="text-base"
+            size="sm"
+            @click="setTokenAccountSidebar(false)"
+          >
+            <font-awesome-icon
+              :title="$t('closeTheTokenNav')"
+              size="lg"
+              :icon="['fal','times']"
+            />
+          </b-button>
+        </div>
+      </div>
     </b-form-group>
     <div class="filterButtonWrapper scroller px-3">
       <TokenSelectorButton
@@ -48,6 +69,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import TokenSelectorButton from '@/components/Wallet/Tokens/Nav/TokenSelector.vue'
 import CreateToken from '@/components/Wallet/Tokens/CreateToken.vue'
 
@@ -63,6 +85,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('Wallet', {
+      tokenAccountSidebar: state => state.tokenAccountSidebar
+    }),
     tokenAccounts () {
       if (this.tokenName === '' || this.tokenName === null) {
         return this.$Wallet.tokenAccounts
@@ -77,6 +102,11 @@ export default {
         return results
       }
     }
+  },
+  methods: {
+    ...mapActions('Wallet', [
+      'setTokenAccountSidebar'
+    ])
   }
 }
 </script>

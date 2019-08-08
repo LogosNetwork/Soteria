@@ -7,9 +7,82 @@
       <div class="text-left py-2 border-bottom px-3">
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <h5 class="mb-0">
-              {{ tokenAccount.name }} - {{ tokenAccount.symbol }}
-            </h5>
+            <b-button
+              v-if="!tokenAccountSidebar"
+              v-b-tooltip.hover
+              :title="$t('openTheTokenNav')"
+              variant="outline-link"
+              class="text-base"
+              size="sm"
+              @click="setTokenAccountSidebar(true)"
+            >
+              <font-awesome-icon
+                :title="$t('openTheTokenNav')"
+                size="lg"
+                :icon="['fal','bars']"
+              />
+            </b-button>
+            <b-dropdown
+              variant="transparent"
+              toggle-class="text-white p-0"
+              size="sm"
+            >
+              <template slot="button-content">
+                <h5 class="mb-0 d-inline-block">
+                  {{ tokenAccount.name }} - {{ tokenAccount.symbol }}
+                </h5>
+              </template>
+              <b-dropdown-form
+                class="px-2"
+              >
+                <b-form-group
+                  class="mb-0"
+                  @submit.stop.prevent
+                >
+                  <b-form-input
+                    v-model="tokenName"
+                    size="sm"
+                    :placeholder="$t('searchTokens')"
+                  />
+                </b-form-group>
+              </b-dropdown-form>
+              <b-dropdown-divider />
+              <b-dropdown-group
+                id="tokenAccountsGroup"
+              >
+                <b-dropdown-item-button
+                  v-for="account in tokenAccounts"
+                  :key="account.address"
+                  @click="setActiveAddress(account.address)"
+                >
+                  <div class="text-truncate">
+                    <span>{{ account.name }} ({{ account.symbol }})</span>
+                  </div>
+                </b-dropdown-item-button>
+              </b-dropdown-group>
+              <b-dropdown-divider />
+              <b-dropdown-item-button
+                v-b-modal.createToken
+              >
+                <font-awesome-icon
+                  :icon="['fal','plus']"
+                  class="mr-2"
+                />
+                <span v-t="'createToken'" />
+              </b-dropdown-item-button>
+            </b-dropdown>
+            <b-modal
+              id="createToken"
+              body-class="pb-0"
+              modal-class="pl-0"
+              content-class="scroller"
+              size="full"
+              no-fade
+              hide-footer
+              hide-header
+            >
+              <CreateToken />
+            </b-modal>
           </div>
           <div>
             <Actions />
@@ -229,6 +302,7 @@ import bigInt from 'big-integer'
 import Actions from '@/components/Wallet/Tokens/Info/Actions.vue'
 import Settings from '@/components/Wallet/Tokens/Info/Settings.vue'
 import TokenAccountHistory from '@/components/Wallet/Tokens/History.vue'
+import CreateToken from '@/components/Wallet/Tokens/CreateToken.vue'
 
 export default {
   name: 'TokenAccountInfo',
@@ -236,11 +310,18 @@ export default {
     Actions,
     Settings,
     TokenAccountHistory,
+    CreateToken,
     LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
+  },
+  data () {
+    return {
+      tokenName: null
+    }
   },
   computed: {
     ...mapState('Wallet', {
-      activeAddress: state => state.activeAddress
+      activeAddress: state => state.activeAddress,
+      tokenAccountSidebar: state => state.tokenAccountSidebar
     }),
     ...mapState('Language', {
       languageCode: state => state.selectedLanguageCode.value
@@ -303,11 +384,34 @@ export default {
         return parseInt(this.tokenAccount.convertToMajor(supplyInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
       }
       return parseInt(supplyInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+    },
+    tokenAccounts () {
+      if (this.tokenName === '' || this.tokenName === null) {
+        return this.$Wallet.tokenAccounts
+      } else {
+        const results = []
+        for (const address in this.$Wallet.tokenAccounts) {
+          const tkAccount = this.$Wallet.tokenAccounts[address]
+          if (`${tkAccount.name} (${tkAccount.symbol})`.toLowerCase().includes(this.tokenName.toLowerCase())) {
+            results.push(tkAccount)
+          }
+        }
+        return results
+      }
+    }
+  },
+  created () {
+    if (!this.$Wallet.tokenAccounts[this.activeAddress]) {
+      for (const address in this.$Wallet.tokenAccounts) {
+        this.setActiveAddress(address)
+        break
+      }
     }
   },
   methods: {
     ...mapActions('Wallet', [
-      'setActiveAddress'
+      'setActiveAddress',
+      'setTokenAccountSidebar'
     ])
   }
 }

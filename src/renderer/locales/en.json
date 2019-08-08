@@ -105,6 +105,8 @@
   "trackThisTokenInTheDashboard": "Track this token in the dashboard",
   "stopTrackingThisTokenInTheDashboard": "Stop tracking this token in the dashboard",
   "closeTheTokenFilter": "Close the token filter",
+  "closeTheTokenNav": "Close the token navigation",
+  "openTheTokenNav": "Open the token navigation",
   "feeBalance": "Fee Balance",
   "feeRate": "Fee Rate",
   "adminActions": "Admin Actions",
@@ -115,6 +117,7 @@
   "main": "Main",
   "myWalletBalance": "My Wallet Balance",
   "tokenAccount": "Token Account",
+  "tokenAccounts": "Token Accounts",
   "tokenActions": {
     "distribute": "Distribute",
     "mint": "Mint",

@@ -7,6 +7,7 @@ const state = {
     }
   },
   tokenFilter: null,
+  tokenAccountSidebar: true,
   activeAddress: null,
   contacts: [],
   synced: false
@@ -24,6 +25,9 @@ const mutations = {
   },
   removeFavorite (state, tokenID) {
     Vue.delete(state.favorites, tokenID)
+  },
+  setTokenAccountSidebar (state, val) {
+    state.tokenAccountSidebar = val
   },
   setFavorites (state, favorites) {
     state.favorites = favorites
@@ -59,6 +63,9 @@ const actions = {
   },
   removeFavorite ({ commit }, tokenID) {
     commit('removeFavorite', tokenID)
+  },
+  setTokenAccountSidebar ({ commit }, val) {
+    commit('setTokenAccountSidebar', val)
   },
   setFavorites ({ commit }, favorites) {
     commit('setFavorites', favorites)

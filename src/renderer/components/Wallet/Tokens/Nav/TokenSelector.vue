@@ -2,8 +2,8 @@
   <b-button
     class="tokenFilterButton"
     variant="transparent"
-    :pressed="selected"
-    @click.stop="setCurrentAccount(token.address)"
+    :pressed="activeAddress === token.address"
+    @click.stop="setActiveAddress(token.address)"
   >
     <div class="d-flex justify-content-between">
       <div class="text-truncate">
@@ -27,26 +27,12 @@ export default {
   computed: {
     ...mapState('Wallet', {
       activeAddress: state => state.activeAddress
-    }),
-    selected () {
-      return this.activeAddress === this.token.address
-    }
-  },
-  created () {
-    if (!this.$Wallet.tokenAccounts[this.activeAddress]) {
-      for (const address in this.$Wallet.tokenAccounts) {
-        this.setActiveAddress(address)
-        break
-      }
-    }
+    })
   },
   methods: {
     ...mapActions('Wallet', [
       'setActiveAddress'
-    ]),
-    setCurrentAccount (address) {
-      this.setActiveAddress(address)
-    }
+    ])
   }
 }
 </script>
