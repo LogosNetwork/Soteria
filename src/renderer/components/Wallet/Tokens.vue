@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex">
-    <TokenAccountNav />
     <TokenAccountInfo class="w-100" />
+    <TokenAccountNav />
   </div>
 </template>
 

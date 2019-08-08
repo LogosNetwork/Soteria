@@ -7,21 +7,6 @@
       <div class="text-left py-2 border-bottom px-3">
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <b-button
-              v-if="!tokenAccountSidebar"
-              v-b-tooltip.hover
-              :title="$t('openTheTokenNav')"
-              variant="outline-link"
-              class="text-base"
-              size="sm"
-              @click="setTokenAccountSidebar(true)"
-            >
-              <font-awesome-icon
-                :title="$t('openTheTokenNav')"
-                size="lg"
-                :icon="['fal','bars']"
-              />
-            </b-button>
             <b-dropdown
               variant="transparent"
               toggle-class="text-white p-0"
@@ -84,8 +69,23 @@
               <CreateToken />
             </b-modal>
           </div>
-          <div>
+          <div class="d-flex justify-content-between align-items-center">
             <Actions />
+            <b-button
+              v-if="!tokenAccountSidebar"
+              v-b-tooltip.hover
+              :title="$t('openTheTokenNav')"
+              variant="outline-primary"
+              class="text-base ml-3"
+              size="sm"
+              @click="setTokenAccountSidebar(true)"
+            >
+              <font-awesome-icon
+                :title="$t('openTheTokenNav')"
+                size="lg"
+                :icon="['fal','bars']"
+              />
+            </b-button>
           </div>
         </div>
       </div>

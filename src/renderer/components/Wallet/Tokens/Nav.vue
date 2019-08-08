@@ -122,7 +122,7 @@ export default {
   background: theme-color("secondary");
   top: 0;
   width: 225px;
-  left: 82px;
+  right: 0;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -131,7 +131,7 @@ export default {
   background: theme-color("secondary");
   bottom: 0;
   width: 225px;
-  left: 82px;
+  right: 0;
   padding-left: 1rem;
   padding-right: 1rem;
 }
