@@ -73,7 +73,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import TokenSelectorButton from '@/components/Wallet/Tokens/Nav/TokenSelector.vue'
-import CreateToken from '@/components/Wallet/Tokens/CreateToken.vue'
+import CreateToken from '@/components/Wallet/Tokens/Nav/CreateToken.vue'
 
 export default {
   name: 'TokenSelectorNav',

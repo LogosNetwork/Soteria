@@ -9,7 +9,7 @@
       :text="$t('actions')"
     >
       <b-dropdown-item-button
-        v-for="action in Object.values(actions)"
+        v-for="action in actions"
         :key="action.id"
         size="sm"
         @click="openModal(action.id)"
@@ -23,14 +23,19 @@
         </span>
       </b-dropdown-item-button>
     </b-dropdown>
+    <TokenActionModals :actions="actions" />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import TokenActionModals from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals.vue'
 
 export default {
   name: 'TokenAccountActions',
+  components: {
+    TokenActionModals
+  },
   computed: {
     ...mapState('Wallet', {
       activeAddress: state => state.activeAddress
@@ -39,7 +44,13 @@ export default {
       return this.$Wallet.tokenAccounts[this.activeAddress]
     },
     actions () {
-      const actions = {}
+      const actions = {
+        recieve: {
+          icon: 'hand-receiving',
+          text: `${this.$t('receive')} ${this.$t('logos')}`,
+          id: 'receive'
+        }
+      }
       for (const account in this.$Wallet.accounts) {
         if (!actions['distribute'] && this.tokenAccount.controllerPrivilege(account, 'distribute')) {
           actions.distribute = {
@@ -138,8 +149,7 @@ export default {
   },
   methods: {
     openModal (id) {
-      console.log(id)
-      return null
+      this.$bvModal.show(`tkActionModal_${id}`)
     }
   }
 }

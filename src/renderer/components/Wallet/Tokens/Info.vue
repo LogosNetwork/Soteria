@@ -289,7 +289,7 @@ import { mapState, mapActions } from 'vuex'
 import bigInt from 'big-integer'
 import Actions from '@/components/Wallet/Tokens/Info/Actions.vue'
 import Settings from '@/components/Wallet/Tokens/Info/Settings.vue'
-import TokenAccountHistory from '@/components/Wallet/Tokens/History.vue'
+import TokenAccountHistory from '@/components/Wallet/Tokens/Info/History.vue'
 
 export default {
   name: 'TokenAccountInfo',
