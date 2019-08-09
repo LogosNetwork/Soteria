@@ -93,16 +93,6 @@
               <small
                 class="text-uppercase text-muted"
               >
-                <span v-t="'token'" /> <span v-t="'address'" />
-              </small>
-            </div>
-            <code class="bg-secondary text-base p-1 mt-1 d-inline-block">{{ tokenAccount.address }}</code>
-          </div>
-          <div class="mb-3">
-            <div>
-              <small
-                class="text-uppercase text-muted"
-              >
                 <span v-t="'myWalletBalance'" />
               </small>
             </div>

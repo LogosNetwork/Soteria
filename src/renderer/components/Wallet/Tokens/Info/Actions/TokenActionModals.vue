@@ -8,14 +8,22 @@
       hide-footer
       hide-header
     >
-      {{ action.id }}
+      <Receive
+        v-if="action.id === 'receive'"
+        :list="false"
+      />
     </b-modal>
   </div>
 </template>
 
 <script>
+import Receive from '@/components/Shared/ActionModals/Receive'
+
 export default {
   name: 'TokenActionModals',
+  components: {
+    Receive
+  },
   props: {
     actions: {
       type: Object,

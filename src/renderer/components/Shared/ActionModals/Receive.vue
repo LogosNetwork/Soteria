@@ -1,6 +1,7 @@
 <template>
   <div>
     <AccountList
+      v-if="list"
       :aggregate="false"
       :tokenfilter="false"
     />
@@ -89,6 +90,12 @@ export default {
   components: {
     AccountList,
     qrcode: VueQrcode
+  },
+  props: {
+    list: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {

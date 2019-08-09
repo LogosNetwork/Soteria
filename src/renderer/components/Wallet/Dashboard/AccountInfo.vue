@@ -68,7 +68,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import bigInt from 'big-integer'
-import Receive from '@/components/Wallet/Dashboard/AccountInfo/Receive'
+import Receive from '@/components/Shared/ActionModals/Receive'
 import Send from '@/components/Wallet/Dashboard/AccountInfo/Send'
 
 export default {
