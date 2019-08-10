@@ -129,5 +129,19 @@
     "whitelist": "Whitelist",
     "withdrawLogos": "Withdraw Logos",
     "withdrawFees": "Withdraw Fees"
+  },
+  "accountSelectorErrors": {
+    "unableToValidate": "Unable to validate this account",
+    "notOpened": "This account must be opened first before sending tokens to it",
+    "invalidAddress": "This is not a valid address",
+    "tokenAccountError": "You cannot send tokens to TokenAccounts.",
+    "needsWhitelisted": "This account has not been whitelisted.",
+    "frozen": "This account is frozen and cannot receive or send this token.",
+    "cameraAccess": "Hey! I need access to your camera",
+    "cameraNotFound": "Do you even have a camera on your device?",
+    "cameraNotSupported": "Seems like this page is served in non-secure context (HTTPS, localhost or file://)",
+    "cameraNotUsable": "Couldn't access your camera. Is it already in use?",
+    "cameraContrains": "Constraints don't match any installed camera. Did you asked for the front camera although there is none?",
+    "cameraUnkown": "UNKNOWN ERROR: "
   }
 }

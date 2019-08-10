@@ -38,75 +38,15 @@
           </Multiselect>
         </b-input-group>
       </b-form-group>
-      <b-form-group
+      <AccountSelector
+        size="lg"
         :label="$t('to')"
-        label-size="lg"
-      >
-        <b-input-group size="lg">
-          <Multiselect
-            id="toSelector"
-            v-model="destinationAccount"
-            class="scan"
-            required
-            :tag-placeholder="$t('addThisAccount')"
-            track-by="address"
-            :custom-label="labelWithAddress"
-            :options="combinedAccounts"
-            :multiple="false"
-            :taggable="true"
-            :placeholder="$t('searchOrAdd')"
-            @tag="addAccount"
-          >
-            <template
-              slot="singleLabel"
-              slot-scope="{ option }"
-            >
-              <span v-if="option.label !== option.address">
-                {{ option.label }}  -
-              </span>
-              <LogosAddress
-                :inactive="true"
-                :force="true"
-                :address="option.address"
-              />
-            </template>
-          </Multiselect>
-          <b-input-group-append>
-            <b-button
-              v-b-tooltip.hover
-              :title="$t('scanQR')"
-              :pressed="isScanning"
-              variant="outline-black"
-              class="text-white"
-              @click="scan()"
-            >
-              <font-awesome-icon
-                class="icon"
-                :icon="['fal','qrcode']"
-              />
-              <span
-                v-t="'scanQR'"
-                class="sr-only"
-              />
-            </b-button>
-          </b-input-group-append>
-        </b-input-group>
-      </b-form-group>
-
-      <div
-        v-if="isScanning"
-        class="mt-3"
-      >
-        <qrcode-stream
-          :paused="!isScanning"
-          @init="onInit"
-          @decode="onDecode"
-        />
-        <div class="error">
-          {{ errorMessage }}
-        </div>
-      </div>
-
+        :show-current="false"
+        :token-account="token"
+        :show-token-account="!sendingTokens"
+        @change="!$event.error ? destinationAccount = $event.account : null"
+        @scanning="isScanning = $event"
+      />
       <div
         v-if="!isScanning"
       >
@@ -169,7 +109,7 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="!isValidAmount || !destinationAccount || (sendingTokens && !validDestination)"
+            :disabled="!isValidAmount || !destinationAccount"
             class="w-100"
             variant="primary"
             @click="send()"
@@ -183,31 +123,28 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import AccountList from '@/components/Wallet/Dashboard/AccountList.vue'
+import AccountSelector from '@/components/Shared/AccountSelector.vue'
+
 import bigInt from 'big-integer'
 
 export default {
   name: 'Send',
   components: {
     AccountList,
-    QrcodeStream: () => import(/* webpackChunkName: "QRCode-Reader" */'vue-qrcode-reader').then(({ QrcodeStream }) => QrcodeStream),
-    Multiselect: () => import(/* webpackChunkName: "Multiselect" */'vue-multiselect'),
-    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
+    AccountSelector,
+    Multiselect: () => import(/* webpackChunkName: "Multiselect" */'vue-multiselect')
   },
   data () {
     return {
       amount: '',
       isScanning: false,
       destinationAccount: null,
-      errorMessage: null,
-      token: null,
-      validDestination: null,
-      invalidDestinationError: ''
+      token: null
     }
   },
   computed: {
     ...mapState('Wallet', {
-      activeAddress: state => state.activeAddress,
-      contacts: state => state.contacts
+      activeAddress: state => state.activeAddress
     }),
     ...mapState('Language', {
       languageCode: state => state.selectedLanguageCode.value
@@ -265,41 +202,6 @@ export default {
     tokenAccount () {
       if (!this.sendingTokens) return null
       return this.$Wallet.tokenAccounts[this.$Utils.accountFromHexKey(this.token.tokenID)]
-    },
-    combinedAccounts () {
-      const results = []
-      const map = new Map()
-      map.set(this.currentAccountAddress, true)
-      for (const address in this.$Wallet.accounts) {
-        if (!map.has(address)) {
-          map.set(address, true)
-          results.push({
-            label: `${this.$Wallet.accounts[address].label}`,
-            address: address
-          })
-        }
-      }
-      for (const token in this.$Wallet.tokenAccounts) {
-        if (!map.has(token)) {
-          map.set(token, true)
-          if (!this.sendingTokens) {
-            results.push({
-              label: `${this.$Wallet.tokenAccounts[token].name} (${this.$Wallet.tokenAccounts[token].symbol})`,
-              address: token
-            })
-          }
-        }
-      }
-      for (const contact of this.contacts) {
-        if (!map.has(contact.address)) {
-          map.set(contact.address, true)
-          results.push({
-            label: contact.label,
-            address: contact.address
-          })
-        }
-      }
-      return results
     },
     sendingTokens () {
       return this.token !== null && this.token.tokenID !== null
@@ -392,37 +294,12 @@ export default {
   },
   watch: {
     token (oldToken, newToken) {
-      this.isValidDestination(this.destinationAccount)
       this.amount = ''
-    },
-    destinationAccount (oldAccount, newAccount) {
-      if (this.destinationAccount !== null) {
-        this.isValidDestination(this.destinationAccount)
-      }
-    },
-    combinedAccounts (newAccounts, oldAccounts) {
-      if (newAccounts.length > 0) {
-        let valid = false
-        for (const account of newAccounts) {
-          if (this.destinationAccount && account.address === this.destinationAccount.address) {
-            this.destinationAccount = account
-            valid = true
-          }
-        }
-        if (valid === false) {
-          this.destinationAccount = newAccounts[0]
-        }
-      } else {
-        this.destinationAccount = null
-      }
     }
   },
   created () {
     if (this.activeAddress === null && this.accountArray.length > 0) {
       this.setActiveAddress(this.accountArray[0].address)
-    }
-    if (this.combinedAccounts.length > 0) {
-      this.destinationAccount = this.combinedAccounts[0]
     }
     if (this.availableTokens.length > 0) {
       this.token = this.availableTokens[0]
@@ -433,111 +310,14 @@ export default {
       'setActiveAddress',
       'addContact'
     ]),
-    scan () {
-      this.isScanning = !this.isScanning
-    },
-    onDecode (content) {
-      if (content.match(/^lgs:lgs_[13456789abcdefghijkmnopqrstuwxyz]{60}$/)) {
-        this.addAccount(content.substring(4, 68))
-        this.isScanning = false
-      }
-    },
-    onInit (promise) {
-      promise.then()
-        .catch(error => {
-          if (error.name === 'NotAllowedError') {
-            this.errorMessage = 'Hey! I need access to your camera'
-          } else if (error.name === 'NotFoundError') {
-            this.errorMessage = 'Do you even have a camera on your device?'
-          } else if (error.name === 'NotSupportedError') {
-            this.errorMessage = 'Seems like this page is served in non-secure context (HTTPS, localhost or file://)'
-          } else if (error.name === 'NotReadableError') {
-            this.errorMessage = 'Couldn\'t access your camera. Is it already in use?'
-          } else if (error.name === 'OverconstrainedError') {
-            this.errorMessage = 'Constraints don\'t match any installed camera. Did you asked for the front camera although there is none?'
-          } else {
-            this.errorMessage = 'UNKNOWN ERROR: ' + error.message
-          }
-        })
-    },
-    addAccount (newAddress) {
-      try {
-        this.$Utils.keyFromAccount(newAddress)
-        const newAccount = { label: newAddress, address: newAddress }
-        if (this.currentAccountAddress !== newAddress) {
-          const existingAccount = this.findAccount(newAddress)
-          if (!existingAccount) {
-            this.addContact(newAccount)
-            this.destinationAccount = newAccount
-          } else {
-            this.destinationAccount = existingAccount
-          }
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    findAccount (newAddress) {
-      return this.combinedAccounts.find((account) => {
-        return account.address === newAddress
-      })
-    },
     tokenLabel ({ name, symbol }) {
       return `${name} (${symbol})`
-    },
-    labelWithAddress ({ label, address }) {
-      if (label !== address) {
-        return `${label} — ${address.substring(0, 9)}...${address.substring(59, 64)}`
-      } else {
-        return `${address.substring(0, 9)}...${address.substring(59, 64)}`
-      }
     },
     setMax () {
       this.amount = this.availableToSend.amount
     },
-    isValidDestination: async function (account) {
-      if (this.destinationAccount.address.match(/^lgs_[13456789abcdefghijkmnopqrstuwxyz]{60}$/) === null) return false
-      if (!this.sendingTokens) return true
-      this.validDestination = null
-      this.invalidDestinationError = ''
-      if (this.tokenAccount && account && account.address) {
-        const address = account.address
-        const rpc = this.$Wallet.rpcClient()
-        const accountInfo = await rpc.accounts.info(address)
-        if (!accountInfo) {
-          this.validDestination = false
-          this.invalidDestinationError = 'Unable to validate this account.'
-          return
-        }
-        if (accountInfo.error && accountInfo.error === 'failed to get account') {
-          this.validDestination = false
-          this.invalidDestinationError = 'This account must be opened first before sending tokens to it.'
-          return
-        }
-        if (accountInfo.error && accountInfo.error === 'Bad account number') {
-          this.validDestination = false
-          this.invalidDestinationError = 'This is not a valid address.'
-          return
-        }
-        if (accountInfo.type !== 'LogosAccount') {
-          this.validDestination = false
-          this.invalidDestinationError = 'You cannot send tokens to TokenAccounts.'
-          return
-        }
-        const tokenInfo = this.tokenAccount.getAccountStatus(account.address)
-        if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
-          this.validDestination = false
-          this.invalidDestinationError = 'This account has not been whitelisted.'
-        } else if (tokenInfo.frozen === true) {
-          this.validDestination = false
-          this.invalidDestinationError = `This account is frozen and cannot receive or send ${this.tokenAccount.symbol}.`
-        } else {
-          this.validDestination = true
-        }
-      }
-    },
     send () {
-      if (this.sendingTokens && this.isValidDestination) {
+      if (this.sendingTokens) {
         let amountInMinorUnit = null
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
           amountInMinorUnit = this.$Wallet.rpcClient().convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
