@@ -99,6 +99,7 @@
   "minorUnitsOf": "minor units of",
   "areAvailableToSend": "are available to send",
   "areAvailableToDistribute": "are available to distribute",
+  "areAvailableToMint": "are available to mint",
   "createToken": "Create Token",
   "tokenCreator": "Token Creator",
   "staking": "Staking",
@@ -132,6 +133,7 @@
     "withdrawFees": "Withdraw Fees"
   },
   "distributed": "Distributed",
+  "minted": "Minted",
   "accountSelectorErrors": {
     "unableToValidate": "Unable to validate this account",
     "notOpened": "This account must be opened first before sending tokens to it",

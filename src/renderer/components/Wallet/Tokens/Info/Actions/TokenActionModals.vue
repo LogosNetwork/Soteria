@@ -15,6 +15,9 @@
       <Distribute
         v-else-if="action.id === 'distribute'"
       />
+      <Mint
+        v-else-if="action.id === 'mint'"
+      />
     </b-modal>
   </div>
 </template>
@@ -22,12 +25,14 @@
 <script>
 import Receive from '@/components/Shared/ActionModals/Receive'
 import Distribute from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Distribute'
+import Mint from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Mint'
 
 export default {
   name: 'TokenActionModals',
   components: {
     Receive,
-    Distribute
+    Distribute,
+    Mint
   },
   props: {
     actions: {

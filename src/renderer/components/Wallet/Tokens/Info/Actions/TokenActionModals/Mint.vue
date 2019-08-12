@@ -4,23 +4,11 @@
       class="text-left"
       fluid
     >
-      <AccountSelector
-        size="lg"
-        :label="$t('to')"
-        :show-current="false"
-        :token-account="tokenAccount"
-        :show-token-accounts="false"
-        @change="!$event.error ? destinationAccount = $event.account : null"
-        @scanning="isScanning = $event"
-      />
-      <div
-        v-if="!isScanning"
-      >
+      <div>
         <b-form-group
           :label="$t('amount')"
           label-size="lg"
-          :description="availableToDistribute.text"
-          class="mt-3"
+          :description="availableToMint.text"
         >
           <b-input-group size="lg">
             <b-form-input
@@ -37,7 +25,7 @@
               <b-button
                 variant="outline-black"
                 class="text-white"
-                :pressed="amount === availableToDistribute.amount"
+                :pressed="amount === availableToMint.amount"
                 @click="setMax()"
               >
                 <span
@@ -56,7 +44,6 @@
       </div>
     </b-container>
     <b-row
-      v-if="!isScanning"
       class="mt-3"
     >
       <b-col class="p-0 w-100">
@@ -66,10 +53,10 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="!isValidAmount || !destinationAccount"
+            :disabled="!isValidAmount"
             class="w-100"
             variant="primary"
-            @click="distribute()"
+            @click="mint()"
           />
         </b-button-group>
       </b-col>
@@ -79,19 +66,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import AccountSelector from '@/components/Shared/AccountSelector.vue'
 import bigInt from 'big-integer'
 
 export default {
-  name: 'Distribute',
-  components: {
-    AccountSelector
-  },
+  name: 'Mint',
   data () {
     return {
-      amount: '',
-      isScanning: false,
-      destinationAccount: null
+      amount: ''
     }
   },
   computed: {
@@ -120,17 +101,17 @@ export default {
       if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
       return this.amount
     },
-    availableToDistribute () {
-      const amountInMinorUnit = this.tokenAccount.tokenBalance
+    availableToMint () {
+      const amountInMinorUnit = bigInt(this.$Utils.MAXUINT128).minus(bigInt(this.tokenAccount.totalSupply)).toString()
       if (this.tokenAccount.decimals !== null) {
         const amountInMajorUnit = this.tokenAccount.convertToMajor(amountInMinorUnit)
         return {
-          text: `${parseInt(amountInMajorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToDistribute')}`,
+          text: `${parseInt(amountInMajorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToMint')}`,
           amount: amountInMajorUnit
         }
       } else {
         return {
-          text: `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToDistribute')}`,
+          text: `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToMint')}`,
           amount: amountInMinorUnit
         }
       }
@@ -138,28 +119,25 @@ export default {
     isValidAmount () {
       if (this.amount === '') return null
       if (!this.amountInMinorUnit) return false
-      return bigInt(this.tokenAccount.tokenBalance)
-        .greaterOrEquals(bigInt(this.amountInMinorUnit))
+      return bigInt(this.amountInMinorUnit).plus(bigInt(this.tokenAccount.totalSupply))
+        .lesserOrEquals(bigInt(this.$Utils.MAXUINT128))
     }
   },
   methods: {
     setMax () {
-      this.amount = this.availableToDistribute.amount
+      this.amount = this.availableToMint.amount
     },
-    distribute () {
-      if (this.isValidAmount && this.destinationAccount !== null) {
-        if (bigInt(this.tokenAccount.tokenBalance)
-          .greaterOrEquals(bigInt(this.amountInMinorUnit))) {
+    mint () {
+      if (this.isValidAmount) {
+        if (bigInt(this.amountInMinorUnit).plus(bigInt(this.tokenAccount.totalSupply))
+          .lesserOrEquals(bigInt(this.$Utils.MAXUINT128))) {
           for (const accountAddress in this.$Wallet.accounts) {
-            if (this.tokenAccount.controllerPrivilege(accountAddress, 'distribute')) {
-              this.$Wallet.accounts[accountAddress].createDistributeRequest({
+            if (this.tokenAccount.controllerPrivilege(accountAddress, 'issuance')) {
+              this.$Wallet.accounts[accountAddress].createIssueAdditionalRequest({
                 tokenAccount: this.tokenAccount.address,
-                transaction: {
-                  destination: this.destinationAccount.address,
-                  amount: this.amountInMinorUnit
-                }
+                amount: this.amountInMinorUnit
               })
-              this.$emit('distribute')
+              this.$emit('mint')
               break
             }
           }

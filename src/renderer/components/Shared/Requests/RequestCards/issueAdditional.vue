@@ -1,13 +1,22 @@
 <template>
   <b-card
     no-body
-    class="text-left"
+    class="text-left border-0"
   >
     <b-card-body>
-      <b-card-title>
+      <b-card-text>
         <div class="d-flex justify-content-between">
           <div>
-            Mint Tokens
+            <font-awesome-icon
+              :icon="faMagic"
+              class="text-success mr-2"
+            />
+            <span
+              v-t="'minted'"
+            />
+            <span class="text-success">
+              {{ totalAmount }} {{ requestInfo.tokenInfo.symbol }}
+            </span>
           </div>
           <div class="timestamp text-right">
             <small>
@@ -16,43 +25,18 @@
             </small>
           </div>
         </div>
-      </b-card-title>
-      <token
-        :token-info="requestInfo.tokenInfo"
-        :origin="requestInfo.origin"
-        :small="small"
-      />
+      </b-card-text>
     </b-card-body>
-    <b-list-group flush>
-      <b-list-group-item>
-        <font-awesome-icon
-          :icon="faMagic"
-          class="text-success mr-2"
-        />
-        <strong class="mr-2">Minted</strong>
-        <span
-          v-if="requestInfo.amountInToken"
-          class="text-success mr-2"
-        >{{ requestInfo.amountInToken }}</span>
-        <span
-          v-if="typeof requestInfo.amountInToken === 'undefined'"
-          class="text-success mr-2"
-        >{{ requestInfo.amount }}</span>
-        <span>{{ requestInfo.tokenInfo.symbol }}</span>
-      </b-list-group-item>
-    </b-list-group>
   </b-card>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { faMagic } from '@fortawesome/pro-light-svg-icons'
-import token from '@/components/Shared/Requests/token.vue'
+import bigInt from 'big-integer'
 
 export default {
-  name: 'IssueAdditional',
-  components: {
-    token: token
-  },
+  name: 'Mint',
   props: {
     requestInfo: {
       type: Object,
@@ -67,11 +51,23 @@ export default {
     return {
       faMagic
     }
+  },
+  computed: {
+    ...mapState('Language', {
+      languageCode: state => state.selectedLanguageCode.value
+    }),
+    totalAmount () {
+      const sum = bigInt(this.requestInfo.amount)
+      if (this.requestInfo.tokenInfo.issuerInfo &&
+        typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
+        this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
+        return parseInt(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      } else {
+        return parseInt(sum.toString(), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      }
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .timestamp {
-    font-size: 1rem
-  }
 </style>
