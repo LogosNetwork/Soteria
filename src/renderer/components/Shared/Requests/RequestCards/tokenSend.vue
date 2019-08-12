@@ -63,7 +63,7 @@
               v-t="'sent'"
             />
             <span class="text-danger">
-              {{ requestInfo.totalAmountInToken }} {{ requestInfo.tokenInfo.symbol }}
+              {{ totalAmount }} {{ requestInfo.tokenInfo.symbol }}
             </span>
             <span
               v-t="'to'"

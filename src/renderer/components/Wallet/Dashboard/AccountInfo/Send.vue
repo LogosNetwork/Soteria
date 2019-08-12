@@ -43,7 +43,7 @@
         :label="$t('to')"
         :show-current="false"
         :token-account="token"
-        :show-token-account="!sendingTokens"
+        :show-token-accounts="!sendingTokens"
         @change="!$event.error ? destinationAccount = $event.account : null"
         @scanning="isScanning = $event"
       />
@@ -167,28 +167,18 @@ export default {
           if (forgeToken.feeType === 'flat') {
             if (bigInt(this.account.tokenBalances[tokenID])
               .minus(bigInt(forgeToken.feeRate)).greater(0)) {
-              tokens.push({
-                name: forgeToken.name,
-                symbol: forgeToken.symbol,
-                tokenID: tokenID,
-                balance: this.account.tokenBalances[tokenID]
-              })
+              tokens.push(forgeToken)
             }
           } else {
             if (bigInt(this.account.tokenBalances[tokenID]).greater(0)) {
-              tokens.push({
-                name: forgeToken.name,
-                symbol: forgeToken.symbol,
-                tokenID: tokenID,
-                balance: this.account.tokenBalances[tokenID]
-              })
+              tokens.push(forgeToken)
             }
           }
         }
       }
       if (tokens.length > 0) {
         tokens.unshift({
-          name: 'Logos',
+          name: this.$t('logos'),
           symbol: 'lgs',
           tokenID: null,
           balance: this.account.balance
@@ -236,18 +226,10 @@ export default {
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
           amount = this.$Wallet.rpcClient().convert.fromTo(amountInMinorUnit, 0, this.issuerInfo.decimals)
           result.amount = amount
-          if (bigInt(amountInMinorUnit).lesserOrEquals(bigInt(0))) {
-            result.text = `${amount} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
-          } else {
-            result.text = `${amount} ${this.$t('lgsAvailableToSend')}`
-          }
+          result.text = `${parseInt(amount, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
         } else {
           result.amount = amountInMinorUnit
-          if (bigInt(amountInMinorUnit).lesserOrEquals(bigInt(0))) {
-            result.text = `${amountInMinorUnit} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
-          } else {
-            result.text = `${amountInMinorUnit} ${this.$t('lgsAvailableToSend')}`
-          }
+          result.text = `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
         }
       }
       return result
@@ -275,7 +257,7 @@ export default {
             if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
             amountInMinorUnit = this.$Wallet.rpcClient().convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
           } else {
-            amountInMinorUnit = this.transaction.amount
+            amountInMinorUnit = this.amount
             if (!/^([0-9]+)$/.test(amountInMinorUnit)) return false
           }
           if (amountInMinorUnit === null) return false
@@ -368,14 +350,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .formButton {
-    height: 48px;
-  }
-  .formButton > .btn-link {
-    color: theme-color("base");
-  }
-  .formButton > .btn-link:hover {
-    color: theme-color("base");
-    opacity: 0.5;
-  }
 </style>

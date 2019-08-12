@@ -4,12 +4,13 @@
       v-if="list"
       :aggregate="false"
       :tokenfilter="false"
+      class="mb-3"
     />
     <b-container
       class="text-left"
       fluid
     >
-      <div class="mt-3">
+      <div>
         <b-form-group
           :label="$t('address')"
           label-size="lg"

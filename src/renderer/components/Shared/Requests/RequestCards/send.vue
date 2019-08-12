@@ -135,12 +135,6 @@ export default {
     ...mapState('Language', {
       languageCode: state => state.selectedLanguageCode.value
     }),
-    viewAddress () {
-      if (this.address) return this.address
-      if (this.requestInfo.view) return this.requestInfo.view
-      if (this.requestInfo.origin) return this.requestInfo.origin
-      return null
-    },
     isReceive () {
       if (!this.address) {
         for (const transaction in this.requestInfo.transactions) {

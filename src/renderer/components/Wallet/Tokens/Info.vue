@@ -355,7 +355,7 @@ export default {
       return parseInt(feeBalanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
     },
     circulatingSupply () {
-      const supplyInMinor = bigInt(this.tokenAccount.totalSupply).minus(bigInt(this.tokenAccount.tokenBalance)).toString()
+      const supplyInMinor = bigInt(this.tokenAccount.totalSupply).minus(bigInt(this.tokenAccount.tokenBalance)).minus(bigInt(this.tokenAccount.tokenFeeBalance)).toString()
       if (this.tokenAccount.decimals) {
         return parseInt(this.tokenAccount.convertToMajor(supplyInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
       }

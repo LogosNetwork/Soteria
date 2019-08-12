@@ -33,12 +33,6 @@
             />
           </template>
         </Multiselect>
-        <div
-          v-if="validDestination === false && showErrors"
-          class="invalid-feedback d-block"
-        >
-          {{ invalidDestinationError }}
-        </div>
         <b-input-group-append>
           <b-button
             v-b-tooltip.hover
@@ -58,6 +52,12 @@
             />
           </b-button>
         </b-input-group-append>
+        <div
+          v-if="validDestination === false && showErrors"
+          class="invalid-feedback d-block"
+        >
+          {{ invalidDestinationError }}
+        </div>
       </b-input-group>
     </b-form-group>
 
@@ -322,30 +322,33 @@ export default {
           this.invalidDestinationError = this.$t('accountSelectorErrors.unableToValidate')
           return false
         }
-        if (accountInfo.error && accountInfo.error === 'failed to get account') {
-          this.validDestination = false
-          this.invalidDestinationError = this.$t('accountSelectorErrors.notOpened')
-          return false
-        }
         if (accountInfo.error && accountInfo.error === 'Bad account number') {
           this.validDestination = false
           this.invalidDestinationError = this.$t('accountSelectorErrors.invalidAddress')
           return false
         }
-        if (accountInfo.type !== 'LogosAccount') {
-          this.validDestination = false
-          this.invalidDestinationError = this.$t('accountSelectorErrors.tokenAccountError')
-          return false
-        }
-        const tokenInfo = this.tokenAccount.getAccountStatus(account.address)
-        if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
-          this.validDestination = false
-          this.invalidDestinationError = this.$t('accountSelectorErrors.needsWhitelisted')
-          return false
-        } else if (tokenInfo.frozen === true) {
-          this.validDestination = false
-          this.invalidDestinationError = this.$t('accountSelectorErrors.frozen')
-          return false
+        // If this is a token send
+        if (this.tokenAccount.tokenID !== null) {
+          if (accountInfo.error && accountInfo.error === 'failed to get account') {
+            this.validDestination = false
+            this.invalidDestinationError = this.$t('accountSelectorErrors.notOpened')
+            return false
+          }
+          if (accountInfo.type !== 'LogosAccount') {
+            this.validDestination = false
+            this.invalidDestinationError = this.$t('accountSelectorErrors.tokenAccountError')
+            return false
+          }
+          const tokenInfo = this.tokenAccount.getAccountStatus(account.address)
+          if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
+            this.validDestination = false
+            this.invalidDestinationError = this.$t('accountSelectorErrors.needsWhitelisted')
+            return false
+          } else if (tokenInfo.frozen === true) {
+            this.validDestination = false
+            this.invalidDestinationError = this.$t('accountSelectorErrors.frozen')
+            return false
+          }
         }
         this.validDestination = true
         return true

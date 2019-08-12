@@ -12,17 +12,22 @@
         v-if="action.id === 'receive'"
         :list="false"
       />
+      <Distribute
+        v-else-if="action.id === 'distribute'"
+      />
     </b-modal>
   </div>
 </template>
 
 <script>
 import Receive from '@/components/Shared/ActionModals/Receive'
+import Distribute from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Distribute'
 
 export default {
   name: 'TokenActionModals',
   components: {
-    Receive
+    Receive,
+    Distribute
   },
   props: {
     actions: {
