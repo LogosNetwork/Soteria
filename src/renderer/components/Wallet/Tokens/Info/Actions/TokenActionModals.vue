@@ -33,6 +33,10 @@
         v-else-if="action.id === 'withdrawFees'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
+      <WithdrawLogos
+        v-else-if="action.id === 'withdrawLogos'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
     </b-modal>
   </div>
 </template>
@@ -44,6 +48,7 @@ import Mint from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Mint
 import Revoke from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Revoke'
 import AdjustUserStatus from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustUserStatus'
 import WithdrawFees from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawFees'
+import WithdrawLogos from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawLogos'
 
 export default {
   name: 'TokenActionModals',
@@ -53,7 +58,8 @@ export default {
     Mint,
     Revoke,
     AdjustUserStatus,
-    WithdrawFees
+    WithdrawFees,
+    WithdrawLogos
   },
   props: {
     actions: {
