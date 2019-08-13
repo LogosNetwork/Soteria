@@ -102,7 +102,6 @@ export default {
       return this.amount
     },
     availableToBurn () {
-      console.log(this.tokenAccount.tokenBalance)
       const amountInMinorUnit = bigInt(this.tokenAccount.tokenBalance).toString()
       if (this.tokenAccount.decimals !== null) {
         const amountInMajorUnit = this.tokenAccount.convertToMajor(amountInMinorUnit)

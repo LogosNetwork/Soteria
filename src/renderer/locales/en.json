@@ -115,6 +115,7 @@
   "openTheTokenNav": "Open the token navigation",
   "feeBalance": "Fee Balance",
   "feeRate": "Fee Rate",
+  "feeType": "Fee Type",
   "adminActions": "Admin Actions",
   "actions": "Actions",
   "controllers": "Controllers",
@@ -149,6 +150,7 @@
   "fromRevokeOf": "from revoke of",
   "minted": "Minted",
   "burned": "Burned",
+  "cantRemove": "Can't remove this value",
   "accountSelectorErrors": {
     "unableToValidate": "Unable to validate this account",
     "notOpened": "This account must be opened first before sending tokens to it",

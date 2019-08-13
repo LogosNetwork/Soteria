@@ -33,6 +33,10 @@
         :type="action.id"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
+      <AdjustFee
+        v-else-if="action.id === 'adjustFee'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
       <WithdrawFees
         v-else-if="action.id === 'withdrawFees'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
@@ -52,6 +56,7 @@ import Mint from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Mint
 import Burn from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Burn'
 import Revoke from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Revoke'
 import AdjustUserStatus from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustUserStatus'
+import AdjustFee from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustFee'
 import WithdrawFees from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawFees'
 import WithdrawLogos from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawLogos'
 
@@ -64,6 +69,7 @@ export default {
     Burn,
     Revoke,
     AdjustUserStatus,
+    AdjustFee,
     WithdrawFees,
     WithdrawLogos
   },
