@@ -1,13 +1,68 @@
 <template>
   <b-card
     no-body
-    class="text-left"
+    class="text-left border-0"
   >
     <b-card-body>
-      <b-card-title>
+      <b-card-text>
         <div class="d-flex justify-content-between">
-          <div>
-            Withdraw Fee
+          <div v-if="isReceive">
+            <font-awesome-icon
+              :icon="faHandReceiving"
+              class="text-success mr-2"
+            />
+            <LogosAddress
+              v-if="!activeAddress"
+              :address="requestInfo.view"
+              :force="small"
+              :inactive="true"
+              :replace="true"
+            />
+            <span
+              v-if="!activeAddress"
+              v-t="'received'"
+              class="text-lowercase"
+            />
+            <span
+              v-else
+              v-t="'received'"
+            />
+            <span class="text-success">
+              {{ totalAmount }} {{ requestInfo.tokenInfo.symbol }}
+            </span>
+            <span
+              v-t="'from'"
+              class="text-lowercase"
+            />
+            <LogosAddress
+              :address="$Utils.accountFromHexKey(requestInfo.token_id)"
+              :force="small"
+              :inactive="true"
+              :replace="true"
+            />
+          </div>
+          <div v-else>
+            <font-awesome-icon
+              :icon="faPaperPlane"
+              class="text-danger mr-2"
+            />
+            <span
+              v-t="'withdrewFees'"
+            />
+            <span class="text-danger">
+              {{ totalAmount }} {{ requestInfo.tokenInfo.symbol }}
+            </span>
+            <span
+              v-t="'to'"
+              class="text-lowercase"
+            />
+            <LogosAddress
+              v-if="requestInfo.transaction"
+              :address="requestInfo.transaction.destination"
+              :force="small"
+              :inactive="true"
+              :replace="true"
+            />
           </div>
           <div class="timestamp text-right">
             <small>
@@ -16,52 +71,28 @@
             </small>
           </div>
         </div>
-      </b-card-title>
-      <token
-        :token-info="requestInfo.tokenInfo"
-        :origin="requestInfo.origin"
-        :small="small"
-      />
+      </b-card-text>
     </b-card-body>
-    <b-list-group flush>
-      <b-list-group-item>
-        <font-awesome-icon
-          :icon="faArrowDown"
-          class="text-success mr-2"
-        />
-        <LogosAddress
-          class="mr-2"
-          :address="requestInfo.transaction.destination"
-          :force="small"
-        />
-        <span class="mr-2">received</span>
-        <span
-          v-if="requestInfo.transaction.amountInToken"
-          class="text-success mr-2"
-        >{{ requestInfo.transaction.amountInToken }}</span>
-        <span
-          v-if="typeof requestInfo.transaction.amountInToken === 'undefined'"
-          class="text-success mr-2"
-        >{{ requestInfo.transaction.amount }}</span>
-        <span>{{ requestInfo.tokenInfo.symbol }}</span>
-      </b-list-group-item>
-    </b-list-group>
   </b-card>
 </template>
 
 <script>
-import { faArrowDown } from '@fortawesome/pro-light-svg-icons'
-import token from '@/components/Shared/Requests/token.vue'
+import { mapState } from 'vuex'
+import { faPaperPlane, faHandReceiving } from '@fortawesome/pro-light-svg-icons'
+import bigInt from 'big-integer'
 
 export default {
   name: 'WithdrawFee',
   components: {
-    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue'),
-    token: token
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   props: {
     requestInfo: {
       type: Object,
+      default: null
+    },
+    address: {
+      type: String,
       default: null
     },
     small: {
@@ -71,13 +102,41 @@ export default {
   },
   data () {
     return {
-      faArrowDown
+      faPaperPlane,
+      faHandReceiving
+    }
+  },
+  computed: {
+    ...mapState('Wallet', {
+      activeAddress: state => state.activeAddress
+    }),
+    ...mapState('Language', {
+      languageCode: state => state.selectedLanguageCode.value
+    }),
+    isReceive () {
+      if (this.address) {
+        if (this.requestInfo.transaction.destination === this.address) {
+          return true
+        }
+      } else {
+        if (this.requestInfo.transaction.destination === this.requestInfo.view) {
+          return true
+        }
+      }
+      return false
+    },
+    totalAmount () {
+      const sum = bigInt(this.requestInfo.transaction.amount)
+      if (this.requestInfo.tokenInfo.issuerInfo &&
+        typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
+        this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
+        return parseInt(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      } else {
+        return parseInt(sum.toString(), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .timestamp {
-    font-size: 1rem
-  }
 </style>

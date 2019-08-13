@@ -115,6 +115,10 @@ export default {
     blacklist: {
       type: Array,
       default: null
+    },
+    ignoreStatus: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -366,15 +370,17 @@ export default {
             this.invalidDestinationError = this.$t('accountSelectorErrors.tokenAccountError')
             return false
           }
-          const tokenInfo = this.tokenAccount.getAccountStatus(account.address)
-          if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
-            this.validDestination = false
-            this.invalidDestinationError = this.$t('accountSelectorErrors.needsWhitelisted')
-            return false
-          } else if (tokenInfo.frozen === true) {
-            this.validDestination = false
-            this.invalidDestinationError = this.$t('accountSelectorErrors.frozen')
-            return false
+          if (!this.ignoreStatus) {
+            const tokenInfo = this.tokenAccount.getAccountStatus(account.address)
+            if (this.tokenAccount.settings.whitelist && tokenInfo.whitelisted === false) {
+              this.validDestination = false
+              this.invalidDestinationError = this.$t('accountSelectorErrors.needsWhitelisted')
+              return false
+            } else if (tokenInfo.frozen === true) {
+              this.validDestination = false
+              this.invalidDestinationError = this.$t('accountSelectorErrors.frozen')
+              return false
+            }
           }
         }
         this.validDestination = true

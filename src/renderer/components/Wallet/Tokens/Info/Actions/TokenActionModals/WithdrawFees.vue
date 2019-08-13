@@ -5,33 +5,22 @@
       fluid
     >
       <AccountSelector
-        v-show="!fromScanning"
-        size="lg"
-        :label="$t('from')"
-        :show-current="false"
-        :token-account="tokenAccount"
-        :show-token-accounts="false"
-        @change="revokeeAccount = $event.account"
-        @scanning="toScanning = $event"
-      />
-      <AccountSelector
-        v-show="!toScanning"
         size="lg"
         :label="$t('to')"
         :show-current="false"
-        :blacklist="revokeeAccount !== null ? [revokeeAccount.address] : null"
         :token-account="tokenAccount"
         :show-token-accounts="false"
         @change="destinationAccount = $event.account"
-        @scanning="fromScanning = $event"
+        @scanning="isScanning = $event"
       />
       <div
-        v-if="!toScanning && !fromScanning"
+        v-if="!isScanning"
       >
         <b-form-group
           :label="$t('amount')"
           label-size="lg"
-          :description="availableToRevoke ? availableToRevoke.text : ''"
+          :description="availableToWithdraw.text"
+          class="mt-3"
         >
           <b-input-group size="lg">
             <b-form-input
@@ -48,7 +37,7 @@
               <b-button
                 variant="outline-black"
                 class="text-white"
-                :pressed="availableToRevoke ? amount === availableToRevoke.amount : false"
+                :pressed="amount === availableToWithdraw.amount"
                 @click="setMax()"
               >
                 <span
@@ -67,7 +56,7 @@
       </div>
     </b-container>
     <b-row
-      v-if="!fromScanning && !toScanning"
+      v-if="!isScanning"
       class="mt-3"
     >
       <b-col class="p-0 w-100">
@@ -76,11 +65,11 @@
           size="lg"
         >
           <b-button
-            v-t="'tokenActions.revoke'"
-            :disabled="!isValidAmount || !destinationAccount || !revokeeAccount"
+            v-t="'send'"
+            :disabled="!isValidAmount || !destinationAccount"
             class="w-100"
             variant="primary"
-            @click="revoke()"
+            @click="withdrawFees()"
           />
         </b-button-group>
       </b-col>
@@ -94,16 +83,14 @@ import AccountSelector from '@/components/Shared/AccountSelector.vue'
 import bigInt from 'big-integer'
 
 export default {
-  name: 'Revoke',
+  name: 'WithdrawFees',
   components: {
     AccountSelector
   },
   data () {
     return {
       amount: '',
-      toScanning: false,
-      fromScanning: false,
-      revokeeAccount: null,
+      isScanning: false,
       destinationAccount: null
     }
   },
@@ -133,52 +120,48 @@ export default {
       if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
       return this.amount
     },
-    availableToRevoke () {
-      if (this.revokeeAccount && this.revokeeAccount.accountInfo && this.revokeeAccount.accountInfo.tokens) {
-        const amountInMinorUnit = bigInt(this.revokeeAccount.accountInfo.tokens[this.tokenAccount.publicKey].balance).toString()
-        if (this.tokenAccount.decimals !== null) {
-          const amountInMajorUnit = this.tokenAccount.convertToMajor(amountInMinorUnit)
-          return {
-            text: `${parseInt(amountInMajorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToRevoke')}`,
-            amount: amountInMajorUnit
-          }
-        } else {
-          return {
-            text: `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToRevoke')}`,
-            amount: amountInMinorUnit
-          }
+    availableToWithdraw () {
+      const amountInMinorUnit = this.tokenAccount.tokenFeeBalance
+      if (this.tokenAccount.decimals !== null) {
+        const amountInMajorUnit = this.tokenAccount.convertToMajor(amountInMinorUnit)
+        return {
+          text: `${parseInt(amountInMajorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToWithdraw')}`,
+          amount: amountInMajorUnit
         }
       } else {
-        return null
+        return {
+          text: `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToWithdraw')}`,
+          amount: amountInMinorUnit
+        }
       }
     },
     isValidAmount () {
       if (this.amount === '') return null
       if (!this.amountInMinorUnit) return false
-      if (!this.availableToRevoke) return false
-      return bigInt(this.availableToRevoke.amount).minus(bigInt(this.amountInMinorUnit))
-        .greaterOrEquals(bigInt(0))
+      return bigInt(this.tokenAccount.tokenFeeBalance)
+        .greaterOrEquals(bigInt(this.amountInMinorUnit))
     }
   },
   methods: {
     setMax () {
-      if (!this.availableToRevoke) return
-      this.amount = this.availableToRevoke.amount
+      this.amount = this.availableToWithdraw.amount
     },
-    revoke () {
-      if (this.isValidAmount && this.destinationAccount && this.revokeeAccount) {
-        for (const accountAddress in this.$Wallet.accounts) {
-          if (this.tokenAccount.controllerPrivilege(accountAddress, 'revoke')) {
-            this.$Wallet.accounts[accountAddress].createRevokeRequest({
-              tokenAccount: this.tokenAccount.address,
-              source: this.revokeeAccount.address,
-              transaction: {
-                destination: this.destinationAccount.address,
-                amount: this.amountInMinorUnit
-              }
-            })
-            this.$emit('sent')
-            break
+    withdrawFees () {
+      if (this.isValidAmount && this.destinationAccount !== null) {
+        if (bigInt(this.tokenAccount.tokenFeeBalance)
+          .greaterOrEquals(bigInt(this.amountInMinorUnit))) {
+          for (const accountAddress in this.$Wallet.accounts) {
+            if (this.tokenAccount.controllerPrivilege(accountAddress, 'withdraw_fee')) {
+              this.$Wallet.accounts[accountAddress].createWithdrawFeeRequest({
+                tokenAccount: this.tokenAccount.address,
+                transaction: {
+                  destination: this.destinationAccount.address,
+                  amount: this.amountInMinorUnit
+                }
+              })
+              this.$emit('sent')
+              break
+            }
           }
         }
       }

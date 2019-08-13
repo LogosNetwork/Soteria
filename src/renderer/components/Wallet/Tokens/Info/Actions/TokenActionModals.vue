@@ -24,6 +24,15 @@
         v-else-if="action.id === 'revoke'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
+      <AdjustUserStatus
+        v-else-if="action.id === 'freeze' || action.id === 'whitelist'"
+        :type="action.id"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
+      <WithdrawFees
+        v-else-if="action.id === 'withdrawFees'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
     </b-modal>
   </div>
 </template>
@@ -33,6 +42,8 @@ import Receive from '@/components/Shared/ActionModals/Receive'
 import Distribute from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Distribute'
 import Mint from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Mint'
 import Revoke from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Revoke'
+import AdjustUserStatus from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustUserStatus'
+import WithdrawFees from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawFees'
 
 export default {
   name: 'TokenActionModals',
@@ -40,7 +51,9 @@ export default {
     Receive,
     Distribute,
     Mint,
-    Revoke
+    Revoke,
+    AdjustUserStatus,
+    WithdrawFees
   },
   props: {
     actions: {
