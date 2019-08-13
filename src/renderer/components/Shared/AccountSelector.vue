@@ -111,12 +111,17 @@ export default {
     size: {
       type: String,
       default: 'lg'
+    },
+    blacklist: {
+      type: Array,
+      default: null
     }
   },
   data () {
     return {
       isScanning: false,
       destinationAccount: null,
+      destinationAccountInfo: null,
       errorMessage: null,
       validDestination: null,
       invalidDestinationError: ''
@@ -140,6 +145,11 @@ export default {
       const map = new Map()
       if (this.showCurrent === false) {
         map.set(this.account.address, true)
+      }
+      if (this.blacklist && this.blacklist.length > 0) {
+        for (const address of this.blacklist) {
+          map.set(address, true)
+        }
       }
       for (const address in this.$Wallet.accounts) {
         if (!map.has(address)) {
@@ -287,12 +297,13 @@ export default {
         return `${address.substring(0, 9)}...${address.substring(59, 64)}`
       }
     },
-    emitDestination () {
+    emitDestination: async function () {
       if (this.destinationAccount !== null) {
-        if (this.isValidDestination(this.destinationAccount)) {
+        const isValid = await this.isValidDestination(this.destinationAccount)
+        if (isValid) {
           this.$emit('change', {
             error: null,
-            account: this.destinationAccount
+            account: this.destinationAccountInfo
           })
         } else {
           this.$emit('change', {
@@ -300,6 +311,11 @@ export default {
             account: null
           })
         }
+      } else {
+        this.$emit('change', {
+          error: 'No Account Selected',
+          account: null
+        })
       }
     },
     isValidDestination: async function (account) {
@@ -316,7 +332,18 @@ export default {
       } else if (this.tokenAccount && account && account.address) {
         const address = account.address
         const rpc = this.$Wallet.rpcClient()
-        const accountInfo = await rpc.accounts.info(address)
+        let accountInfo = null
+        if (!this.destinationAccountInfo ||
+          !this.destinationAccountInfo.accountInfo ||
+          this.destinationAccountInfo.address !== this.destinationAccount.address) {
+          accountInfo = await rpc.accounts.info(address)
+          this.destinationAccountInfo = {
+            ...this.destinationAccount,
+            accountInfo: accountInfo
+          }
+        } else {
+          accountInfo = this.destinationAccountInfo.accountInfo
+        }
         if (!accountInfo) {
           this.validDestination = false
           this.invalidDestinationError = this.$t('accountSelectorErrors.unableToValidate')

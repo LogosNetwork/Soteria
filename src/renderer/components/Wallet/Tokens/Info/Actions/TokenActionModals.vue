@@ -14,9 +14,15 @@
       />
       <Distribute
         v-else-if="action.id === 'distribute'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
       <Mint
         v-else-if="action.id === 'mint'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
+      <Revoke
+        v-else-if="action.id === 'revoke'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
     </b-modal>
   </div>
@@ -26,13 +32,15 @@
 import Receive from '@/components/Shared/ActionModals/Receive'
 import Distribute from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Distribute'
 import Mint from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Mint'
+import Revoke from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Revoke'
 
 export default {
   name: 'TokenActionModals',
   components: {
     Receive,
     Distribute,
-    Mint
+    Mint,
+    Revoke
   },
   props: {
     actions: {

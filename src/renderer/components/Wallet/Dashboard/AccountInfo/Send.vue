@@ -44,7 +44,7 @@
         :show-current="false"
         :token-account="token"
         :show-token-accounts="!sendingTokens"
-        @change="!$event.error ? destinationAccount = $event.account : null"
+        @change="destinationAccount = $event.account"
         @scanning="isScanning = $event"
       />
       <div

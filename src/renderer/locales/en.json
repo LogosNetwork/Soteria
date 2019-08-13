@@ -82,6 +82,7 @@
   "address": "Address",
   "copyToClipboard": "Copied address to clipboard!",
   "to": "To",
+  "by": "By",
   "scanQR": "Scan a QR Code Address",
   "amount": "Amount",
   "from": "From",
@@ -100,6 +101,7 @@
   "areAvailableToSend": "are available to send",
   "areAvailableToDistribute": "are available to distribute",
   "areAvailableToMint": "are available to mint",
+  "areAvailableToRevoke": "are available to revoke",
   "createToken": "Create Token",
   "tokenCreator": "Token Creator",
   "staking": "Staking",
@@ -133,6 +135,8 @@
     "withdrawFees": "Withdraw Fees"
   },
   "distributed": "Distributed",
+  "revoked": "Revoked",
+  "fromRevokeOf": "from revoke of",
   "minted": "Minted",
   "accountSelectorErrors": {
     "unableToValidate": "Unable to validate this account",

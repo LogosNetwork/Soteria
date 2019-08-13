@@ -137,7 +137,7 @@ export default {
                 tokenAccount: this.tokenAccount.address,
                 amount: this.amountInMinorUnit
               })
-              this.$emit('mint')
+              this.$emit('sent')
               break
             }
           }
