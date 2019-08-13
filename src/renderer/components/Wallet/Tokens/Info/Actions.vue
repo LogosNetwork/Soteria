@@ -69,7 +69,6 @@ export default {
           }
         }
         if (!actions['burn'] &&
-          this.tokenAccount.hasSetting('burn') &&
           this.tokenAccount.controllerPrivilege(account, 'burn')) {
           actions.burn = {
             icon: 'fire',
@@ -108,6 +107,15 @@ export default {
             icon: 'edit',
             text: this.$t('tokenActions.editInfo'),
             id: 'editInfo'
+          }
+        }
+        if (!actions['adjustFee'] &&
+          this.tokenAccount.hasSetting('adjust_fee') &&
+          this.tokenAccount.controllerPrivilege(account, 'adjust_fee')) {
+          actions.adjustFee = {
+            icon: 'percentage',
+            text: this.$t('tokenActions.adjustFee'),
+            id: 'adjustFee'
           }
         }
         if (!actions['withdrawFees'] &&

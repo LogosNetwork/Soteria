@@ -20,6 +20,10 @@
         v-else-if="action.id === 'mint'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
+      <Burn
+        v-else-if="action.id === 'burn'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
       <Revoke
         v-else-if="action.id === 'revoke'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
@@ -45,6 +49,7 @@
 import Receive from '@/components/Shared/ActionModals/Receive'
 import Distribute from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Distribute'
 import Mint from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Mint'
+import Burn from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Burn'
 import Revoke from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Revoke'
 import AdjustUserStatus from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustUserStatus'
 import WithdrawFees from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawFees'
@@ -56,6 +61,7 @@ export default {
     Receive,
     Distribute,
     Mint,
+    Burn,
     Revoke,
     AdjustUserStatus,
     WithdrawFees,

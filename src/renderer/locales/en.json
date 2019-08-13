@@ -102,6 +102,7 @@
   "areAvailableToDistribute": "are available to distribute",
   "areAvailableToWithdraw": "are available to withdraw",
   "areAvailableToMint": "are available to mint",
+  "areAvailableToBurn": "are available to burn",
   "areAvailableToRevoke": "are available to revoke",
   "createToken": "Create Token",
   "tokenCreator": "Token Creator",
@@ -128,6 +129,7 @@
     "mint": "Mint",
     "burn": "Burn",
     "adjustUsers": "Adjust Users",
+    "adjustFee": "Adjust Fee",
     "revoke": "Revoke",
     "editInfo": "Edit Info",
     "freeze": "Freeze",
@@ -146,6 +148,7 @@
   "revoked": "Revoked",
   "fromRevokeOf": "from revoke of",
   "minted": "Minted",
+  "burned": "Burned",
   "accountSelectorErrors": {
     "unableToValidate": "Unable to validate this account",
     "notOpened": "This account must be opened first before sending tokens to it",
