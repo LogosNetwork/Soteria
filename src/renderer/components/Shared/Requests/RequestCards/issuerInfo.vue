@@ -1,13 +1,25 @@
 <template>
   <b-card
     no-body
-    class="text-left"
+    class="text-left border-0"
   >
     <b-card-body>
-      <b-card-title>
+      <b-card-text>
         <div class="d-flex justify-content-between">
           <div>
-            Update Info
+            <font-awesome-icon
+              :icon="faEdit"
+              class="text-success mr-2"
+            />
+            <LogosAddress
+              :address="requestInfo.origin"
+              :force="small"
+              :inactive="true"
+              :replace="true"
+            />
+            <span
+              v-t="'updatedIssuerInfo'"
+            />
           </div>
           <div class="timestamp text-right">
             <small>
@@ -16,33 +28,18 @@
             </small>
           </div>
         </div>
-      </b-card-title>
-      <token
-        :token-info="requestInfo.tokenInfo"
-        :origin="requestInfo.origin"
-        :small="small"
-      />
+      </b-card-text>
     </b-card-body>
-    <b-list-group flush>
-      <b-list-group-item>
-        <codepad
-          class="text-left"
-          :code="requestInfo.prettyInfo"
-          :thin="true"
-        />
-      </b-list-group-item>
-    </b-list-group>
   </b-card>
 </template>
 
 <script>
-import token from '@/components/Shared/Requests/token.vue'
+import { faEdit } from '@fortawesome/pro-light-svg-icons'
 
 export default {
-  name: 'IssuerInfo',
+  name: 'UpdateIssuerInfo',
   components: {
-    token: token,
-    codepad: () => import(/* webpackChunkName: "Codepad" */ '@/components/Shared/codepad.vue')
+    LogosAddress: () => import(/* webpackChunkName: "LogosAddress" */'@/components/Shared/LogosAddress.vue')
   },
   props: {
     requestInfo: {
@@ -53,11 +50,13 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  data () {
+    return {
+      faEdit
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .timestamp {
-    font-size: 1rem
-  }
 </style>
