@@ -1,13 +1,42 @@
 <template>
   <b-card
     no-body
-    class="text-left"
+    class="text-left border-0"
   >
     <b-card-body>
-      <b-card-title>
+      <b-card-text>
         <div class="d-flex justify-content-between">
           <div>
-            Fee Adjustment
+            <font-awesome-icon
+              :icon="faPercentage"
+              class="text-success mr-2"
+            />
+            <span
+              v-t="'adjustedTheFeeTo'"
+            />
+            <span
+              v-if="requestInfo.fee_type === 'flat'"
+            >
+              <span v-t="'feeType'" />:
+              <span
+                v-t="'flat'"
+                class="text-success"
+              />
+              <span v-t="'feeRate'" />:
+              <span class="text-danger">{{ totalAmount }} {{ requestInfo.tokenInfo.symbol }}</span>
+            </span>
+            <span
+              v-else
+              class="text-danger"
+            >
+              <span v-t="'feeType'" />:
+              <span
+                v-t="'percentage'"
+                class="text-success"
+              />
+              <span v-t="'feeRate'" />:
+              <span class="text-danger">{{ requestInfo.fee_rate }}%</span>
+            </span>
           </div>
           <div class="timestamp text-right">
             <small>
@@ -16,37 +45,18 @@
             </small>
           </div>
         </div>
-      </b-card-title>
-      <token
-        :token-info="requestInfo.tokenInfo"
-        :origin="requestInfo.origin"
-        :small="small"
-      />
+      </b-card-text>
     </b-card-body>
-    <b-list-group flush>
-      <b-list-group-item>
-        <strong>Fee Type: </strong>{{ requestInfo.fee_type }}
-      </b-list-group-item>
-      <b-list-group-item>
-        <span v-if="requestInfo.fee_type.toLowerCase() === 'flat'">
-          <strong>Fee Rate: </strong>{{ requestInfo.fee_rate }} minor units of {{ requestInfo.tokenInfo.symbol }}
-        </span>
-        <span v-if="requestInfo.fee_type.toLowerCase() === 'percentage'">
-          <strong>Fee Rate: </strong>{{ requestInfo.fee_rate }}%
-        </span>
-      </b-list-group-item>
-    </b-list-group>
   </b-card>
 </template>
 
 <script>
-import token from '@/components/Shared/Requests/token.vue'
+import { mapState } from 'vuex'
+import { faPercentage } from '@fortawesome/pro-light-svg-icons'
+import bigInt from 'big-integer'
 
 export default {
   name: 'AdjustFee',
-  components: {
-    token: token
-  },
   props: {
     requestInfo: {
       type: Object,
@@ -56,11 +66,28 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  data () {
+    return {
+      faPercentage
+    }
+  },
+  computed: {
+    ...mapState('Language', {
+      languageCode: state => state.selectedLanguageCode.value
+    }),
+    totalAmount () {
+      const sum = bigInt(this.requestInfo.fee_rate)
+      if (this.requestInfo.tokenInfo.issuerInfo &&
+        typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
+        this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
+        return parseInt(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      } else {
+        return parseInt(sum.toString(), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      }
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-  .timestamp {
-    font-size: 1rem
-  }
 </style>
