@@ -5,6 +5,7 @@
       :id="`tkActionModal_${action.id}`"
       :key="action.id"
       :body-class="action.id !== 'receive' ? 'pb-0' : ''"
+      :size="action.id === 'settings' ? 'lg' : ''"
       hide-footer
       hide-header
     >
@@ -49,6 +50,10 @@
         v-else-if="action.id === 'editInfo'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
+      <Settings
+        v-else-if="action.id === 'settings'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
     </b-modal>
   </div>
 </template>
@@ -62,6 +67,7 @@ import Revoke from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Re
 import AdjustUserStatus from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustUserStatus'
 import AdjustFee from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustFee'
 import EditInfo from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/EditInfo'
+import Settings from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Settings'
 import WithdrawFees from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawFees'
 import WithdrawLogos from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawLogos'
 
@@ -76,6 +82,7 @@ export default {
     AdjustUserStatus,
     AdjustFee,
     EditInfo,
+    Settings,
     WithdrawFees,
     WithdrawLogos
   },

@@ -135,15 +135,15 @@ export default {
           }
         }
         if (!actions['settings'] &&
-          (this.tokenAccount.controllerPrivilege(account, 'change_issuance') ||
+          ((this.tokenAccount.hasSetting('modify_issuance') && this.tokenAccount.controllerPrivilege(account, 'change_issuance')) ||
           (this.tokenAccount.hasSetting('modify_issuance') && this.tokenAccount.controllerPrivilege(account, 'change_modify_issuance')) ||
-          this.tokenAccount.controllerPrivilege(account, 'change_revoke') ||
+          (this.tokenAccount.hasSetting('modify_revoke') && this.tokenAccount.controllerPrivilege(account, 'change_revoke')) ||
           (this.tokenAccount.hasSetting('modify_revoke') && this.tokenAccount.controllerPrivilege(account, 'change_modify_revoke')) ||
-          this.tokenAccount.controllerPrivilege(account, 'change_freeze') ||
+          (this.tokenAccount.hasSetting('modify_freeze') && this.tokenAccount.controllerPrivilege(account, 'change_freeze')) ||
           (this.tokenAccount.hasSetting('modify_freeze') && this.tokenAccount.controllerPrivilege(account, 'change_modify_freeze')) ||
-          this.tokenAccount.controllerPrivilege(account, 'change_adjust_fee') ||
+          (this.tokenAccount.hasSetting('modify_adjust_fee') && this.tokenAccount.controllerPrivilege(account, 'change_adjust_fee')) ||
           (this.tokenAccount.hasSetting('modify_adjust_fee') && this.tokenAccount.controllerPrivilege(account, 'change_modify_adjust_fee')) ||
-          this.tokenAccount.controllerPrivilege(account, 'change_whitelist') ||
+          (this.tokenAccount.hasSetting('modify_whitelist') && this.tokenAccount.controllerPrivilege(account, 'change_whitelist')) ||
           (this.tokenAccount.hasSetting('modify_whitelist') && this.tokenAccount.controllerPrivilege(account, 'change_modify_whitelist')))) {
           actions.settings = {
             icon: 'cogs',
