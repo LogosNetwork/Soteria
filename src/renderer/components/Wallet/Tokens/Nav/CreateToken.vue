@@ -35,6 +35,8 @@
               v-model="creatorAccount"
               class="w-100"
               required
+              :allow-empty="false"
+              deselect-label="Can't remove this value"
               :tag-placeholder="$t('addThisAccount')"
               track-by="address"
               :custom-label="labelWithAddress"
@@ -114,6 +116,8 @@
               v-model="tokenOptions.totalSupply"
               class="w-100"
               required
+              :allow-empty="false"
+              deselect-label="Can't remove this value"
               tag-placeholder="Use your own value"
               track-by="label"
               label="label"
@@ -1134,6 +1138,7 @@ export default {
         controller.account = controller.account.address
       })
       this.$Wallet.accounts[this.creatorAccount.address].createTokenIssuanceRequest(tokenOptions)
+      this.$Wallet.ResetWalletReactivity()
       this.closeModal()
     },
     labelWithAddress ({ label, address }) {
