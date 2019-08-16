@@ -109,7 +109,7 @@ export default {
     availableToWithdraw () {
       const amountInMajorUnit = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
       return {
-        text: `${parseInt(amountInMajorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('logos')} ${this.$t('areAvailableToWithdraw')}`,
+        text: `${parseFloat(amountInMajorUnit).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('logos')} ${this.$t('areAvailableToWithdraw')}`,
         amount: amountInMajorUnit
       }
     },

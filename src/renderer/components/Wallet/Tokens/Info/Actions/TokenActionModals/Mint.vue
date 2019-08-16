@@ -106,12 +106,12 @@ export default {
       if (this.tokenAccount.decimals !== null) {
         const amountInMajorUnit = this.tokenAccount.convertToMajor(amountInMinorUnit)
         return {
-          text: `${parseInt(amountInMajorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToMint')}`,
+          text: `${parseFloat(amountInMajorUnit).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToMint')}`,
           amount: amountInMajorUnit
         }
       } else {
         return {
-          text: `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToMint')}`,
+          text: `${parseFloat(amountInMinorUnit).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToMint')}`,
           amount: amountInMinorUnit
         }
       }

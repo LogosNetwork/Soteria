@@ -87,14 +87,14 @@ export default {
     balance: function () {
       if (this.activeAddress !== null) {
         if (!this.$Wallet.account) return 0
-        return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.$Wallet.accounts[this.activeAddress].balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.$Wallet.rpcClient().convert.fromReason(this.$Wallet.accounts[this.activeAddress].balance, 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         let sum = bigInt(0)
         for (const address in this.$Wallet.accounts) {
           const account = this.$Wallet.accounts[address]
           sum = sum.add(bigInt(account.balance))
         }
-        return parseInt(this.$Wallet.rpcClient().convert.fromReason(sum.toString(), 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.$Wallet.rpcClient().convert.fromReason(sum.toString(), 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
       }
     }
   },

@@ -130,9 +130,9 @@ export default {
       if (this.requestInfo.tokenInfo.issuerInfo &&
         typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
         this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
-        return parseInt(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals)).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
-        return parseInt(sum.toString(), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(sum.toString()).toLocaleString(this.languageCode, { useGrouping: true })
       }
     }
   }

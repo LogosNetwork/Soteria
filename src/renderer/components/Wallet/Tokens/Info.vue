@@ -314,14 +314,14 @@ export default {
       return false
     },
     balance () {
-      return parseInt(this.$Wallet.rpcClient().convert.fromReason(this.tokenAccount.balance, 'LOGOS'), 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(this.$Wallet.rpcClient().convert.fromReason(this.tokenAccount.balance, 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
     },
     tokenBalance () {
       const balanceInMinor = this.tokenAccount.tokenBalance
       if (this.tokenAccount.decimals) {
-        return parseInt(this.tokenAccount.convertToMajor(balanceInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.tokenAccount.convertToMajor(balanceInMinor)).toLocaleString(this.languageCode, { useGrouping: true })
       }
-      return parseInt(balanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(balanceInMinor).toLocaleString(this.languageCode, { useGrouping: true })
     },
     walletBalance () {
       let totalBalanceInMinor = bigInt(0)
@@ -333,9 +333,9 @@ export default {
         }
       }
       if (this.tokenAccount.decimals) {
-        return parseInt(this.tokenAccount.convertToMajor(totalBalanceInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.tokenAccount.convertToMajor(totalBalanceInMinor)).toLocaleString(this.languageCode, { useGrouping: true })
       }
-      return parseInt(totalBalanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(totalBalanceInMinor).toLocaleString(this.languageCode, { useGrouping: true })
     },
     showFeeBalance () {
       return this.tokenAccount.tokenFeeBalance !== '0' || this.tokenAccount.feeRate !== '0'
@@ -343,23 +343,23 @@ export default {
     feeRate () {
       const feeRateInMinor = this.tokenAccount.feeRate
       if (this.tokenAccount.decimals) {
-        return parseInt(this.tokenAccount.convertToMajor(feeRateInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.tokenAccount.convertToMajor(feeRateInMinor)).toLocaleString(this.languageCode, { useGrouping: true })
       }
-      return parseInt(feeRateInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(feeRateInMinor).toLocaleString(this.languageCode, { useGrouping: true })
     },
     feeBalance () {
       const feeBalanceInMinor = this.tokenAccount.tokenFeeBalance
       if (this.tokenAccount.decimals) {
-        return parseInt(this.tokenAccount.convertToMajor(feeBalanceInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.tokenAccount.convertToMajor(feeBalanceInMinor)).toLocaleString(this.languageCode, { useGrouping: true })
       }
-      return parseInt(feeBalanceInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(feeBalanceInMinor).toLocaleString(this.languageCode, { useGrouping: true })
     },
     circulatingSupply () {
       const supplyInMinor = bigInt(this.tokenAccount.totalSupply).minus(bigInt(this.tokenAccount.tokenBalance)).minus(bigInt(this.tokenAccount.tokenFeeBalance)).toString()
       if (this.tokenAccount.decimals) {
-        return parseInt(this.tokenAccount.convertToMajor(supplyInMinor), 10).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.tokenAccount.convertToMajor(supplyInMinor)).toLocaleString(this.languageCode, { useGrouping: true })
       }
-      return parseInt(supplyInMinor, 10).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(supplyInMinor).toLocaleString(this.languageCode, { useGrouping: true })
     },
     tokenAccounts () {
       if (this.tokenName === '' || this.tokenName === null) {

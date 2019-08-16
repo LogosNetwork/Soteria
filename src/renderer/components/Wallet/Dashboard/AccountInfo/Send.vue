@@ -226,10 +226,10 @@ export default {
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
           amount = this.$Wallet.rpcClient().convert.fromTo(amountInMinorUnit, 0, this.issuerInfo.decimals)
           result.amount = amount
-          result.text = `${parseInt(amount, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
+          result.text = `${parseFloat(amount).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
         } else {
           result.amount = amountInMinorUnit
-          result.text = `${parseInt(amountInMinorUnit, 10).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
+          result.text = `${parseFloat(amountInMinorUnit).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('minorUnitsOf')} ${this.tokenAccount.name} ${this.$t('areAvailableToSend')}`
         }
       }
       return result
