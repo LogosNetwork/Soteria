@@ -54,6 +54,10 @@
         v-else-if="action.id === 'settings'"
         @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
       />
+      <Controller
+        v-else-if="action.id === 'update_controller'"
+        @sent="$bvModal.hide(`tkActionModal_${action.id}`)"
+      />
     </b-modal>
   </div>
 </template>
@@ -68,6 +72,7 @@ import AdjustUserStatus from '@/components/Wallet/Tokens/Info/Actions/TokenActio
 import AdjustFee from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/AdjustFee'
 import EditInfo from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/EditInfo'
 import Settings from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Settings'
+import Controller from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/Controller'
 import WithdrawFees from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawFees'
 import WithdrawLogos from '@/components/Wallet/Tokens/Info/Actions/TokenActionModals/WithdrawLogos'
 
@@ -83,6 +88,7 @@ export default {
     AdjustFee,
     EditInfo,
     Settings,
+    Controller,
     WithdrawFees,
     WithdrawLogos
   },

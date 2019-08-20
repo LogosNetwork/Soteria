@@ -23,7 +23,7 @@
         </span>
       </b-dropdown-item-button>
     </b-dropdown>
-    <TokenActionModals :actions="actions" />
+    <TokenActionModals :actions="modalActions" />
   </div>
 </template>
 
@@ -153,8 +153,16 @@ export default {
         }
       }
       return actions
+    },
+    modalActions () {
+      const actions = this.actions
+      actions.update_controller = {
+        id: 'update_controller'
+      }
+      return actions
     }
   },
+
   methods: {
     openModal (id) {
       this.$bvModal.show(`tkActionModal_${id}`)

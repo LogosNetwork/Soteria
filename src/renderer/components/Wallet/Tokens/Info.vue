@@ -232,6 +232,7 @@
               size="sm"
               class="text-white mr-2 mb-3"
               variant="outline-primary"
+              @click="openControllerModal(controller.account)"
             >
               <b-row class="justify-content-md-center">
                 <b-col>
@@ -388,7 +389,10 @@ export default {
     ...mapActions('Wallet', [
       'setActiveAddress',
       'setTokenAccountSidebar'
-    ])
+    ]),
+    openControllerModal (address) {
+      this.$bvModal.show(`tkActionModal_update_controller`)
+    }
   }
 }
 </script>
