@@ -52,14 +52,14 @@ export default {
         }
       }
       for (const account in this.$Wallet.accounts) {
-        if (!actions['distribute'] && this.tokenAccount.controllerPrivilege(account, 'distribute')) {
+        if (!actions.distribute && this.tokenAccount.controllerPrivilege(account, 'distribute')) {
           actions.distribute = {
             icon: 'paper-plane',
             text: this.$t('tokenActions.distribute'),
             id: 'distribute'
           }
         }
-        if (!actions['mint'] &&
+        if (!actions.mint &&
           this.tokenAccount.hasSetting('issuance') &&
           this.tokenAccount.controllerPrivilege(account, 'issuance')) {
           actions.mint = {
@@ -68,7 +68,7 @@ export default {
             id: 'mint'
           }
         }
-        if (!actions['burn'] &&
+        if (!actions.burn &&
           this.tokenAccount.controllerPrivilege(account, 'burn')) {
           actions.burn = {
             icon: 'fire',
@@ -76,7 +76,7 @@ export default {
             id: 'burn'
           }
         }
-        if (!actions['revoke'] &&
+        if (!actions.revoke &&
           this.tokenAccount.hasSetting('revoke') &&
           this.tokenAccount.controllerPrivilege(account, 'revoke')) {
           actions.revoke = {
@@ -85,7 +85,7 @@ export default {
             id: 'revoke'
           }
         }
-        if (!actions['freeze'] &&
+        if (!actions.freeze &&
           (this.tokenAccount.hasSetting('freeze') && this.tokenAccount.controllerPrivilege(account, 'freeze'))) {
           actions.freeze = {
             icon: 'snowflake',
@@ -93,7 +93,7 @@ export default {
             id: 'freeze'
           }
         }
-        if (!actions['whitelist'] &&
+        if (!actions.whitelist &&
           (this.tokenAccount.hasSetting('whitelist') && this.tokenAccount.controllerPrivilege(account, 'whitelist'))) {
           actions.adjustUsers = {
             icon: 'list-alt',
@@ -101,7 +101,7 @@ export default {
             id: 'whitelist'
           }
         }
-        if (!actions['editInfo'] &&
+        if (!actions.editInfo &&
           this.tokenAccount.controllerPrivilege(account, 'update_issuer_info')) {
           actions.editInfo = {
             icon: 'edit',
@@ -109,7 +109,7 @@ export default {
             id: 'editInfo'
           }
         }
-        if (!actions['adjustFee'] &&
+        if (!actions.adjustFee &&
           this.tokenAccount.hasSetting('adjust_fee') &&
           this.tokenAccount.controllerPrivilege(account, 'adjust_fee')) {
           actions.adjustFee = {
@@ -118,7 +118,7 @@ export default {
             id: 'adjustFee'
           }
         }
-        if (!actions['withdrawFees'] &&
+        if (!actions.withdrawFees &&
           this.tokenAccount.controllerPrivilege(account, 'withdraw_fee')) {
           actions.withdrawFees = {
             icon: 'hand-receiving',
@@ -126,7 +126,7 @@ export default {
             id: 'withdrawFees'
           }
         }
-        if (!actions['withdrawLogos'] &&
+        if (!actions.withdrawLogos &&
           this.tokenAccount.controllerPrivilege(account, 'withdraw_logos')) {
           actions.withdrawLogos = {
             icon: 'lambda',
@@ -134,7 +134,7 @@ export default {
             id: 'withdrawLogos'
           }
         }
-        if (!actions['settings'] &&
+        if (!actions.settings &&
           ((this.tokenAccount.hasSetting('modify_issuance') && this.tokenAccount.controllerPrivilege(account, 'change_issuance')) ||
           (this.tokenAccount.hasSetting('modify_issuance') && this.tokenAccount.controllerPrivilege(account, 'change_modify_issuance')) ||
           (this.tokenAccount.hasSetting('modify_revoke') && this.tokenAccount.controllerPrivilege(account, 'change_revoke')) ||

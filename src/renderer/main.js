@@ -11,7 +11,8 @@ import Multiselect from 'vue-multiselect'
 import VueInputAutowidth from 'vue-input-autowidth'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStar } from '@fortawesome/pro-solid-svg-icons'
-import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode, faChartLine, faStar as faLightStar, faGlobeAmericas, faQuestionCircle, faMagic, faFire, faMask, faUserEdit, faEdit, faCrown, faListAlt, faSnowflake, faBars, faPercentage } from '@fortawesome/pro-light-svg-icons'
+import { faDocker } from '@fortawesome/free-brands-svg-icons'
+import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode, faChartLine, faStar as faLightStar, faGlobeAmericas, faQuestionCircle, faMagic, faFire, faMask, faUserEdit, faEdit, faCrown, faListAlt, faSnowflake, faBars, faPercentage, faClouds, faDownload } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -64,6 +65,9 @@ library.add(faListAlt)
 library.add(faSnowflake)
 library.add(faBars)
 library.add(faPercentage)
+library.add(faDocker)
+library.add(faClouds)
+library.add(faDownload)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
@@ -79,6 +83,15 @@ Vue.filter('fromNow', (timestamp) => {
 Vue.use(BootstrapVue)
 Vue.use(VueInputAutowidth)
 Vue.use(LogosWallet)
+
+if (global && global.ipcRenderer) {
+  global.ipcRenderer.on('initaliziation', (event, arg) => {
+    console.log(arg)
+    store.dispatch('System/setOperatingSystem', arg.platform, { root: true })
+  })
+  global.ipcRenderer.send('initaliziation')
+}
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

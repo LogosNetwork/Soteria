@@ -33,7 +33,7 @@ let rendererConfig = {
         use: ['vue-style-loader', 'css-loader', {
           loader: 'sass-loader',
           options: {
-            data: `@import "${path.resolve(__dirname, '../src/renderer/assets/styles/vars.scss')}";`
+            prependData: `@import "${path.resolve(__dirname, '../src/renderer/assets/styles/vars.scss')}";`
           }
         }]
       },

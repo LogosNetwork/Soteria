@@ -10,7 +10,7 @@ if (global && global.createPersistedState && global.createSharedMutations) {
   // Electron Persistance
   plugins = [
     global.createPersistedState({
-      ignoredPaths: ['Onboarding']
+      ignoredPaths: ['Onboarding', 'System']
     })
   ]
 } else if (window.localStorage) {

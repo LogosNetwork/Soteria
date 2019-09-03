@@ -61,7 +61,7 @@ export default {
       this.changeLanguage(code)
     },
     generateSeedPage () {
-      this.$router.push({ path: '/onboarding/seed' })
+      this.$router.push({ path: '/onboarding/server' })
     }
   }
 }

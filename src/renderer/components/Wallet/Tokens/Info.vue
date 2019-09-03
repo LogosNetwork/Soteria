@@ -391,7 +391,7 @@ export default {
       'setTokenAccountSidebar'
     ]),
     openControllerModal (address) {
-      this.$bvModal.show(`tkActionModal_update_controller`)
+      this.$bvModal.show('tkActionModal_update_controller')
     }
   }
 }

@@ -1,7 +1,7 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
-
+import { app, BrowserWindow, ipcMain } from 'electron'
+import * as os from 'os'
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
+  ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
@@ -56,6 +56,14 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+ipcMain.on('initaliziation', (event, arg) => {
+  event.reply('initaliziation', {
+    platform: os.platform()
+  })
+})
+
+// mainWindow.webContents.send('bootstrapUpdate', '1%')
 
 /**
  * Auto Updater

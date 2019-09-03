@@ -22,6 +22,11 @@ export default new Router({
           component: require('@/components/Onboarding/SelectLanguage').default
         },
         {
+          name: 'server',
+          path: 'server',
+          component: require('@/components/Onboarding/SelectServer').default
+        },
+        {
           name: 'seed',
           path: 'seed',
           component: require('@/components/Onboarding/GenerateSeed').default

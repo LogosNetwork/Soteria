@@ -32,7 +32,7 @@ export default {
     // Set proper syncing / verifying SDK options with user overrides
     // Set the settings for local Logos Node RPC Integration
     wallet.ConfigureSoteria = async () => {
-      const response = await axios.get(`https://pla.bs/delegates`)
+      const response = await axios.get('https://pla.bs/delegates')
       // Pulls in token info
       Vue.prototype.$Wallet.tokenSync = true
       // Marks the node as trusted and doesn't validate sigs to saves time.
