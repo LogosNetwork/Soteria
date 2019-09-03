@@ -51,6 +51,9 @@ export default {
     ...mapState('Language', {
       languages: state => state.languages,
       selectedLanguageCode: state => state.selectedLanguageCode
+    }),
+    ...mapState('System', {
+      operatingSystem: state => state.operatingSystem
     })
   },
   methods: {
@@ -61,7 +64,11 @@ export default {
       this.changeLanguage(code)
     },
     generateSeedPage () {
-      this.$router.push({ path: '/onboarding/server' })
+      if (this.operatingSystem === 'linux') {
+        this.$router.push({ path: '/onboarding/server' })
+      } else {
+        this.$router.push({ path: '/onboarding/seed' })
+      }
     }
   }
 }
