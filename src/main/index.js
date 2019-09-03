@@ -2,6 +2,8 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import * as os from 'os'
+import * as shell from 'shelljs'
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -59,7 +61,8 @@ app.on('activate', () => {
 
 ipcMain.on('initaliziation', (event, arg) => {
   event.reply('initaliziation', {
-    platform: os.platform()
+    platform: os.platform(),
+    docker: Boolean(shell.which('docker'))
   })
 })
 

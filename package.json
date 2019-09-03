@@ -33,6 +33,7 @@
     "bootstrap-vue": "^2.0.0-rc.28",
     "dayjs": "^1.8.16",
     "prismjs": "^1.17.1",
+    "shelljs": "^0.8.3",
     "vue": "^2.6.10",
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.14.0",

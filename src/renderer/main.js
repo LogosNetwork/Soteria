@@ -87,6 +87,7 @@ Vue.use(LogosWallet)
 if (global && global.ipcRenderer) {
   global.ipcRenderer.on('initaliziation', (event, arg) => {
     console.log(arg)
+    store.dispatch('System/setHasDocker', arg, { root: true })
     store.dispatch('System/setOperatingSystem', arg.platform, { root: true })
   })
   global.ipcRenderer.send('initaliziation')
