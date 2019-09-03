@@ -8,7 +8,7 @@
   "previous": "Previous",
   "docker": "Docker",
   "setupDocker": "Setup Docker",
-  "setupRemote": "Setup Remote",
+  "setupRemote": "Use Remote",
   "remoteNode": "Remote Node",
   "localNode": "Local Node",
   "installNode": "Install Node",

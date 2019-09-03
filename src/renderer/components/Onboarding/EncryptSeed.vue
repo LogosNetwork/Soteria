@@ -231,7 +231,7 @@ export default {
     height:5px;
     margin-left:1px;
     display: inline-block;
-    background: $input-bg
+    background: theme-color("secondary");
   }
   .eyeButton {
     border-top-right-radius: 0.3rem;
@@ -243,5 +243,9 @@ export default {
   }
   .eyeButton > .btn-link:hover > .icon {
     opacity: 0.5;
+  }
+  .input-group > :first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 </style>

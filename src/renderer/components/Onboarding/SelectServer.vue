@@ -119,7 +119,7 @@ export default {
       // TODO
     },
     connectToRemote () {
-      // TODO
+      this.$router.push({ path: '/onboarding/seed' })
     },
     installNode () {
       // TODO
