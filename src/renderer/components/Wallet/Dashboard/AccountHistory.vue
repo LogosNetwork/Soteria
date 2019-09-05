@@ -21,7 +21,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import RequestList from '@/components/Shared/Requests/RequestList.vue'
+import RequestList from '@/components/Shared/Requests/requestList.vue'
 
 export default {
   name: 'AccountHistory',
