@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 import './assets/styles/shame.scss'
 import LogosWallet from './api/wallet'
 import App from './App'
@@ -17,7 +16,6 @@ import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fort
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
-Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 library.add(faFileImport)

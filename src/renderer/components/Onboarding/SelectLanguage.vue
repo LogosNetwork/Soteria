@@ -64,11 +64,7 @@ export default {
       this.changeLanguage(code)
     },
     generateSeedPage () {
-      if (this.operatingSystem === 'linux') {
-        this.$router.push({ path: '/onboarding/server' })
-      } else {
-        this.$router.push({ path: '/onboarding/seed' })
-      }
+      this.$router.push({ path: '/onboarding/server' })
     }
   }
 }

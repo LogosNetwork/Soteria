@@ -9,29 +9,26 @@
     </div>
     <div class="row mt-3 justify-content-center align-items-center">
       <div class="panel table text-base">
-        <div
-          v-if="hasDocker && operatingSystem === 'linux'"
-          class="plan"
-        >
+        <div class="plan">
           <div class="card bg-secondary">
             <div class="mt-3 mb-0 card-img-top circle">
               <font-awesome-icon
                 size="3x"
                 class="icon"
-                :icon="['fab','docker']"
+                :icon="['fal','lambda']"
               />
             </div>
             <div class="card-body">
               <h5
-                v-t="'docker'"
+                v-t="'officialLogosNode'"
                 class="card-title"
               />
               <b-button
-                v-t="'setupDocker'"
+                v-t="'connectLogosNode'"
                 class="mt-3"
                 size="lg"
                 variant="primary"
-                @click="setupDocker()"
+                @click="connectLogosNode()"
               />
             </div>
           </div>
@@ -122,8 +119,8 @@ export default {
     previous () {
       this.$router.go(-1)
     },
-    setupDocker () {
-      // TODO
+    connectLogosNode () {
+      this.$router.push({ path: '/onboarding/seed' })
     },
     connectToRemote () {
       this.$router.push({ path: '/onboarding/seed' })

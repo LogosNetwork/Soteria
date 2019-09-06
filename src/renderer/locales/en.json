@@ -13,7 +13,7 @@
   "localNode": "Local Node",
   "installNode": "Install Node",
   "selectServer": "Select Server",
-  "severInfo": "Docker and Local Node provide the best trustless environment. Remote node is usually the easiest option.",
+  "severInfo": "Local Nodes provide the best trustless environment. Official Logos Node is usually the easiest option.",
   "seed": "Seed",
   "haveaseed": "Have a seed?",
   "needaseed": "Need a seed?",
@@ -133,6 +133,8 @@
   "myWalletBalance": "My Wallet Balance",
   "tokenAccount": "Token Account",
   "tokenAccounts": "Token Accounts",
+  "officialLogosNode": "Official Logos Node",
+  "connectLogosNode": "Connect to Logos Node",
   "tokenActions": {
     "distribute": "Distribute",
     "mint": "Mint",
