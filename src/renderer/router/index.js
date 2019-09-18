@@ -27,6 +27,11 @@ export default new Router({
           component: require('@/components/Onboarding/SelectServer').default
         },
         {
+          name: 'insertServerInfo',
+          path: 'insertServerInfo',
+          component: require('@/components/Onboarding/InsertServerInfo').default
+        },
+        {
           name: 'seed',
           path: 'seed',
           component: require('@/components/Onboarding/GenerateSeed').default

@@ -142,6 +142,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('Onboarding', {
+      nodeOptions: state => state.nodeOptions
+    }),
     ...mapState('EncryptedWallet', {
       wallet: state => state.wallet,
       validated: state => state.validated
@@ -169,7 +172,7 @@ export default {
         this.setValidated(true)
         this.setSeed(null)
         this.$Wallet.ResetWalletReactivity()
-        this.$Wallet.ConfigureSoteria().then((res) => {
+        this.$Wallet.ConfigureSoteria(this.nodeOptions).then((res) => {
           this.$router.push({ path: '/wallet/dashboard' })
         })
       } catch (err) {

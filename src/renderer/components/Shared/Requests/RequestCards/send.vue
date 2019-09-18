@@ -159,7 +159,7 @@ export default {
             sum = sum.plus(bigInt(this.requestInfo.transactions[transaction].amount))
           }
         }
-        return parseFloat(this.$Wallet.rpcClient().convert.fromReason(sum.toString(), 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.$Wallet.rpcClient.convert.fromReason(sum.toString(), 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
       }
       return null
     }

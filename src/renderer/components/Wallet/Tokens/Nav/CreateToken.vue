@@ -1040,7 +1040,7 @@ export default {
     },
     decimalDescription () {
       if (this.validDecimal) {
-        return `With the decimial set to ${this.tokenOptions.totalSupply.decimals} the total supply will be ${this.$Wallet.rpcClient().convert.fromTo(this.tokenOptions.totalSupply.amount, 0, this.tokenOptions.totalSupply.decimals)} ${this.tokenOptions.symbol}`
+        return `With the decimial set to ${this.tokenOptions.totalSupply.decimals} the total supply will be ${this.$Wallet.rpcClient.convert.fromTo(this.tokenOptions.totalSupply.amount, 0, this.tokenOptions.totalSupply.decimals)} ${this.tokenOptions.symbol}`
       } else {
         return `With no decimial set the total supply will be ${this.tokenOptions.totalSupply.amount} ${this.tokenOptions.symbol}`
       }

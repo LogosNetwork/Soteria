@@ -148,28 +148,28 @@ export default {
               request.prettyInfo = request.issuer_info
             }
           } else if (this.requestInfo.constructor.name === 'WithdrawLogos') {
-            request.transaction.amountInLogos = this.$Wallet.rpcClient().convert.fromReason(request.transaction.amount, 'LOGOS')
+            request.transaction.amountInLogos = this.$Wallet.rpcClient.convert.fromReason(request.transaction.amount, 'LOGOS')
           } else if (request.transaction) {
             if (request.tokenInfo.issuerInfo &&
               typeof request.tokenInfo.issuerInfo.decimals !== 'undefined' &&
               request.tokenInfo.issuerInfo.decimals > 0) {
-              request.transaction.amountInToken = this.$Wallet.rpcClient().convert.fromTo(request.transaction.amount, 0, request.tokenInfo.issuerInfo.decimals)
+              request.transaction.amountInToken = this.$Wallet.rpcClient.convert.fromTo(request.transaction.amount, 0, request.tokenInfo.issuerInfo.decimals)
             }
           } else if (request.transactions) {
             request.totalAmount = this.requestInfo.totalAmount
             if (request.tokenInfo.issuerInfo &&
               typeof request.tokenInfo.issuerInfo.decimals !== 'undefined' &&
               request.tokenInfo.issuerInfo.decimals > 0) {
-              request.totalAmountInToken = this.$Wallet.rpcClient().convert.fromTo(request.totalAmount, 0, request.tokenInfo.issuerInfo.decimals)
+              request.totalAmountInToken = this.$Wallet.rpcClient.convert.fromTo(request.totalAmount, 0, request.tokenInfo.issuerInfo.decimals)
               for (const transaction of request.transactions) {
-                transaction.amountInToken = this.$Wallet.rpcClient().convert.fromTo(transaction.amount, 0, request.tokenInfo.issuerInfo.decimals)
+                transaction.amountInToken = this.$Wallet.rpcClient.convert.fromTo(transaction.amount, 0, request.tokenInfo.issuerInfo.decimals)
               }
             }
           }
         } else if (request.transactions) {
-          request.totalAmountLogos = this.$Wallet.rpcClient().convert.fromReason(this.requestInfo.totalAmount, 'LOGOS')
+          request.totalAmountLogos = this.$Wallet.rpcClient.convert.fromReason(this.requestInfo.totalAmount, 'LOGOS')
           for (const transaction of request.transactions) {
-            transaction.amountInLogos = this.$Wallet.rpcClient().convert.fromReason(transaction.amount, 'LOGOS')
+            transaction.amountInLogos = this.$Wallet.rpcClient.convert.fromReason(transaction.amount, 'LOGOS')
           }
         }
         return request

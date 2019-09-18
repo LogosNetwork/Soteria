@@ -1,8 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
-import * as os from 'os'
-import * as shell from 'shelljs'
+import { app, BrowserWindow } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -58,15 +56,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-ipcMain.on('initaliziation', (event, arg) => {
-  event.reply('initaliziation', {
-    platform: os.platform(),
-    docker: Boolean(shell.which('docker'))
-  })
-})
-
-// mainWindow.webContents.send('bootstrapUpdate', '1%')
 
 /**
  * Auto Updater

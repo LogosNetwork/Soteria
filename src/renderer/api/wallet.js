@@ -28,21 +28,25 @@ export default {
       await Vue.prototype.$Wallet.createAccount(null, false)
       Vue.prototype.$Wallet.ResetWalletReactivity()
     }
-    // TODO
-    // Set proper syncing / verifying SDK options with user overrides
-    // Set the settings for local Logos Node RPC Integration
-    wallet.ConfigureSoteria = async () => {
-      const response = await axios.get('https://pla.bs/delegates')
-      // Pulls in token info
+    wallet.ConfigureSoteria = async (nodeOptions = null) => {
       Vue.prototype.$Wallet.tokenSync = true
-      // Marks the node as trusted and doesn't validate sigs to saves time.
-      // Future optimizations will speed this up but this should be true
-      // for remote node integration.
       Vue.prototype.$Wallet.validateSync = false
-      Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
-      Vue.prototype.$Wallet.rpc = {
-        proxy: 'https://pla.bs',
-        delegates: Object.values(response.data)
+      if (nodeOptions) {
+        Vue.prototype.$Wallet.mqtt = null
+        Vue.prototype.$Wallet.ws = true
+        Vue.prototype.$Wallet.p2pPropagation = true
+        Vue.prototype.$Wallet.rpc = {
+          nodeURL: nodeOptions.nodeURL,
+          nodePort: nodeOptions.nodePort,
+          wsPort: nodeOptions.wsPort
+        }
+      } else {
+        const response = await axios.get('https://pla.bs/delegates')
+        Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
+        Vue.prototype.$Wallet.rpc = {
+          proxy: 'https://pla.bs',
+          nodeURL: Object.values(response.data)[0]
+        }
       }
       return true
     }

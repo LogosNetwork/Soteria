@@ -104,10 +104,10 @@ export default {
     },
     amountInMinorUnit () {
       if (this.amount === '') return false
-      return this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
+      return this.$Wallet.rpcClient.convert.toReason(this.amount, 'LOGOS')
     },
     availableToWithdraw () {
-      const amountInMajorUnit = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+      const amountInMajorUnit = this.$Wallet.rpcClient.convert.fromReason(bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
       return {
         text: `${parseFloat(amountInMajorUnit).toLocaleString(this.languageCode, { useGrouping: true })} ${this.$t('logos')} ${this.$t('areAvailableToWithdraw')}`,
         amount: amountInMajorUnit

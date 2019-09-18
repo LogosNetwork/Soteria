@@ -315,7 +315,7 @@ export default {
       return false
     },
     balance () {
-      return parseFloat(this.$Wallet.rpcClient().convert.fromReason(this.tokenAccount.balance, 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
+      return parseFloat(this.$Wallet.rpcClient.convert.fromReason(this.tokenAccount.balance, 'LOGOS')).toLocaleString(this.languageCode, { useGrouping: true })
     },
     tokenBalance () {
       const balanceInMinor = this.tokenAccount.tokenBalance

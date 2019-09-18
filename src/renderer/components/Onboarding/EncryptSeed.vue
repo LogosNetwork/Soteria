@@ -153,7 +153,8 @@ export default {
   },
   computed: {
     ...mapState('Onboarding', {
-      seed: state => state.seed
+      seed: state => state.seed,
+      nodeOptions: state => state.nodeOptions
     }),
     ...mapState('EncryptedWallet', {
       validated: state => state.validated
@@ -178,7 +179,7 @@ export default {
       if (this.validated) {
         this.$Wallet.password = this.password
         this.$Wallet.load(encryptedWallet)
-        this.$Wallet.ConfigureSoteria().then((res) => {
+        this.$Wallet.ConfigureSoteria(this.nodeOptions).then((res) => {
           this.$router.push({ path: '/wallet/dashboard' })
         })
       } else {

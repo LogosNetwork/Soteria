@@ -210,7 +210,7 @@ export default {
         amount: ''
       }
       if (!this.sendingTokens) {
-        const amount = this.$Wallet.rpcClient().convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
+        const amount = this.$Wallet.rpcClient.convert.fromReason(bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).toString(), 'LOGOS')
         result.amount = amount
         if (bigInt(this.account.balance).minus(bigInt(this.$Utils.minimumFee)).lesserOrEquals(bigInt(0))) {
           result.text = this.$t('insufficientFunds')
@@ -224,7 +224,7 @@ export default {
           amountInMinorUnit = bigInt(amountInMinorUnit).minus(bigInt(this.tokenAccount.feeRate)).toString()
         }
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
-          amount = this.$Wallet.rpcClient().convert.fromTo(amountInMinorUnit, 0, this.issuerInfo.decimals)
+          amount = this.$Wallet.rpcClient.convert.fromTo(amountInMinorUnit, 0, this.issuerInfo.decimals)
           result.amount = amount
           result.text = `${parseFloat(amount).toLocaleString(this.languageCode, { useGrouping: true })} ${this.tokenAccount.symbol} ${this.$t('areAvailableToSend')}`
         } else {
@@ -239,7 +239,7 @@ export default {
       if (this.amount) {
         if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
         if (!this.sendingTokens) {
-          const amountInMinorUnit = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
+          const amountInMinorUnit = this.$Wallet.rpcClient.convert.toReason(this.amount, 'LOGOS')
           return (
             bigInt(amountInMinorUnit).greater(0) &&
             bigInt(this.$Wallet.account.balance)
@@ -255,7 +255,7 @@ export default {
           if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined' &&
             this.issuerInfo.decimals > 0) {
             if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.amount)) return false
-            amountInMinorUnit = this.$Wallet.rpcClient().convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
+            amountInMinorUnit = this.$Wallet.rpcClient.convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
           } else {
             amountInMinorUnit = this.amount
             if (!/^([0-9]+)$/.test(amountInMinorUnit)) return false
@@ -302,7 +302,7 @@ export default {
       if (this.sendingTokens) {
         let amountInMinorUnit = null
         if (this.issuerInfo && typeof this.issuerInfo.decimals !== 'undefined') {
-          amountInMinorUnit = this.$Wallet.rpcClient().convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
+          amountInMinorUnit = this.$Wallet.rpcClient.convert.fromTo(this.amount, this.issuerInfo.decimals, 0)
         } else {
           amountInMinorUnit = this.amount
         }
@@ -332,7 +332,7 @@ export default {
         }
         this.$emit('sent')
       } else {
-        const amount = this.$Wallet.rpcClient().convert.toReason(this.amount, 'LOGOS')
+        const amount = this.$Wallet.rpcClient.convert.toReason(this.amount, 'LOGOS')
         if (bigInt(this.$Wallet.accounts[this.currentAccountAddress].balance)
           .greaterOrEquals(
             bigInt(amount).plus(bigInt(this.$Utils.minimumFee))

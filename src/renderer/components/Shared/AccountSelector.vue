@@ -335,7 +335,7 @@ export default {
         return true
       } else if (this.tokenAccount && account && account.address) {
         const address = account.address
-        const rpc = this.$Wallet.rpcClient()
+        const rpc = this.$Wallet.rpcClient
         let accountInfo = null
         if (!this.destinationAccountInfo ||
           !this.destinationAccountInfo.accountInfo ||

@@ -149,7 +149,7 @@ export default {
       if (this.requestInfo.tokenInfo.issuerInfo &&
         typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
         this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
-        return parseFloat(this.$Wallet.rpcClient().convert.fromTo(this.requestInfo.totalAmount, 0, this.requestInfo.tokenInfo.issuerInfo.decimals)).toLocaleString(this.languageCode, { useGrouping: true })
+        return parseFloat(this.$Wallet.rpcClient.convert.fromTo(this.requestInfo.totalAmount, 0, this.requestInfo.tokenInfo.issuerInfo.decimals)).toLocaleString(this.languageCode, { useGrouping: true })
       } else {
         return parseFloat(this.requestInfo.totalAmount).toLocaleString(this.languageCode, { useGrouping: true })
       }
@@ -165,7 +165,7 @@ export default {
         if (this.requestInfo.tokenInfo.issuerInfo &&
           typeof this.requestInfo.tokenInfo.issuerInfo.decimals !== 'undefined' &&
           this.requestInfo.tokenInfo.issuerInfo.decimals > 0) {
-          return parseFloat(this.$Wallet.rpcClient().convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals)).toLocaleString(this.languageCode, { useGrouping: true })
+          return parseFloat(this.$Wallet.rpcClient.convert.fromTo(sum.toString(), 0, this.requestInfo.tokenInfo.issuerInfo.decimals)).toLocaleString(this.languageCode, { useGrouping: true })
         } else {
           return parseFloat(sum.toString()).toLocaleString(this.languageCode, { useGrouping: true })
         }

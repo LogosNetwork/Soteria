@@ -6,7 +6,7 @@
         class="mt-3"
       />
       <small v-t="'twentyFourWords'" />
-      <div class="row mt-3 justify-content-center align-items-center">
+      <div class="d-flex mt-3 justify-content-center align-items-center">
         <div class="panel table bg-secondary">
           <b-input
             v-for="(item, index) in phraseList"
@@ -60,7 +60,7 @@ import { mapState, mapActions } from 'vuex'
 import bip39 from 'bip39'
 
 export default {
-  name: 'ExportPaper',
+  name: 'InsertMnemonic',
   data () {
     return {
       phraseList: new Array(24)

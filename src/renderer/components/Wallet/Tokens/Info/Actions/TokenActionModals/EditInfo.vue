@@ -136,7 +136,7 @@ export default {
     },
     totalSupply () {
       if (this.decimals === '') return null
-      return this.$Wallet.rpcClient().convert.fromTo(this.tokenAccount.totalSupply, this.currentDecimal, this.decimals)
+      return this.$Wallet.rpcClient.convert.fromTo(this.tokenAccount.totalSupply, this.currentDecimal, this.decimals)
     }
   },
   mounted () {

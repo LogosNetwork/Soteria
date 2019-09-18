@@ -39,49 +39,33 @@
               <font-awesome-icon
                 size="3x"
                 class="icon"
-                :icon="['fal','clouds']"
+                :icon="['fal','server']"
               />
             </div>
             <div class="card-body">
               <h5
-                v-t="'remoteNode'"
+                v-t="'remoteLocalNode'"
                 class="card-title"
               />
               <b-button
-                v-t="'setupRemote'"
+                v-t="'connectLocalNode'"
                 class="mt-3"
                 size="lg"
                 variant="primary"
-                @click="connectToRemote()"
+                @click="connectToNode()"
               />
             </div>
           </div>
-        </div>
-        <div
-          v-if="operatingSystem === 'linux'"
-          class="plan"
-        >
-          <div class="card bg-secondary">
-            <div class="mt-3 mb-0 card-img-top circle">
-              <font-awesome-icon
-                size="3x"
-                class="icon"
-                :icon="['fal','download']"
-              />
-            </div>
-            <div class="card-body">
-              <h5
-                v-t="'localNode'"
-                class="card-title"
-              />
-              <b-button
-                v-t="'installNode'"
-                class="mt-3"
-                size="lg"
-                variant="primary"
-                @click="installNode()"
-              />
-            </div>
+          <div>
+            <b-button
+              variant="link"
+              href="https://pla.bs/install-guide"
+              target="_blank"
+              class="text-white"
+              @click="openPage($event)"
+            >
+              How to setup a local node
+            </b-button>
           </div>
         </div>
       </div>
@@ -122,11 +106,15 @@ export default {
     connectLogosNode () {
       this.$router.push({ path: '/onboarding/seed' })
     },
-    connectToRemote () {
-      this.$router.push({ path: '/onboarding/seed' })
+    connectToNode () {
+      this.$router.push({ path: '/onboarding/insertServerInfo' })
     },
-    installNode () {
-      // TODO
+    openPage (event) {
+      if (global && global.shell) {
+        event.preventDefault()
+        event.stopPropagation()
+        global.shell.openExternal('https://pla.bs/install-guide')
+      }
     }
   }
 }
