@@ -24,7 +24,7 @@
     "@fortawesome/pro-light-svg-icons": "^5.11.1",
     "@fortawesome/pro-solid-svg-icons": "^5.11.1",
     "@fortawesome/vue-fontawesome": "^0.1.7",
-    "@logosnetwork/logos-webwallet-sdk": "^0.3.9",
+    "@logosnetwork/logos-webwallet-sdk": "^0.3.10",
     "axios": "^0.19.0",
     "big-integer": "^1.6.45",
     "bip39": "^2.6.0",
