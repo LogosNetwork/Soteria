@@ -67,6 +67,11 @@
               <b-form-invalid-feedback id="urlError">
                 Must be a valid URL
               </b-form-invalid-feedback>
+              <b-form-invalid-feedback
+                v-t="'insufficientLogosFunds'"
+                class="text-danger"
+                :class="!hasFee ? 'd-block': ''"
+              />
             </b-input-group>
           </b-form-group>
         </b-form-group>
@@ -82,7 +87,7 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="validImage === false || validURL === false || validDecimal === false"
+            :disabled="validImage === false || validURL === false || validDecimal === false || !hasFee"
             class="w-100"
             variant="primary"
             @click="editInfo()"
@@ -95,6 +100,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import bigInt from 'big-integer'
+
 const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
 export default {
   name: 'Burn',
@@ -119,6 +126,9 @@ export default {
     validURL () {
       if (this.website === '') return null
       return urlRegex.test(this.website)
+    },
+    hasFee () {
+      return bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).greaterOrEquals(0)
     },
     validDecimal () {
       if (this.decimals === '') return null

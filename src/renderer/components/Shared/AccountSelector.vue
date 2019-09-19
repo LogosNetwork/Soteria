@@ -305,10 +305,17 @@ export default {
       if (this.destinationAccount !== null) {
         const isValid = await this.isValidDestination(this.destinationAccount)
         if (isValid) {
-          this.$emit('change', {
-            error: null,
-            account: this.destinationAccountInfo
-          })
+          if (!this.tokenAccount) {
+            this.$emit('change', {
+              error: null,
+              account: this.destinationAccount
+            })
+          } else {
+            this.$emit('change', {
+              error: null,
+              account: this.destinationAccountInfo
+            })
+          }
         } else {
           this.$emit('change', {
             error: this.invalidDestinationError,

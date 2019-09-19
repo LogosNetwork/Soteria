@@ -14,6 +14,11 @@
         @change="destinationAccount = $event.account"
         @scanning="isScanning = $event"
       />
+      <b-form-invalid-feedback
+        v-t="'insufficientLogosFunds'"
+        class="text-danger"
+        :class="!hasFee ? 'd-block': ''"
+      />
     </b-container>
     <b-row
       v-if="!isScanning"
@@ -26,7 +31,7 @@
         >
           <b-button
             v-t="buttonLabel"
-            :disabled="!destinationAccount"
+            :disabled="!destinationAccount || !hasFee"
             class="w-100"
             variant="primary"
             @click="adjustUserStatus()"
@@ -40,6 +45,7 @@
 <script>
 import { mapState } from 'vuex'
 import AccountSelector from '@/components/Shared/AccountSelector.vue'
+import bigInt from 'big-integer'
 
 export default {
   name: 'AdjustUserStatus',
@@ -70,6 +76,9 @@ export default {
       return (this.destinationAccount &&
         this.destinationAccount.address &&
         this.tokenAccount.getAccountStatus(this.destinationAccount.address).frozen === true)
+    },
+    hasFee () {
+      return bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).greaterOrEquals(0)
     },
     isWhitelisted () {
       return (this.destinationAccount &&

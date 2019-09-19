@@ -11,7 +11,7 @@ import VueInputAutowidth from 'vue-input-autowidth'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStar } from '@fortawesome/pro-solid-svg-icons'
 import { faDocker } from '@fortawesome/free-brands-svg-icons'
-import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faPowerOff, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode, faChartLine, faStar as faLightStar, faGlobeAmericas, faQuestionCircle, faMagic, faFire, faMask, faUserEdit, faEdit, faCrown, faListAlt, faSnowflake, faBars, faPercentage, faServer, faDownload } from '@fortawesome/pro-light-svg-icons'
+import { faTimes, faFileImport, faChartNetwork, faLambda, faEye, faEyeSlash, faShieldCheck, faKey, faPencil, faLockAlt, faFileUpload, faCogs, faWallet, faLandmark, faExchange, faSearch, faCoins, faSquare, faPlus, faFilter, faCircle, faCoin, faHandReceiving, faPaperPlane, faSyncAlt, faTachometerAlt, faCopy, faQrcode, faChartLine, faStar as faLightStar, faGlobeAmericas, faQuestionCircle, faMagic, faFire, faMask, faUserEdit, faEdit, faCrown, faListAlt, faSnowflake, faBars, faPercentage, faServer, faDownload } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -32,7 +32,6 @@ library.add(faCogs)
 library.add(faWallet)
 library.add(faExchange)
 library.add(faLandmark)
-library.add(faPowerOff)
 library.add(faSearch)
 library.add(faCoins)
 library.add(faCoin)

@@ -38,7 +38,7 @@
         class="sr-only"
       />
     </b-button>
-    <b-button
+    <!-- <b-button
       v-b-tooltip.right.hover="$t('governance')"
       class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
@@ -84,20 +84,20 @@
         v-t="'settings'"
         class="sr-only"
       />
-    </b-button>
+    </b-button> -->
     <b-button
-      v-b-tooltip.right.hover="$t('logout')"
+      v-b-tooltip.right.hover="$t('lockWallet')"
       class="navigationSelector mb-2 btn-transparent d-flex align-items-center justify-content-center mx-auto"
       variant="transparent"
-      :title="$t('logout')"
-      @click="logout"
+      :title="$t('lockWallet')"
+      @click="lockWallet"
     >
       <font-awesome-icon
         size="lg"
-        :icon="['fal','power-off']"
+        :icon="['fal','lock-alt']"
       />
       <span
-        v-t="'logout'"
+        v-t="'lockWallet'"
         class="sr-only"
       />
     </b-button>
@@ -113,9 +113,9 @@ export default {
     ...mapActions('EncryptedWallet', [
       'setWallet'
     ]),
-    logout () {
+    lockWallet () {
       this.setWallet(this.$Wallet.encrypt())
-      this.$Wallet.mqttDisconnect()
+      this.$Wallet.wsDisconnect()
       this.$Wallet.loadOptions({
         seed: null,
         mqtt: null,

@@ -37,6 +37,11 @@
               :placeholder="`${$t('amountIn')} ${tokenAccount.name}`"
             />
           </b-input-group>
+          <b-form-invalid-feedback
+            v-t="'insufficientLogosFunds'"
+            class="text-danger"
+            :class="!hasFee ? 'd-block': ''"
+          />
         </b-form-group>
       </div>
     </b-container>
@@ -50,7 +55,7 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="!validFeeRate"
+            :disabled="!validFeeRate || !hasFee"
             class="w-100"
             variant="primary"
             @click="adjustFee()"
@@ -105,6 +110,9 @@ export default {
       if (this.tokenAccount.decimals === null) return false
       if (!/^([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(this.feeRate)) return false
       return this.feeRate
+    },
+    hasFee () {
+      return bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).greaterOrEquals(0)
     },
     validFeeRate () {
       if (this.feeType === '') return null

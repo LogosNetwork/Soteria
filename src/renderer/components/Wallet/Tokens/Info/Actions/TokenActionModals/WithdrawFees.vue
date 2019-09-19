@@ -52,6 +52,11 @@
             v-t="'sendAmountError'"
             class="text-danger"
           />
+          <b-form-invalid-feedback
+            v-t="'insufficientLogosFunds'"
+            class="text-danger"
+            :class="!hasFee ? 'd-block': ''"
+          />
         </b-form-group>
       </div>
     </b-container>
@@ -66,7 +71,7 @@
         >
           <b-button
             v-t="'send'"
-            :disabled="!isValidAmount || !destinationAccount"
+            :disabled="!isValidAmount || !destinationAccount || !hasFee"
             class="w-100"
             variant="primary"
             @click="withdrawFees()"
@@ -140,6 +145,9 @@ export default {
       if (!this.amountInMinorUnit) return false
       return bigInt(this.tokenAccount.tokenFeeBalance)
         .greaterOrEquals(bigInt(this.amountInMinorUnit))
+    },
+    hasFee () {
+      return bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).greaterOrEquals(0)
     }
   },
   methods: {

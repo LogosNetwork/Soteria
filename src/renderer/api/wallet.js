@@ -40,7 +40,7 @@ export default {
           nodePort: nodeOptions.nodePort,
           wsPort: nodeOptions.wsPort
         }
-      } else {
+      } else if (!Vue.prototype.$Wallet.ws) {
         const response = await axios.get('https://pla.bs/delegates')
         Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
         Vue.prototype.$Wallet.rpc = {

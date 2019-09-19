@@ -23,7 +23,7 @@
                   id="nodeURL"
                   v-model="nodeURL"
                   :state="validURL"
-                  placeholder="54.91.230.200"
+                  placeholder="3.95.164.238"
                 />
               </div>
               <label
@@ -88,7 +88,7 @@ export default {
   name: 'InsertServerInfo',
   data () {
     return {
-      nodeURL: '54.91.230.200',
+      nodeURL: '3.95.164.238',
       nodePort: '55000',
       wsPort: '18000'
     }

@@ -63,6 +63,11 @@
             v-t="'sendAmountError'"
             class="text-danger"
           />
+          <b-form-invalid-feedback
+            v-t="'insufficientLogosFunds'"
+            class="text-danger"
+            :class="!hasFee ? 'd-block': ''"
+          />
         </b-form-group>
       </div>
     </b-container>
@@ -77,7 +82,7 @@
         >
           <b-button
             v-t="'tokenActions.revoke'"
-            :disabled="!isValidAmount || !destinationAccount || !revokeeAccount"
+            :disabled="!isValidAmount || !destinationAccount || !revokeeAccount || !hasFee"
             class="w-100"
             variant="primary"
             @click="revoke()"
@@ -116,6 +121,9 @@ export default {
     }),
     tokenAccount () {
       return this.$Wallet.tokenAccounts[this.activeAddress]
+    },
+    hasFee () {
+      return bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).greaterOrEquals(0)
     },
     amountInMinorUnit () {
       if (this.amount === '') return false

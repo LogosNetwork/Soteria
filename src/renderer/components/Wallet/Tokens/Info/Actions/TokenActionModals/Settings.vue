@@ -28,6 +28,11 @@
             </template>
           </Multiselect>
         </b-input-group>
+        <b-form-invalid-feedback
+          v-t="'insufficientLogosFunds'"
+          class="text-danger"
+          :class="!hasFee ? 'd-block': ''"
+        />
       </b-form-group>
     </b-container>
     <b-row
@@ -53,6 +58,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import bigInt from 'big-integer'
 
 export default {
   name: 'Settings',
@@ -217,6 +223,9 @@ export default {
     },
     tokenAccount () {
       return this.$Wallet.tokenAccounts[this.activeAddress]
+    },
+    hasFee () {
+      return bigInt(this.tokenAccount.balance).minus(bigInt(this.$Utils.minimumFee)).greaterOrEquals(0)
     }
   },
   mounted () {

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex h-100">
     <TokenAccountInfo class="w-100" />
     <TokenAccountNav />
   </div>
