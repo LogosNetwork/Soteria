@@ -45,7 +45,8 @@ export default {
         Vue.prototype.$Wallet.mqtt = 'wss://pla.bs:8443'
         Vue.prototype.$Wallet.rpc = {
           proxy: 'https://pla.bs',
-          nodeURL: Object.values(response.data)[0]
+          nodeURL: Object.values(response.data)[0],
+          nodePort: '55000'
         }
       }
       return true

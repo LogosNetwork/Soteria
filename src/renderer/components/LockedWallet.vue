@@ -135,7 +135,7 @@ export default {
   data () {
     return {
       error: null,
-      password: 'thisisagoodpassword', // TODO Remove this for prod
+      password: '',
       showPassword: false,
       deleteText: null,
       inputType: 'password'
